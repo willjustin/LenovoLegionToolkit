@@ -493,7 +493,7 @@
     <value>Діє</value>
   </data>
   <data name="DiscreteGPUControl_Deactivate" xml:space="preserve">
-    <value>Деактивовано</value>
+    <value>Вимкнути</value>
   </data>
   <data name="Inactive" xml:space="preserve">
     <value>Неактивно</value>
@@ -1947,5 +1947,17 @@
   <data name="BootLogoWindow_Description" xml:space="preserve">
 	  <value>Користувальницька познака завантаження має бути рівно {0} пікселів.
 Підтримувані формати: {1}.</value>
+  </data>
+  <data name="BatteryNightChargeModeControl_Title" xml:space="preserve">
+	  <value>Заряджання протягом ночі</value>
+  </data>
+  <data name="BatteryNightChargeModeControl_Message" xml:space="preserve">
+	  <value>Якщо увімкнено, цей пристрій буде заряджатися до 80% при підключенні протягом ночі та закінчить заряджання до 100% до моменту використання пристрою вранці.</value>
+  </data>
+  <data name="BatteryNightChargeAutomationStepControl_Title" xml:space="preserve">
+	  <value>Заряджання протягом ночі</value>
+  </data>
+  <data name="BatteryNightChargeAutomationStepControl_Message" xml:space="preserve">
+	  <value>Якщо увімкнено, цей пристрій буде заряджатися до 80% при підключенні протягом ночі та закінчить заряджання до 100% до моменту використання пристрою вранці.</value>
   </data>
 </root>
