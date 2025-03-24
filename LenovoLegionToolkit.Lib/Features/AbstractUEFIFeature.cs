@@ -3,23 +3,12 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using LenovoLegionToolkit.Lib.Utils;
 using Windows.Win32;
-using Windows.Win32.Security;
 
 namespace LenovoLegionToolkit.Lib.Features;
 
-public abstract class AbstractUEFIFeature<T> : IFeature<T> where T : struct, Enum, IComparable
+public abstract class AbstractUEFIFeature<T>(string guid, string scopeName, uint scopeAttribute)
+    : IFeature<T> where T : struct, Enum, IComparable
 {
-    private readonly string _guid;
-    private readonly string _scopeName;
-    private readonly uint _scopeAttribute;
-
-    protected AbstractUEFIFeature(string guid, string scopeName, uint scopeAttribute)
-    {
-        _guid = guid;
-        _scopeName = scopeName;
-        _scopeAttribute = scopeAttribute;
-    }
-
     public async Task<bool> IsSupportedAsync()
     {
         try
@@ -48,7 +37,7 @@ public abstract class AbstractUEFIFeature<T> : IFeature<T> where T : struct, Enu
 
         try
         {
-            if (!SetPrivilege(true))
+            if (!TokenManipulator.AddPrivileges(TokenManipulator.SE_SYSTEM_ENVIRONMENT_PRIVILEGE))
             {
                 if (Log.Instance.IsTraceEnabled)
                     Log.Instance.Trace($"Cannot set UEFI privileges [feature={GetType().Name}]");
@@ -57,7 +46,7 @@ public abstract class AbstractUEFIFeature<T> : IFeature<T> where T : struct, Enu
             }
 
             var ptrSize = (uint)Marshal.SizeOf<TS>();
-            if (PInvoke.GetFirmwareEnvironmentVariableEx(_scopeName, _guid, ptr.ToPointer(), ptrSize, null) != 0)
+            if (PInvoke.GetFirmwareEnvironmentVariableEx(scopeName, guid, ptr.ToPointer(), ptrSize, null) != 0)
             {
                 var result = Marshal.PtrToStructure<TS>(ptr);
 
@@ -69,15 +58,15 @@ public abstract class AbstractUEFIFeature<T> : IFeature<T> where T : struct, Enu
             else
             {
                 if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Cannot read variable {_scopeName} from UEFI [feature={GetType().Name}]");
+                    Log.Instance.Trace($"Cannot read variable {scopeName} from UEFI [feature={GetType().Name}]");
 
-                throw new InvalidOperationException($"Cannot read variable {_scopeName} from UEFI");
+                throw new InvalidOperationException($"Cannot read variable {scopeName} from UEFI");
             }
         }
         finally
         {
             Marshal.FreeHGlobal(ptr);
-            SetPrivilege(false);
+            TokenManipulator.RemovePrivileges(TokenManipulator.SE_SYSTEM_ENVIRONMENT_PRIVILEGE);
         }
     });
 
@@ -87,7 +76,7 @@ public abstract class AbstractUEFIFeature<T> : IFeature<T> where T : struct, Enu
 
         try
         {
-            if (!SetPrivilege(true))
+            if (!TokenManipulator.AddPrivileges(TokenManipulator.SE_SYSTEM_ENVIRONMENT_PRIVILEGE))
             {
                 if (Log.Instance.IsTraceEnabled)
                     Log.Instance.Trace($"Cannot set UEFI privileges [feature={GetType().Name}]");
@@ -97,12 +86,12 @@ public abstract class AbstractUEFIFeature<T> : IFeature<T> where T : struct, Enu
 
             Marshal.StructureToPtr(structure, ptr, false);
             var ptrSize = (uint)Marshal.SizeOf<TS>();
-            if (!PInvoke.SetFirmwareEnvironmentVariableEx(_scopeName, _guid, ptr.ToPointer(), ptrSize, _scopeAttribute))
+            if (!PInvoke.SetFirmwareEnvironmentVariableEx(scopeName, guid, ptr.ToPointer(), ptrSize, scopeAttribute))
             {
                 if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Cannot write variable {_scopeName} to UEFI [feature={GetType().Name}]");
+                    Log.Instance.Trace($"Cannot write variable {scopeName} to UEFI [feature={GetType().Name}]");
 
-                throw new InvalidOperationException($"Cannot write variable {_scopeName} to UEFI");
+                throw new InvalidOperationException($"Cannot write variable {scopeName} to UEFI");
             }
             else
             {
@@ -113,55 +102,7 @@ public abstract class AbstractUEFIFeature<T> : IFeature<T> where T : struct, Enu
         finally
         {
             Marshal.FreeHGlobal(ptr);
-            SetPrivilege(false);
+            TokenManipulator.RemovePrivileges(TokenManipulator.SE_SYSTEM_ENVIRONMENT_PRIVILEGE);
         }
     });
-
-    private unsafe bool SetPrivilege(bool enable)
-    {
-        try
-        {
-            using var handle = PInvoke.GetCurrentProcess_SafeHandle();
-
-            if (!PInvoke.OpenProcessToken(handle, TOKEN_ACCESS_MASK.TOKEN_QUERY | TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES, out var token))
-            {
-                if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Could not open process token [feature={GetType().Name}]");
-
-                return false;
-            }
-
-            if (!PInvoke.LookupPrivilegeValue(null, "SeSystemEnvironmentPrivilege", out var luid))
-            {
-                if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Could not look up privilege value [feature={GetType().Name}]");
-
-                return false;
-            }
-
-            var state = new TOKEN_PRIVILEGES { PrivilegeCount = 1 };
-            state.Privileges._0 = new LUID_AND_ATTRIBUTES
-            {
-                Luid = luid,
-                Attributes = enable ? TOKEN_PRIVILEGES_ATTRIBUTES.SE_PRIVILEGE_ENABLED : 0
-            };
-
-            if (!PInvoke.AdjustTokenPrivileges(token, false, state, 0, null, null))
-            {
-                if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Could not adjust token privileges [feature={GetType().Name}]");
-
-                return false;
-            }
-
-            return true;
-        }
-        catch (Exception ex)
-        {
-            if (Log.Instance.IsTraceEnabled)
-                Log.Instance.Trace($"Exception while setting privilege. [feature={GetType().Name}]", ex);
-
-            return false;
-        }
-    }
 }

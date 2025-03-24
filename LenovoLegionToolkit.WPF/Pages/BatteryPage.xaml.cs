@@ -36,9 +36,14 @@ public partial class BatteryPage
             return;
         }
 
-        _cts?.Cancel();
+        if (_cts is not null)
+            await _cts.CancelAsync();
+
+        _cts = null;
+
         if (_refreshTask is not null)
             await _refreshTask;
+
         _refreshTask = null;
     }
 
@@ -59,7 +64,7 @@ public partial class BatteryPage
                 try
                 {
                     var batteryInfo = Battery.GetBatteryInformation();
-                    var powerAdapterStatus = await Power.IsPowerAdapterConnectedAsync().ConfigureAwait(false);
+                    var powerAdapterStatus = await Power.IsPowerAdapterConnectedAsync();
                     var onBatterySince = Battery.GetOnBatterySince();
                     Dispatcher.Invoke(() => Set(batteryInfo, powerAdapterStatus, onBatterySince));
 
@@ -168,14 +173,5 @@ public partial class BatteryPage
         }
 
         return $"{temperature:0.0} {Resource.Celsius}";
-    }
-
-    private void BatteryTemperatureCardControl_Click(object sender, RoutedEventArgs e)
-    {
-        _settings.Store.TemperatureUnit = _settings.Store.TemperatureUnit == TemperatureUnit.C ? TemperatureUnit.F : TemperatureUnit.C;
-        _settings.SynchronizeStore();
-
-        var temperature = (sender as FrameworkElement)?.Tag as double?;
-        _batteryTemperatureText.Text = GetTemperatureText(temperature);
     }
 }

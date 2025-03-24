@@ -20,12 +20,12 @@ public class GPUController
     private CancellationTokenSource? _refreshCancellationTokenSource;
 
     private GPUState _state = GPUState.Unknown;
-    private List<Process> _processes = new();
+    private List<Process> _processes = [];
     private string? _gpuInstanceId;
     private string? _performanceState;
 
-    public GPUState LastKnownState => _state;
     public event EventHandler<GPUStatus>? Refreshed;
+    public bool IsStarted { get => _refreshTask != null; }
 
     public bool IsSupported()
     {
@@ -48,6 +48,12 @@ public class GPUController
         }
     }
 
+    public async Task<GPUState> GetLastKnownStateAsync()
+    {
+        using (await _lock.LockAsync().ConfigureAwait(false))
+            return _state;
+    }
+
     public async Task<GPUStatus> RefreshNowAsync()
     {
         using (await _lock.LockAsync().ConfigureAwait(false))
@@ -57,9 +63,10 @@ public class GPUController
         }
     }
 
-    public async Task StartAsync(int delay = 1_000, int interval = 5_000)
+    public Task StartAsync(int delay = 1_000, int interval = 5_000)
     {
-        await StopAsync(true).ConfigureAwait(false);
+        if (IsStarted)
+            return Task.CompletedTask;
 
         if (Log.Instance.IsTraceEnabled)
             Log.Instance.Trace($"Starting... [delay={delay}, interval={interval}]");
@@ -67,6 +74,7 @@ public class GPUController
         _refreshCancellationTokenSource = new CancellationTokenSource();
         var token = _refreshCancellationTokenSource.Token;
         _refreshTask = Task.Run(() => RefreshLoopAsync(delay, interval, token), token);
+        return Task.CompletedTask;
     }
 
     public async Task StopAsync(bool waitForFinish = false)
@@ -74,7 +82,8 @@ public class GPUController
         if (Log.Instance.IsTraceEnabled)
             Log.Instance.Trace($"Stopping... [refreshTask.isNull={_refreshTask is null}, _refreshCancellationTokenSource.IsCancellationRequested={_refreshCancellationTokenSource?.IsCancellationRequested}]");
 
-        _refreshCancellationTokenSource?.Cancel();
+        if (_refreshCancellationTokenSource is not null)
+            await _refreshCancellationTokenSource.CancelAsync().ConfigureAwait(false);
 
         if (waitForFinish)
         {
@@ -216,7 +225,7 @@ public class GPUController
             Log.Instance.Trace($"Refresh in progress...");
 
         _state = GPUState.Unknown;
-        _processes = new();
+        _processes = [];
         _gpuInstanceId = null;
         _performanceState = null;
 
@@ -256,50 +265,39 @@ public class GPUController
             _performanceState = "Unknown";
         }
 
-        var processNames = NVAPIExtensions.GetActiveProcesses(gpu);
-        if (processNames.Count < 1)
-        {
-            if (NVAPI.IsDisplayConnected(gpu))
-            {
-                _state = GPUState.MonitorConnected;
-
-                if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Inactive, monitor connected [state={_state}, processes.Count={_processes.Count}, gpuInstanceId={_gpuInstanceId}]");
-            }
-            else
-            {
-                _state = GPUState.Inactive;
-
-                if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Inactive [state={_state}, processes.Count={_processes.Count}, gpuInstanceId={_gpuInstanceId}]");
-            }
-
-            return;
-        }
-
-        _processes = processNames;
-
-        if (NVAPI.IsDisplayConnected(gpu))
-        {
-            _state = GPUState.MonitorConnected;
-
-            if (Log.Instance.IsTraceEnabled)
-                Log.Instance.Trace($"Active, monitor connected [state={_state}, processes.Count={_processes.Count}, gpuInstanceId={_gpuInstanceId}]");
-
-            return;
-        }
-
         var pnpDeviceIdPart = NVAPI.GetGPUId(gpu);
 
         if (string.IsNullOrEmpty(pnpDeviceIdPart))
             throw new InvalidOperationException("pnpDeviceIdPart is null or empty");
 
         var gpuInstanceId = await WMI.Win32.PnpEntity.GetDeviceIDAsync(pnpDeviceIdPart).ConfigureAwait(false);
+        var processNames = NVAPIExtensions.GetActiveProcesses(gpu);
 
-        _state = GPUState.Active;
-        _gpuInstanceId = gpuInstanceId;
+        if (NVAPI.IsDisplayConnected(gpu))
+        {
+            _processes = processNames;
+            _state = GPUState.MonitorConnected;
 
-        if (Log.Instance.IsTraceEnabled)
-            Log.Instance.Trace($"Active [state={_state}, processes.Count={_processes.Count}, gpuInstanceId={_gpuInstanceId}, pnpDeviceIdPart={pnpDeviceIdPart}]");
+            if (Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace(
+                    $"Monitor connected [state={_state}, processes.Count={_processes.Count}, gpuInstanceId={_gpuInstanceId}]");
+        }
+        else if (processNames.Count != 0)
+        {
+            _processes = processNames;
+            _state = GPUState.Active;
+            _gpuInstanceId = gpuInstanceId;
+
+            if (Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace($"Active [state={_state}, processes.Count={_processes.Count}, gpuInstanceId={_gpuInstanceId}, pnpDeviceIdPart={pnpDeviceIdPart}]");
+        }
+        else
+        {
+            _state = GPUState.Inactive;
+            _gpuInstanceId = gpuInstanceId;
+
+            if (Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace($"Inactive [state={_state}, processes.Count={_processes.Count}, gpuInstanceId={_gpuInstanceId}]");
+        }
     }
 }

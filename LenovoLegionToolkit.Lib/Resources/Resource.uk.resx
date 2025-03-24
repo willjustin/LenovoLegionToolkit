@@ -127,10 +127,10 @@
     <value>Вимкнено</value>
   </data>
   <data name="AlwaysOnUSBState_OnAlways" xml:space="preserve">
-    <value>Увімкнено, завжди</value>
+    <value>Завжди</value>
   </data>
   <data name="AlwaysOnUSBState_OnWhenSleeping" xml:space="preserve">
-    <value>Увімкнено під час сну</value>
+    <value>Під час сну</value>
   </data>
   <data name="AutorunState_Disabled" xml:space="preserve">
     <value>Вимкнено</value>
@@ -268,10 +268,10 @@
     <value>Найповільніша</value>
   </data>
   <data name="RGBKeyboardBacklightBrightness_High" xml:space="preserve">
-    <value>Висока</value>
+    <value>Яскрава</value>
   </data>
   <data name="RGBKeyboardBacklightBrightness_Low" xml:space="preserve">
-    <value>Низька</value>
+    <value>Тьмяна</value>
   </data>
   <data name="RGBKeyboardBacklightEffect_Breath" xml:space="preserve">
     <value>Дихання</value>
@@ -301,10 +301,10 @@
     <value>Шаблон 2</value>
   </data>
   <data name="SpectrumKeyboardBacklightBrightness_High" xml:space="preserve">
-    <value>Висока</value>
+    <value>Яскрава</value>
   </data>
   <data name="SpectrumKeyboardBacklightBrightness_Low" xml:space="preserve">
-    <value>Низька</value>
+    <value>Тьмяна</value>
   </data>
   <data name="SpectrumKeyboardBacklightBrightness_Medium" xml:space="preserve">
     <value>Середня</value>
@@ -396,10 +396,10 @@
     <comment>Informs the user that Touchpad Lock is or will be turned on.</comment>
   </data>
   <data name="WhiteKeyboardBacklightState_High" xml:space="preserve">
-    <value>Висока</value>
+    <value>Яскрава</value>
   </data>
   <data name="WhiteKeyboardBacklightState_Low" xml:space="preserve">
-    <value>Низька</value>
+    <value>Тьмяна</value>
   </data>
   <data name="WhiteKeyboardBacklightState_Off" xml:space="preserve">
     <value>Вимк.</value>
@@ -446,18 +446,54 @@
     <value>Коротка</value>
   </data>
   <data name="ModifierKey_Shift" xml:space="preserve">
-	  <value>Shift</value>
+    <value>Shift</value>
   </data>
   <data name="ModifierKey_Ctrl" xml:space="preserve">
-	  <value>Ctrl</value>
+    <value>Ctrl</value>
   </data>
   <data name="ModifierKey_Alt" xml:space="preserve">
-	  <value>Alt</value>
+    <value>Alt</value>
   </data>
   <data name="BatteryNightChargeState_On" xml:space="preserve">
-	  <value>Увімкнене</value>
+    <value>Увімкнене</value>
   </data>
   <data name="BatteryNightChargeState_Off" xml:space="preserve">
-	  <value>Вимкнене</value>
+    <value>Вимкнене</value>
+  </data>
+  <data name="SpeakerState_Mute" xml:space="preserve">
+    <value>Вимкнути звук</value>
+  </data>
+  <data name="SpeakerState_Unmute" xml:space="preserve">
+    <value>Увімкнути звук</value>
+  </data>
+  <data name="PowerModeMappingMode_Disabled" xml:space="preserve">
+    <value>Вимкнений</value>
+  </data>
+  <data name="PowerModeMappingMode_WindowsPowerMode" xml:space="preserve">
+    <value>Режим живлення Windows</value>
+  </data>
+  <data name="PowerModeMappingMode_WindowsPowerPlan" xml:space="preserve">
+    <value>План живлення Windows</value>
+  </data>
+  <data name="RGBKeyboardBacklightPreset_Four" xml:space="preserve">
+    <value>Шаблон 4</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerDay" xml:space="preserve">
+    <value>Щоденно</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerHour" xml:space="preserve">
+    <value>Щогодини</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerMonth" xml:space="preserve">
+    <value>Щомісяця</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerThreeHours" xml:space="preserve">
+    <value>Що 3 години</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerTwelveHours" xml:space="preserve">
+    <value>Що 12 годин</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerWeek" xml:space="preserve">
+    <value>Щотижня</value>
   </data>
 </root>

@@ -547,6 +547,33 @@ namespace LenovoLegionToolkit.Lib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string PowerModeMappingMode_Disabled {
+            get {
+                return ResourceManager.GetString("PowerModeMappingMode_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows Power Mode.
+        /// </summary>
+        public static string PowerModeMappingMode_WindowsPowerMode {
+            get {
+                return ResourceManager.GetString("PowerModeMappingMode_WindowsPowerMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows Power Plan.
+        /// </summary>
+        public static string PowerModeMappingMode_WindowsPowerPlan {
+            get {
+                return ResourceManager.GetString("PowerModeMappingMode_WindowsPowerPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Balance.
         /// </summary>
         public static string PowerModeState_Balance {
@@ -646,6 +673,15 @@ namespace LenovoLegionToolkit.Lib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preset 4.
+        /// </summary>
+        public static string RGBKeyboardBacklightPreset_Four {
+            get {
+                return ResourceManager.GetString("RGBKeyboardBacklightPreset_Four", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Off.
         /// </summary>
         public static string RGBKeyboardBacklightPreset_Off {
@@ -714,6 +750,24 @@ namespace LenovoLegionToolkit.Lib.Resources {
         public static string RGBKeyboardBacklightSpeed_Slowest {
             get {
                 return ResourceManager.GetString("RGBKeyboardBacklightSpeed_Slowest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mute.
+        /// </summary>
+        public static string SpeakerState_Mute {
+            get {
+                return ResourceManager.GetString("SpeakerState_Mute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unmute.
+        /// </summary>
+        public static string SpeakerState_Unmute {
+            get {
+                return ResourceManager.GetString("SpeakerState_Unmute", resourceCulture);
             }
         }
         
@@ -993,6 +1047,60 @@ namespace LenovoLegionToolkit.Lib.Resources {
         public static string TouchpadLockState_On {
             get {
                 return ResourceManager.GetString("TouchpadLockState_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Daily.
+        /// </summary>
+        public static string UpdateCheckFrequency_PerDay {
+            get {
+                return ResourceManager.GetString("UpdateCheckFrequency_PerDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every hour.
+        /// </summary>
+        public static string UpdateCheckFrequency_PerHour {
+            get {
+                return ResourceManager.GetString("UpdateCheckFrequency_PerHour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monthly.
+        /// </summary>
+        public static string UpdateCheckFrequency_PerMonth {
+            get {
+                return ResourceManager.GetString("UpdateCheckFrequency_PerMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every 3 hours.
+        /// </summary>
+        public static string UpdateCheckFrequency_PerThreeHours {
+            get {
+                return ResourceManager.GetString("UpdateCheckFrequency_PerThreeHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every 12 hours.
+        /// </summary>
+        public static string UpdateCheckFrequency_PerTwelveHours {
+            get {
+                return ResourceManager.GetString("UpdateCheckFrequency_PerTwelveHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weekly.
+        /// </summary>
+        public static string UpdateCheckFrequency_PerWeek {
+            get {
+                return ResourceManager.GetString("UpdateCheckFrequency_PerWeek", resourceCulture);
             }
         }
         

@@ -63,9 +63,14 @@ public partial class SensorsControl
             return;
         }
 
-        _cts?.Cancel();
+        if (_cts is not null)
+            await _cts.CancelAsync();
+
+        _cts = null;
+
         if (_refreshTask is not null)
             await _refreshTask;
+
         _refreshTask = null;
 
         UpdateValues(SensorsData.Empty);
@@ -91,6 +96,8 @@ public partial class SensorsControl
                 Dispatcher.Invoke(() => Visibility = Visibility.Collapsed);
                 return;
             }
+
+            await _controller.PrepareAsync();
 
             while (!token.IsCancellationRequested)
             {
@@ -136,17 +143,6 @@ public partial class SensorsControl
             GetTemperatureText(data.GPU.Temperature), GetTemperatureText(data.GPU.MaxTemperature));
         UpdateValue(_gpuFanSpeedBar, _gpuFanSpeedLabel, data.GPU.MaxFanSpeed, data.GPU.FanSpeed,
             $"{data.GPU.FanSpeed} {Resource.RPM}", $"{data.GPU.MaxFanSpeed} {Resource.RPM}");
-    }
-
-    private void TemperatureLabel_Click(object sender, RoutedEventArgs e)
-    {
-        _applicationSettings.Store.TemperatureUnit = _applicationSettings.Store.TemperatureUnit == TemperatureUnit.C ? TemperatureUnit.F : TemperatureUnit.C;
-        _applicationSettings.SynchronizeStore();
-
-        if (_cpuTemperatureLabel.Tag is double cpuTemperature)
-            _cpuTemperatureLabel.Content = GetTemperatureText(cpuTemperature);
-        if (_gpuTemperatureLabel.Tag is double gpuTemperature)
-            _gpuTemperatureLabel.Content = GetTemperatureText(gpuTemperature);
     }
 
     private string GetTemperatureText(double temperature)

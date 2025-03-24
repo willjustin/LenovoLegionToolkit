@@ -136,7 +136,7 @@
     <value>{0} giây</value>
   </data>
   <data name="LowWattageACAdapterConnectedAutomationPipelineTrigger_DisplayName" xml:space="preserve">
-    <value>Khi nối với nguồn điện công suất thấp</value>
+    <value>Khi kết nối với nguồn điện công suất thấp</value>
   </data>
   <data name="OnStartupAutomationPipelineTrigger_DisplayName" xml:space="preserve">
     <value>Khi khởi động</value>
@@ -192,5 +192,39 @@
   </data>
   <data name="OverclockDiscreteGPUAutomationStepState_On" xml:space="preserve">
     <value>Bật</value>
+  </data>
+  <data name="GodModePresetChangedAutomationPipelineTrigger_DisplayName" xml:space="preserve">
+    <value>Khi thay đổi thiết lập trong chế độ Tùy Chỉnh</value>
+  </data>
+  <data name="PeriodicActionPipelineTrigger_DisplayName" xml:space="preserve">
+    <value>Hành động định kỳ</value>
+    <comment>The display name of the periodic automation action.</comment>
+  </data>
+  <data name="WiFiConnectedAutomationPipelineTrigger_DisplayName" xml:space="preserve">
+    <value>Khi kết nối Wi-Fi</value>
+  </data>
+  <data name="WiFiDisconnectedAutomationPipelineTrigger_DisplayName" xml:space="preserve">
+    <value>Khi ngắt kết nối Wi-Fi</value>
+  </data>
+  <data name="OnResumeAutomationPipelineTrigger_DisplayName" xml:space="preserve">
+    <value>Khi tạm dừng</value>
+  </data>
+  <data name="HDROffAutomationPipelineTrigger_DisplayName" xml:space="preserve">
+    <value>Khi HDR tắt</value>
+  </data>
+  <data name="HDROnAutomationPipelineTrigger_DisplayName" xml:space="preserve">
+    <value>Khi HDR bật</value>
+  </data>
+  <data name="MacroAutomationStepState_Off" xml:space="preserve">
+    <value>Tắt</value>
+  </data>
+  <data name="MacroAutomationStepState_On" xml:space="preserve">
+    <value>Bật</value>
+  </data>
+  <data name="DeviceDisconnectedAutomationPipelineTrigger_DisplayName" xml:space="preserve">
+    <value>Khi ngắt kết nối thiết bị</value>
+  </data>
+  <data name="DeviceConnectedAutomationPipelineTrigger_DisplayName" xml:space="preserve">
+    <value>Khi kết nối thiết bị</value>
   </data>
 </root>

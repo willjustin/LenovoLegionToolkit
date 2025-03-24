@@ -24,6 +24,8 @@ public class Flags
     public string? ProxyUsername { get; }
     public string? ProxyPassword { get; }
     public bool ProxyAllowAllCerts { get; }
+    public bool DisableUpdateChecker { get; }
+    public bool DisableConflictingSoftwareWarning { get; }
 
     public Flags(IEnumerable<string> startupArgs)
     {
@@ -39,22 +41,24 @@ public class Flags
         ForceDisableLenovoLighting = BoolValue(args, "--force-disable-lenovolighting");
         ExperimentalGPUWorkingMode = BoolValue(args, "--experimental-gpu-working-mode");
         EnableHybridModeAutomation = BoolValue(args, "--enable-hybrid-mode-automation");
-        ProxyUrl = Uri.TryCreate(StringValue(args, "--proxyUrl"), UriKind.Absolute, out var uri) ? uri : null;
-        ProxyUsername = StringValue(args, "--proxyUsername");
-        ProxyPassword = StringValue(args, "--proxyPassword");
-        ProxyAllowAllCerts = BoolValue(args, "--proxyAllowAllCerts");
+        ProxyUrl = Uri.TryCreate(StringValue(args, "--proxy-url"), UriKind.Absolute, out var uri) ? uri : null;
+        ProxyUsername = StringValue(args, "--proxy-username");
+        ProxyPassword = StringValue(args, "--proxy-password");
+        ProxyAllowAllCerts = BoolValue(args, "--proxy-allow-all-certs");
+        DisableUpdateChecker = BoolValue(args, "--disable-update-checker");
+        DisableConflictingSoftwareWarning = BoolValue(args, "--disable-conflicting-software-warning");
     }
 
-    private static IEnumerable<string> LoadExternalArgs()
+    private static string[] LoadExternalArgs()
     {
         try
         {
             var argsFile = Path.Combine(Folders.AppData, "args.txt");
-            return !File.Exists(argsFile) ? Array.Empty<string>() : File.ReadAllLines(argsFile);
+            return !File.Exists(argsFile) ? [] : File.ReadAllLines(argsFile);
         }
         catch
         {
-            return Array.Empty<string>();
+            return [];
         }
     }
 
@@ -80,5 +84,7 @@ public class Flags
         $" {nameof(ProxyUrl)}: {ProxyUrl}," +
         $" {nameof(ProxyUsername)}: {ProxyUsername}," +
         $" {nameof(ProxyPassword)}: {ProxyPassword}," +
-        $" {nameof(ProxyAllowAllCerts)}: {ProxyAllowAllCerts}";
+        $" {nameof(ProxyAllowAllCerts)}: {ProxyAllowAllCerts}," +
+        $" {nameof(DisableUpdateChecker)}: {DisableUpdateChecker}, " +
+        $" {nameof(DisableConflictingSoftwareWarning)}: {DisableConflictingSoftwareWarning}";
 }

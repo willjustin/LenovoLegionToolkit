@@ -132,9 +132,6 @@
   <data name="AboutPage_ProjectWebsiteOnGitHub" xml:space="preserve">
     <value>GitHubtaǵı jobanıń veb-saytı</value>
   </data>
-  <data name="AboutPage_ThirdPartyLibraries" xml:space="preserve">
-    <value>Sırtqı kitapxanalar</value>
-  </data>
   <data name="AboutPage_Title" xml:space="preserve">
     <value>Baǵdarlama haqqında</value>
   </data>
@@ -150,13 +147,6 @@
   </data>
   <data name="AddNew" xml:space="preserve">
     <value>Jańadan qosıw</value>
-  </data>
-  <data name="AlwaysActivatePowerPlans_Message" xml:space="preserve">
-    <value>Vantage yamasa onıń xızmetlerin qosılǵan sonda da Power Plandı aktivlestitiń.
- Bul sazlaw tek bir neshe quwat jobaları menen támiyinlenbegen qurılmalar ushın mólsherlengen.</value>
-  </data>
-  <data name="AlwaysActivatePowerPlans_Title" xml:space="preserve">
-    <value>Hámiyshe Windows quwatlılıq jobasın aktivlestiriw</value>
   </data>
   <data name="AlwaysOnUSBControl_Message" xml:space="preserve">
     <value>Kompyuter óshirilgen, gibernaciya yamasa uyqı rejiminde bolǵanda qurılmalardı USB arqalı zaryadlaw.</value>
@@ -739,9 +729,6 @@ DIQQAT: Eger ishki displey óshirilgen bolsa, bul háreket durıs orınlanbaydı
   <data name="IncompatibleDevice_Message" xml:space="preserve">
     <value>Bul qurılma Lenovo Legion Toolkit penen mas kelmeydi.</value>
   </data>
-  <data name="IncompatibleDevice_Title" xml:space="preserve">
-    <value>Lenovo Legion Toolkit</value>
-  </data>
   <data name="KeyboardBacklightPage_NoCompatibleKeyboardsFound" xml:space="preserve">
     <value>Mas klaviatura tabılmadı</value>
   </data>
@@ -749,7 +736,7 @@ DIQQAT: Eger ishki displey óshirilgen bolsa, bul háreket durıs orınlanbaydı
     <value>Klaviaturanıń arqa jaqtılıǵı</value>
   </data>
   <data name="Keyboard_VantageEnabledWarning_Message" xml:space="preserve">
-    <value>Vantage yamasa onıń xızmetleri islep turǵanda, klaviaturanıń arqa jaqtılıǵın bul jerde basqarıw múmkin emes.</value>
+    <value>Lenovo Vantage yamasa onıń xızmetleri islep turǵanda, klaviaturanıń arqa jaqtılıǵın bul jerde basqarıw múmkin emes.</value>
   </data>
   <data name="Keyboard_VantageEnabledWarning_Title" xml:space="preserve">
     <value>Lenovo vantage yamasa onıń xızmetlerin islep atır</value>
@@ -859,10 +846,6 @@ DIQQAT: Eger ishki displey óshirilgen bolsa, bul háreket durıs orınlanbaydı
   <data name="NotificationsSettingsWindow_CapsAndNumLock" xml:space="preserve">
     <value>Caps Lock hám Num Lock</value>
   </data>
-  <data name="NotificationsSettingsWindow_DontShowNotifications_Message" xml:space="preserve">
-    <value>Fn túymesiniń mikrofon dawısın óshiriw sıyaqlı háreketleri haqqındaǵı xabarlamalardı óshiredi
-Eger de tolıq ekranlı baǵdarlamalar menen mashqalalar bolsa, bul varianttı qosıń.</value>
-  </data>
   <data name="NotificationsSettingsWindow_DontShowNotifications_Title" xml:space="preserve">
     <value>Xabarlamalardı kórsetpew</value>
   </data>
@@ -957,9 +940,6 @@ Durıs paketlerdi ornatıp atırǵanıńızǵa isenim kámil etiń.</value>
   <data name="PackagesPage_DownloadInProgress_Title" xml:space="preserve">
     <value>Júklenbekte</value>
   </data>
-  <data name="PackagesPage_DownloadTo" xml:space="preserve">
-    <value>Júklew ornı</value>
-  </data>
   <data name="Filter" xml:space="preserve">
     <value>Filtr...</value>
   </data>
@@ -1017,30 +997,6 @@ Rejimdi Fn+Q járdeminde ózgerte alasız.</value>
   </data>
   <data name="PowerModeControl_Warning" xml:space="preserve">
     <value>Quwatlaw blogı qosılmasa, saylanǵan quwatlılıq rejimi durıs islemewi múmkin.</value>
-  </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Message" xml:space="preserve">
-    <value>Lenovo vantage yamasa onıń xızmetlerin islep atirǵan hám noutbukıńız quwat jobaların ózgertkende bul parametrdi qosıw qápelimde jaman aqıbetlerge alıp keliwi múmkin.</value>
-  </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Title" xml:space="preserve">
-    <value>Isenimińiz kámil me?</value>
-  </data>
-  <data name="PowerPlansWindow_BalanceMode" xml:space="preserve">
-    <value>Teńlestirilgen rejim</value>
-  </data>
-  <data name="PowerPlansWindow_CustomMode" xml:space="preserve">
-    <value>Arnawlı rejim</value>
-  </data>
-  <data name="PowerPlansWindow_DefaultPowerPlan" xml:space="preserve">
-    <value>Aldınnan ornatılǵan</value>
-  </data>
-  <data name="PowerPlansWindow_PerformanceMode" xml:space="preserve">
-    <value>Islew rejimi</value>
-  </data>
-  <data name="PowerPlansWindow_QuietMode" xml:space="preserve">
-    <value>Tınısh rejimi</value>
-  </data>
-  <data name="PowerPlansWindow_Title" xml:space="preserve">
-    <value>Quwatlılıq jobaları</value>
   </data>
   <data name="RGBKeyboardBacklightAutomationStepControl_Message" xml:space="preserve">
     <value>Klaviaturnıń arqa jaqtılıǵın aldınnan sazlawdı ornatıń.</value>
@@ -1181,10 +1137,10 @@ Bul varianttı ózgertkennen keyin qayta iske túsiriw usınıs etiledi.</value>
     <value>Lenovo Hotkeysti óshiriw</value>
   </data>
   <data name="SettingsPage_DisableVantage_Error_Message" xml:space="preserve">
-    <value>Vantage hám/yamasa ImController nadurıs óshirilgen bolıwı múmkin</value>
+    <value>Lenovo Vantage hám/yamasa ImController nadurıs óshirilgen bolıwı múmkin</value>
   </data>
   <data name="SettingsPage_DisableVantage_Error_Title" xml:space="preserve">
-    <value>Vantage hám/yamasa ImControllerdi óshirip bo'lmadı</value>
+    <value>Lenovo Vantage hám/yamasa ImControllerdi óshirip bo'lmadı</value>
   </data>
   <data name="SettingsPage_DisableVantage_Message" xml:space="preserve">
     <value>Lenovo vantage hám ImController-ni óshirmesten óshirip qoyıń.
@@ -1206,10 +1162,10 @@ Bul varianttı ózgertkennen keyin qayta iske túsiriw usınıs etiledi.</value>
     <value>Lenovo Hotkeystiń túymelerin iske túsiriw ámelge aspadı</value>
   </data>
   <data name="SettingsPage_EnableVantage_Error_Message" xml:space="preserve">
-    <value>Vantage hám/yamasa ImController tuwrı jaǵılmaǵan bolıwı múmkin</value>
+    <value>Lenovo Vantage hám/yamasa ImController tuwrı jaǵılmaǵan bolıwı múmkin</value>
   </data>
   <data name="SettingsPage_EnableVantage_Error_Title" xml:space="preserve">
-    <value>Vantage hám/yamasa ImControllerdi jaǵılmadı</value>
+    <value>Lenovo Vantage hám/yamasa ImControllerdi jaǵılmadı</value>
   </data>
   <data name="SettingsPage_ExcludeRefreshRates_Message" xml:space="preserve">
     <value>Fn+R túymelerin paydalıraq qılıw ushın, siz jańalanıw tezligin esaptan tısqarı qılıwıńız múmkin</value>
@@ -1235,7 +1191,7 @@ Bul varianttı ózgertkennen keyin qayta iske túsiriw usınıs etiledi.</value>
   <data name="SettingsPage_Notifications_Title" xml:space="preserve">
     <value>Xabarlamalar</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Title" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlans_Title" xml:space="preserve">
     <value>Quwatlılıq jobaları</value>
   </data>
   <data name="SettingsPage_SmartKeyDoublePressAction_Message" xml:space="preserve">
@@ -1440,12 +1396,6 @@ Eger siz dawam etiwdi tańlasańız, jurnaldı júrgiziw avtomatikalıq qosılad
   </data>
   <data name="WhiteKeyboardBacklightControl_Title" xml:space="preserve">
     <value>Klaviaturanıń arqa jaqtılıǵı</value>
-  </data>
-  <data name="WinKeyAutomationStepControl_Message" xml:space="preserve">
-    <value>Windows túymesin jaǵıw yamasa óshiriw.</value>
-  </data>
-  <data name="WinKeyAutomationStepControl_Title" xml:space="preserve">
-    <value>Windows túymesi</value>
   </data>
   <data name="WinKeyControl_Message" xml:space="preserve">
     <value>Tek ǵana ornatılǵan klaviaturada isleydi.</value>
@@ -1714,13 +1664,13 @@ Bul sazlaw tek arnawlı rejim qosılǵanda nátiyje beredi.</value>
   <data name="PowerPlansWindow_AoAcWarning_Message" xml:space="preserve">
     <value>Bul qurılma Modern Standbydı qollap-quwatlaytuǵının Windows xabarlaydı. Teńlestirilgen quwatlılıq jobasınan basqasın qollanıw kútilmegen háreketke alıp keliwi múmkin.</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Message" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlans_Message" xml:space="preserve">
     <value>Quwatlılıq rejimi ózgergende qollanılatuǵın Windows quwatlılıq jobaların tańlań.</value>
   </data>
   <data name="SettingsPage_Power_Title" xml:space="preserve">
     <value>Quwatlılıq</value>
   </data>
-  <data name="SettingsPage_PowerPlansControlPanel_Title" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlansControlPanel_Title" xml:space="preserve">
     <value>Windows basqarıw panelindegi quwatlılıq jobası variantları</value>
   </data>
   <data name="PoweredOff" xml:space="preserve">
@@ -1847,6 +1797,10 @@ ESKERTIW: Diskret GPU ámeldegi bolmasa, bul ámel tuwrı atqarılmaydı.</value
   <data name="IGPUModeChangeException_Title" xml:space="preserve">
     <value>GPU jumıs rejimin ózgertip bolmadı</value>
   </data>
+  <data name="IGPUModeChangeException_Message" xml:space="preserve">
+    <value>Eger kútilgen nátiyjeni kórmeseńiz, bir neshe sekunddan keyin rejimdi jáne ózgertirip kóriń.
+ Eger dGPU ulıwma juwap bermese, noutbuktı qayta jumısqa túsiriń.</value>
+  </data>
   <data name="IGPUModeChangeException_Title_IGPUOnly" xml:space="preserve">
     <value>Diskret grafik karta isletilip atır</value>
   </data>
@@ -1863,13 +1817,7 @@ ESKERTIW: Diskret GPU ámeldegi bolmasa, bul ámel tuwrı atqarılmaydı.</value
     <value>Lenovo vantage yamasa onıń xızmetlerin islep atirǵan bolsa, paydalanıwshı rejimi sazlawları tuwrı qollanılmaydı.</value>
   </data>
   <data name="GodModeSettingsWindow_LegionZoneWarning_Title" xml:space="preserve">
-    <value>Eger LegionZone yamasa onıń xızmetlerin islep atirǵan bolsa, paydalanıwshı rejimi sazlawları tuwrı qollanılmaydı.</value>
-  </data>
-  <data name="DGPU_Connected_Title" xml:space="preserve">
-    <value>Grafika protsessor jaǵıwlı</value>
-  </data>
-  <data name="DGPU_Disconnected_Title" xml:space="preserve">
-    <value>Grafika protsessor óshirilgen</value>
+    <value>Eger Legion Zone yamasa onıń xızmetlerin islep atirǵan bolsa, paydalanıwshı rejimi sazlawları tuwrı qollanılmaydı.</value>
   </data>
   <data name="ComboBoxHybridModeAutomationStepControl_Title" xml:space="preserve">
     <value>Video kartanıń rejimi</value>
@@ -1890,6 +1838,9 @@ ESKERTIW: Diskret GPU ámeldegi bolmasa, bul ámel tuwrı atqarılmaydı.</value
   </data>
   <data name="NotificationsSettingsWindow_Updates_Title" xml:space="preserve">
     <value>Jańalanıwlar</value>
+  </data>
+  <data name="GodModeSettingsWindow_GPU_ToCpuDynamicBoostControl" xml:space="preserve">
+    <value>GPU to CPU Dynamic Boost</value>
   </data>
   <data name="SettingsPage_BootLogo_Title" xml:space="preserve">
     <value>Logotip júklenip atır</value>
@@ -1926,5 +1877,30 @@ ESKERTIW: Diskret GPU ámeldegi bolmasa, bul ámel tuwrı atqarılmaydı.</value
   </data>
   <data name="AutomationPipelineControl_SubtitlePart_Preset" xml:space="preserve">
     <value>Aldınnan ornatıw</value>
+  </data>
+  <data name="SettingsPage_SmartFnLock_Title" xml:space="preserve">
+    <value>Smart Fn Lock</value>
+  </data>
+  <data name="SettingsPage_SmartFnLock_Message" xml:space="preserve">
+    <value>Alt, Ctrl yamasa Shift túymeleri basılǵanda Fn Lock óshiriledi.</value>
+  </data>
+  <data name="Off" xml:space="preserve">
+    <value>Óshik</value>
+  </data>
+  <data name="BootLogoWindow_Description" xml:space="preserve">
+    <value>Arnawlı júklew logotipi áyne {0} piksel úlken bolıwı kerek.
+Qollap - quwatlanatuǵın formatlar: {1}.</value>
+  </data>
+  <data name="BatteryNightChargeModeControl_Title" xml:space="preserve">
+    <value>Batareykanı túnde zaryadlaw</value>
+  </data>
+  <data name="BatteryNightChargeModeControl_Message" xml:space="preserve">
+    <value>Eger qosılǵan bolsa, bul qurılma túnde toqqa jalǵanǵanda 80% quwatlanadı hám azanda bul qurılmadan paydalanǵanda 100% quwatlanadı.</value>
+  </data>
+  <data name="BatteryNightChargeAutomationStepControl_Title" xml:space="preserve">
+    <value>Batareyanı túnde zaryadlaw</value>
+  </data>
+  <data name="BatteryNightChargeAutomationStepControl_Message" xml:space="preserve">
+    <value>Eger qosılǵan bolsa, bul qurılma túnde rozetkaǵa jalǵanǵanda 80% quwatlanadı hám azanda bul qurılmadan paydalanǵanda 100% quwatlanadı.</value>
   </data>
 </root>

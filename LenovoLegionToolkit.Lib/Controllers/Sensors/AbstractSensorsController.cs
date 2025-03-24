@@ -12,37 +12,44 @@ using Windows.Win32.System.Power;
 
 namespace LenovoLegionToolkit.Lib.Controllers.Sensors;
 
-public abstract class AbstractSensorsController : ISensorsController
+public abstract class AbstractSensorsController(GPUController gpuController) : ISensorsController
 {
-    private readonly struct GPUInfo
+    private readonly struct GPUInfo(
+        int utilization,
+        int coreClock,
+        int maxCoreClock,
+        int memoryClock,
+        int maxMemoryClock,
+        int temperature,
+        int maxTemperature)
     {
-        public static readonly GPUInfo Empty = new() { Utilization = -1, CoreClock = -1, MaxCoreClock = -1, MemoryClock = -1, MaxMemoryClock = -1, Temperature = -1, MaxTemperature = -1 };
+        public static readonly GPUInfo Empty = new(-1, -1, -1, -1, -1, -1, -1);
 
-        public int Utilization { get; init; }
-        public int CoreClock { get; init; }
-        public int MaxCoreClock { get; init; }
-        public int MemoryClock { get; init; }
-        public int MaxMemoryClock { get; init; }
-        public int Temperature { get; init; }
-        public int MaxTemperature { get; init; }
+        public int Utilization { get; } = utilization;
+        public int CoreClock { get; } = coreClock;
+        public int MaxCoreClock { get; } = maxCoreClock;
+        public int MemoryClock { get; } = memoryClock;
+        public int MaxMemoryClock { get; } = maxMemoryClock;
+        public int Temperature { get; } = temperature;
+        public int MaxTemperature { get; } = maxTemperature;
     }
 
     private readonly SafePerformanceCounter _percentProcessorPerformanceCounter = new("Processor Information", "% Processor Performance", "_Total");
     private readonly SafePerformanceCounter _percentProcessorUtilityCounter = new("Processor Information", "% Processor Utility", "_Total");
-
-    private readonly GPUController _gpuController;
 
     private int? _cpuBaseClockCache;
     private int? _cpuMaxCoreClockCache;
     private int? _cpuMaxFanSpeedCache;
     private int? _gpuMaxFanSpeedCache;
 
-    protected AbstractSensorsController(GPUController gpuController)
-    {
-        _gpuController = gpuController ?? throw new ArgumentNullException(nameof(gpuController));
-    }
-
     public abstract Task<bool> IsSupportedAsync();
+
+    public Task PrepareAsync()
+    {
+        _percentProcessorPerformanceCounter.Reset();
+        _percentProcessorUtilityCounter.Reset();
+        return Task.CompletedTask;
+    }
 
     public async Task<SensorsData> GetDataAsync()
     {
@@ -51,49 +58,50 @@ public abstract class AbstractSensorsController : ISensorsController
 
         var cpuUtilization = GetCpuUtilization(genericMaxUtilization);
         var cpuMaxCoreClock = _cpuMaxCoreClockCache ??= await GetCpuMaxCoreClockAsync().ConfigureAwait(false);
-        var cpuCoreClock = GetCpuCoreClock(cpuMaxCoreClock);
+        var cpuCoreClock = GetCpuCoreClock();
         var cpuCurrentTemperature = await GetCpuCurrentTemperatureAsync().ConfigureAwait(false);
         var cpuCurrentFanSpeed = await GetCpuCurrentFanSpeedAsync().ConfigureAwait(false);
         var cpuMaxFanSpeed = _cpuMaxFanSpeedCache ??= await GetCpuMaxFanSpeedAsync().ConfigureAwait(false);
 
-        var gpuInfo = GetGPUInfo();
+        var gpuInfo = await GetGPUInfoAsync().ConfigureAwait(false);
         var gpuCurrentTemperature = gpuInfo.Temperature >= 0 ? gpuInfo.Temperature : await GetGpuCurrentTemperatureAsync().ConfigureAwait(false);
         var gpuMaxTemperature = gpuInfo.MaxTemperature >= 0 ? gpuInfo.MaxTemperature : genericMaxTemperature;
         var gpuCurrentFanSpeed = await GetGpuCurrentFanSpeedAsync().ConfigureAwait(false);
         var gpuMaxFanSpeed = _gpuMaxFanSpeedCache ??= await GetGpuMaxFanSpeedAsync().ConfigureAwait(false);
 
-        var result = new SensorsData
-        {
-            CPU = new()
-            {
-                Utilization = cpuUtilization,
-                MaxUtilization = genericMaxUtilization,
-                CoreClock = cpuCoreClock,
-                MaxCoreClock = cpuMaxCoreClock,
-                Temperature = cpuCurrentTemperature,
-                MaxTemperature = genericMaxTemperature,
-                FanSpeed = cpuCurrentFanSpeed,
-                MaxFanSpeed = cpuMaxFanSpeed,
-            },
-            GPU = new()
-            {
-                Utilization = gpuInfo.Utilization,
-                MaxUtilization = genericMaxUtilization,
-                CoreClock = gpuInfo.CoreClock,
-                MaxCoreClock = gpuInfo.MaxCoreClock,
-                MemoryClock = gpuInfo.MemoryClock,
-                MaxMemoryClock = gpuInfo.MaxMemoryClock,
-                Temperature = gpuCurrentTemperature,
-                MaxTemperature = gpuMaxTemperature,
-                FanSpeed = gpuCurrentFanSpeed,
-                MaxFanSpeed = gpuMaxFanSpeed,
-            }
-        };
+        var cpu = new SensorData(cpuUtilization,
+            genericMaxUtilization,
+            cpuCoreClock,
+            cpuMaxCoreClock,
+            -1,
+            -1,
+            cpuCurrentTemperature,
+            genericMaxTemperature,
+            cpuCurrentFanSpeed,
+            cpuMaxFanSpeed);
+        var gpu = new SensorData(gpuInfo.Utilization,
+            genericMaxUtilization,
+            gpuInfo.CoreClock,
+            gpuInfo.MaxCoreClock,
+            gpuInfo.MemoryClock,
+            gpuInfo.MaxMemoryClock,
+            gpuCurrentTemperature,
+            gpuMaxTemperature,
+            gpuCurrentFanSpeed,
+            gpuMaxFanSpeed);
+        var result = new SensorsData(cpu, gpu);
 
         if (Log.Instance.IsTraceEnabled)
             Log.Instance.Trace($"Current data: {result} [type={GetType().Name}]");
 
         return result;
+    }
+
+    public async Task<(int cpuFanSpeed, int gpuFanSpeed)> GetFanSpeedsAsync()
+    {
+        var cpuFanSpeed = await GetCpuCurrentFanSpeedAsync().ConfigureAwait(false);
+        var gpuFanSpeed = await GetGpuCurrentFanSpeedAsync().ConfigureAwait(false);
+        return (cpuFanSpeed, gpuFanSpeed);
     }
 
     protected abstract Task<int> GetCpuCurrentTemperatureAsync();
@@ -111,16 +119,16 @@ public abstract class AbstractSensorsController : ISensorsController
     private int GetCpuUtilization(int maxUtilization)
     {
         var result = (int)_percentProcessorUtilityCounter.NextValue();
-        if (result < 0 || result > maxUtilization)
+        if (result < 0)
             return -1;
-        return result;
+        return Math.Min(result, maxUtilization);
     }
 
-    private int GetCpuCoreClock(int cpuMaxCoreClock)
+    private int GetCpuCoreClock()
     {
         var baseClock = _cpuBaseClockCache ??= GetCpuBaseClock();
         var clock = (int)(baseClock * (_percentProcessorPerformanceCounter.NextValue() / 100f));
-        if (clock < 1 || clock > cpuMaxCoreClock)
+        if (clock < 1)
             return -1;
         return clock;
     }
@@ -161,9 +169,12 @@ public abstract class AbstractSensorsController : ISensorsController
 
     private static Task<int> GetCpuMaxCoreClockAsync() => WMI.LenovoGameZoneData.GetCPUFrequencyAsync();
 
-    private GPUInfo GetGPUInfo()
+    private async Task<GPUInfo> GetGPUInfoAsync()
     {
-        if (_gpuController.LastKnownState is GPUState.Inactive or GPUState.PoweredOff)
+        if (gpuController.IsSupported())
+            await gpuController.StartAsync().ConfigureAwait(false);
+
+        if (await gpuController.GetLastKnownStateAsync().ConfigureAwait(false) is GPUState.PoweredOff or GPUState.Unknown)
             return GPUInfo.Empty;
 
         try
@@ -190,16 +201,13 @@ public abstract class AbstractSensorsController : ISensorsController
             var currentTemperature = temperatureSensor?.CurrentTemperature ?? -1;
             var maxTemperature = temperatureSensor?.DefaultMaximumTemperature ?? -1;
 
-            return new()
-            {
-                Utilization = utilization,
-                CoreClock = currentCoreClock,
-                MaxCoreClock = maxCoreClock + maxCoreClockOffset,
-                MemoryClock = currentMemoryClock,
-                MaxMemoryClock = maxMemoryClock + maxMemoryClockOffset,
-                Temperature = currentTemperature,
-                MaxTemperature = maxTemperature
-            };
+            return new(utilization,
+                currentCoreClock,
+                maxCoreClock + maxCoreClockOffset,
+                currentMemoryClock,
+                maxMemoryClock + maxMemoryClockOffset,
+                currentTemperature,
+                maxTemperature);
         }
         catch
         {

@@ -8,9 +8,18 @@ using System.Threading.Tasks;
 using LenovoLegionToolkit.Lib.Extensions;
 using LenovoLegionToolkit.Lib.Utils;
 using Windows.Win32;
-using Windows.Win32.Security;
 
 namespace LenovoLegionToolkit.Lib.System;
+
+public class CantSetUEFIPrivilegeException : Exception;
+
+public class CantMountUEFIPartitionException : Exception;
+
+public class NotEnoughSpaceOnUEFIPartitionException : Exception;
+
+public class InvalidBootLogoImageFormatException : Exception;
+
+public class InvalidBootLogoImageSizeException : Exception;
 
 public static class BootLogo
 {
@@ -89,12 +98,12 @@ public static class BootLogo
 
         try
         {
-            if (!SetPrivilege(true))
+            if (!TokenManipulator.AddPrivileges(TokenManipulator.SE_SYSTEM_ENVIRONMENT_PRIVILEGE))
             {
                 if (Log.Instance.IsTraceEnabled)
                     Log.Instance.Trace($"Cannot set UEFI privileges.");
 
-                throw new InvalidOperationException("Cannot set UEFI privilege.");
+                throw new CantSetUEFIPrivilegeException();
             }
 
             var ptrSize = (uint)Marshal.SizeOf<BootLogoInfo>();
@@ -114,7 +123,7 @@ public static class BootLogo
         {
             Marshal.FreeHGlobal(ptr);
 
-            SetPrivilege(false);
+            TokenManipulator.RemovePrivileges(TokenManipulator.SE_SYSTEM_ENVIRONMENT_PRIVILEGE);
         }
     }
 
@@ -127,12 +136,12 @@ public static class BootLogo
 
         try
         {
-            if (!SetPrivilege(true))
+            if (!TokenManipulator.AddPrivileges(TokenManipulator.SE_SYSTEM_ENVIRONMENT_PRIVILEGE))
             {
                 if (Log.Instance.IsTraceEnabled)
                     Log.Instance.Trace($"Cannot set UEFI privileges.");
 
-                throw new InvalidOperationException("Cannot set UEFI privilege.");
+                throw new CantSetUEFIPrivilegeException();
             }
 
             Marshal.StructureToPtr(info, ptr, false);
@@ -148,7 +157,7 @@ public static class BootLogo
         {
             Marshal.FreeHGlobal(ptr);
 
-            SetPrivilege(false);
+            TokenManipulator.RemovePrivileges(TokenManipulator.SE_SYSTEM_ENVIRONMENT_PRIVILEGE);
         }
     }
 
@@ -161,12 +170,12 @@ public static class BootLogo
 
         try
         {
-            if (!SetPrivilege(true))
+            if (!TokenManipulator.AddPrivileges(TokenManipulator.SE_SYSTEM_ENVIRONMENT_PRIVILEGE))
             {
                 if (Log.Instance.IsTraceEnabled)
                     Log.Instance.Trace($"Cannot set UEFI privileges.");
 
-                throw new InvalidOperationException("Cannot set UEFI privilege.");
+                throw new CantSetUEFIPrivilegeException();
             }
 
             var ptrSize = (uint)Marshal.SizeOf<BootLogoChecksum>();
@@ -186,7 +195,7 @@ public static class BootLogo
         {
             Marshal.FreeHGlobal(ptr);
 
-            SetPrivilege(false);
+            TokenManipulator.RemovePrivileges(TokenManipulator.SE_SYSTEM_ENVIRONMENT_PRIVILEGE);
         }
     }
 
@@ -200,12 +209,12 @@ public static class BootLogo
 
         try
         {
-            if (!SetPrivilege(true))
+            if (!TokenManipulator.AddPrivileges(TokenManipulator.SE_SYSTEM_ENVIRONMENT_PRIVILEGE))
             {
                 if (Log.Instance.IsTraceEnabled)
                     Log.Instance.Trace($"Cannot set UEFI privileges.");
 
-                throw new InvalidOperationException("Cannot set UEFI privilege.");
+                throw new CantSetUEFIPrivilegeException();
             }
 
             Marshal.StructureToPtr(str, ptr, false);
@@ -221,7 +230,7 @@ public static class BootLogo
         {
             Marshal.FreeHGlobal(ptr);
 
-            SetPrivilege(false);
+            TokenManipulator.RemovePrivileges(TokenManipulator.SE_SYSTEM_ENVIRONMENT_PRIVILEGE);
         }
     }
 
@@ -240,7 +249,7 @@ public static class BootLogo
                 if (Log.Instance.IsTraceEnabled)
                     Log.Instance.Trace($"Cannot mount EFI partition.");
 
-                throw new InvalidOperationException("Cannot mount EFI partition.");
+                throw new CantMountUEFIPartitionException();
             }
 
             if (new DriveInfo($"{drive}:").AvailableFreeSpace < new FileInfo(sourcePath).Length)
@@ -248,7 +257,7 @@ public static class BootLogo
                 if (Log.Instance.IsTraceEnabled)
                     Log.Instance.Trace($"Not enough free space on EFI partition.");
 
-                throw new InvalidOperationException("Not enough free space on EFI partition.");
+                throw new NotEnoughSpaceOnUEFIPartitionException();
             }
 
             var destinationDirectory = Path.Combine($"{drive}:", "EFI", "Lenovo", "Logo");
@@ -290,7 +299,7 @@ public static class BootLogo
                 if (Log.Instance.IsTraceEnabled)
                     Log.Instance.Trace($"Cannot mount EFI partition");
 
-                throw new InvalidOperationException("Cannot mount EFI partition.");
+                throw new CantMountUEFIPartitionException();
             }
 
             var directoryPath = $@"{drive}:\EFI\Lenovo\Logo";
@@ -327,7 +336,7 @@ public static class BootLogo
             if (Log.Instance.IsTraceEnabled)
                 Log.Instance.Trace($"Invalid image size.");
 
-            throw new InvalidOperationException("Invalid image size.");
+            throw new InvalidBootLogoImageSizeException();
         }
 
         if (!info.SupportedFormat.ImageFormats().Contains(image.RawFormat))
@@ -335,7 +344,7 @@ public static class BootLogo
             if (Log.Instance.IsTraceEnabled)
                 Log.Instance.Trace($"Invalid image format.");
 
-            throw new InvalidOperationException("Invalid image format.");
+            throw new InvalidBootLogoImageFormatException();
         }
 
         if (Log.Instance.IsTraceEnabled)
@@ -389,53 +398,5 @@ public static class BootLogo
 
         if (Log.Instance.IsTraceEnabled)
             Log.Instance.Trace($"EFI partition un-mounted from {letter}:.");
-    }
-
-    private static unsafe bool SetPrivilege(bool enable)
-    {
-        try
-        {
-            using var handle = PInvoke.GetCurrentProcess_SafeHandle();
-
-            if (!PInvoke.OpenProcessToken(handle, TOKEN_ACCESS_MASK.TOKEN_QUERY | TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES, out var token))
-            {
-                if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Could not open process token.");
-
-                return false;
-            }
-
-            if (!PInvoke.LookupPrivilegeValue(null, "SeSystemEnvironmentPrivilege", out var luid))
-            {
-                if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Could not look up privilege value.");
-
-                return false;
-            }
-
-            var state = new TOKEN_PRIVILEGES { PrivilegeCount = 1 };
-            state.Privileges._0 = new LUID_AND_ATTRIBUTES
-            {
-                Luid = luid,
-                Attributes = enable ? TOKEN_PRIVILEGES_ATTRIBUTES.SE_PRIVILEGE_ENABLED : 0
-            };
-
-            if (!PInvoke.AdjustTokenPrivileges(token, false, state, 0, null, null))
-            {
-                if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Could not adjust token privileges.");
-
-                return false;
-            }
-
-            return true;
-        }
-        catch (Exception ex)
-        {
-            if (Log.Instance.IsTraceEnabled)
-                Log.Instance.Trace($"Exception while setting privilege.", ex);
-
-            return false;
-        }
     }
 }

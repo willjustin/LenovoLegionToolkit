@@ -19,8 +19,6 @@ using LenovoLegionToolkit.WPF.Windows.Utils;
 using Wpf.Ui.Common;
 using MenuItem = Wpf.Ui.Controls.MenuItem;
 
-#pragma warning disable CA2211
-
 namespace LenovoLegionToolkit.WPF.Pages;
 
 public partial class AutomationPage
@@ -29,7 +27,7 @@ public partial class AutomationPage
 
     private readonly AutomationProcessor _automationProcessor = IoCContainer.Resolve<AutomationProcessor>();
 
-    private IAutomationStep[] _supportedAutomationSteps = Array.Empty<IAutomationStep>();
+    private IAutomationStep[] _supportedAutomationSteps = [];
 
     public AutomationPage()
     {
@@ -136,7 +134,7 @@ public partial class AutomationPage
 
         foreach (var pipeline in pipelines.Where(p => p.Trigger is null))
         {
-            var control = GenerateControl(pipeline, _manualPipelinesStackPanel);
+            var control = GenerateControl(pipeline, _manualPipelinesStackPanel, false);
             _manualPipelinesStackPanel.Children.Add(control);
             initializedTasks.Add(control.InitializedTask);
         }
@@ -172,23 +170,29 @@ public partial class AutomationPage
             new GodModePresetAutomationStep(default),
             new HDRAutomationStep(default),
             new InstantBootAutomationStep(default),
+            new MacroAutomationStep(default),
             new MicrophoneAutomationStep(default),
+            new SpeakerAutomationStep(default),
             new NotificationAutomationStep(default),
             new OneLevelWhiteKeyboardBacklightAutomationStep(default),
             new OverclockDiscreteGPUAutomationStep(default),
             new OverDriveAutomationStep(default),
             new PanelLogoBacklightAutomationStep(default),
+            new PlaySoundAutomationStep(default),
             new PortsBacklightAutomationStep(default),
             new PowerModeAutomationStep(default),
+            new QuickActionAutomationStep(default),
             new RefreshRateAutomationStep(default),
             new ResolutionAutomationStep(default),
             new RGBKeyboardBacklightAutomationStep(default),
-            new RunAutomationStep(default, default),
+            new RunAutomationStep(default, default, default, default),
             new SpectrumKeyboardBacklightBrightnessAutomationStep(0),
             new SpectrumKeyboardBacklightProfileAutomationStep(1),
             new SpectrumKeyboardBacklightImportProfileAutomationStep(default),
             new TouchpadLockAutomationStep(default),
             new TurnOffMonitorsAutomationStep(),
+            new TurnOffWiFiAutomationStep(),
+            new TurnOnWiFiAutomationStep(),
             new WhiteKeyboardBacklightAutomationStep(default),
             new WinKeyAutomationStep(default)
         };
@@ -202,12 +206,18 @@ public partial class AutomationPage
                 steps.RemoveAt(index);
         }
 
-        return steps.ToArray();
+        return [.. steps];
     }
 
-    private AutomationPipelineControl GenerateControl(AutomationPipeline pipeline, Panel stackPanel)
+    private AutomationPipelineControl GenerateControl(AutomationPipeline pipeline, Panel stackPanel, bool allowQuickActionAutomationStep = true)
     {
-        var control = new AutomationPipelineControl(pipeline, _supportedAutomationSteps);
+        var supportedSteps = _supportedAutomationSteps;
+        if (!allowQuickActionAutomationStep)
+        {
+            supportedSteps = Array.FindAll(supportedSteps, s => s is not QuickActionAutomationStep);
+        }
+
+        var control = new AutomationPipelineControl(pipeline, supportedSteps);
         control.MouseRightButtonUp += (_, e) =>
         {
             ShowPipelineContextMenu(control, stackPanel);
@@ -298,7 +308,7 @@ public partial class AutomationPage
             return;
 
         var pipeline = new AutomationPipeline(newName);
-        var control = GenerateControl(pipeline, _manualPipelinesStackPanel);
+        var control = GenerateControl(pipeline, _manualPipelinesStackPanel, false);
         _manualPipelinesStackPanel.Children.Insert(0, control);
 
         _noManualActionsText.Visibility = _manualPipelinesStackPanel.Children.Count < 1
@@ -316,9 +326,6 @@ public partial class AutomationPage
             Resource.AutomationPage_RenamePipeline_Placeholder,
             name,
             allowEmpty: true);
-
-        if (string.IsNullOrEmpty(newName))
-            return;
 
         control.SetName(newName);
     }

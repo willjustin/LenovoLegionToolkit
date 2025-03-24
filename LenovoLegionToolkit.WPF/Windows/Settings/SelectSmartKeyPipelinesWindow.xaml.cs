@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using LenovoLegionToolkit.Lib;
 using LenovoLegionToolkit.Lib.Automation;
@@ -57,7 +58,7 @@ public partial class SelectSmartKeyPipelinesWindow
     {
         _loader.IsLoading = true;
 
-        _showThisAppToggle.IsChecked = SettingsStoreGuid == null;
+        _showThisAppToggle.IsChecked = SettingsStoreGuid is null;
 
         var allPipelines = await _automationProcessor.GetPipelinesAsync();
         var pipelines = allPipelines.Where(p => p.Trigger is null).OrderBy(p => p.Name).ToArray();
@@ -99,7 +100,7 @@ public partial class SelectSmartKeyPipelinesWindow
         else
         {
             SettingsStoreList.AddRange(selectedPipelines);
-            SettingsStoreGuid = SettingsStoreList.Any() ? SettingsStoreList.First() : Guid.Empty;
+            SettingsStoreGuid = SettingsStoreList.FirstOrDefault();
         }
 
         _settings.SynchronizeStore();
@@ -156,6 +157,8 @@ public partial class SelectSmartKeyPipelinesWindow
 
             _grid.Children.Add(_checkBox);
             _grid.Children.Add(_nameTextBox);
+
+            AutomationProperties.SetLabeledBy(_checkBox, _nameTextBox);
 
             Content = _grid;
         }

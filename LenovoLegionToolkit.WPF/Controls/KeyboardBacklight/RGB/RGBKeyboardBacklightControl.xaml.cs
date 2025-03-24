@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,6 +7,8 @@ using LenovoLegionToolkit.Lib;
 using LenovoLegionToolkit.Lib.Controllers;
 using LenovoLegionToolkit.Lib.Extensions;
 using LenovoLegionToolkit.Lib.Listeners;
+using LenovoLegionToolkit.Lib.Messaging;
+using LenovoLegionToolkit.Lib.Messaging.Messages;
 using LenovoLegionToolkit.Lib.SoftwareDisabler;
 using LenovoLegionToolkit.WPF.Extensions;
 using Wpf.Ui.Common;
@@ -17,9 +20,9 @@ namespace LenovoLegionToolkit.WPF.Controls.KeyboardBacklight.RGB;
 
 public partial class RGBKeyboardBacklightControl
 {
-    private Button[] PresetButtons => new[] { _offPresetButton, _preset1Button, _preset2Button, _preset3Button };
+    private Button[] PresetButtons => [_offPresetButton, _preset1Button, _preset2Button, _preset3Button, _preset4Button];
 
-    private ColorPickerControl[] Zones => new[] { _zone1ColorPicker, _zone2ColorPicker, _zone3ColorPicker, _zone4ColorPicker };
+    private ColorPickerControl[] Zones => [_zone1ColorPicker, _zone2ColorPicker, _zone3ColorPicker, _zone4ColorPicker];
 
     private readonly RGBKeyboardBacklightController _controller = IoCContainer.Resolve<RGBKeyboardBacklightController>();
     private readonly RGBKeyboardBacklightListener _listener = IoCContainer.Resolve<RGBKeyboardBacklightListener>();
@@ -34,9 +37,17 @@ public partial class RGBKeyboardBacklightControl
         _listener.Changed += Listener_Changed;
 
         SizeChanged += RGBKeyboardBacklightControl_SizeChanged;
+
+        MessagingCenter.Subscribe<RGBKeyboardBacklightChangedMessage>(this, () => Dispatcher.InvokeTask(async () =>
+        {
+            if (!IsVisible)
+                return;
+
+            await RefreshAsync();
+        }));
     }
 
-    private void Listener_Changed(object? sender, RGBKeyboardBacklightChanged e) => Dispatcher.Invoke(async () =>
+    private void Listener_Changed(object? sender, EventArgs e) => Dispatcher.Invoke(async () =>
     {
         if (!IsLoaded || !IsVisible)
             return;
@@ -95,10 +106,8 @@ public partial class RGBKeyboardBacklightControl
         {
             _vantageWarningInfoBar.IsOpen = true;
 
-            _offPresetButton.IsEnabled = false;
-            _preset1Button.IsEnabled = false;
-            _preset2Button.IsEnabled = false;
-            _preset3Button.IsEnabled = false;
+            foreach (var presetButton in PresetButtons)
+                presetButton.IsEnabled = false;
 
             _brightnessControl.IsEnabled = false;
             _effectControl.IsEnabled = false;
@@ -130,10 +139,8 @@ public partial class RGBKeyboardBacklightControl
 
         _vantageWarningInfoBar.IsOpen = false;
 
-        _offPresetButton.IsEnabled = true;
-        _preset1Button.IsEnabled = true;
-        _preset2Button.IsEnabled = true;
-        _preset3Button.IsEnabled = true;
+        foreach (var presetButton in PresetButtons)
+            presetButton.IsEnabled = true;
 
         if (state.SelectedPreset == RGBKeyboardBacklightPreset.Off)
         {
@@ -154,10 +161,10 @@ public partial class RGBKeyboardBacklightControl
             return;
         }
 
-        var preset = state.Presets[state.SelectedPreset];
+        var preset = state.Presets.GetValueOrDefault(state.SelectedPreset, RGBKeyboardBacklightBacklightPresetDescription.Default);
 
-        var speedEnabled = preset.Effect != RGBKeyboardBacklightEffect.Static;
-        var zonesEnabled = preset.Effect == RGBKeyboardBacklightEffect.Static || preset.Effect == RGBKeyboardBacklightEffect.Breath;
+        var speedEnabled = preset.Effect is not RGBKeyboardBacklightEffect.Static;
+        var zonesEnabled = preset.Effect is RGBKeyboardBacklightEffect.Static or RGBKeyboardBacklightEffect.Breath;
 
         _brightnessControl.SetItems(Enum.GetValues<RGBKeyboardBacklightBrightness>(), preset.Brightness, v => v.GetDisplayName());
         _effectControl.SetItems(Enum.GetValues<RGBKeyboardBacklightEffect>(), preset.Effect, v => v.GetDisplayName());

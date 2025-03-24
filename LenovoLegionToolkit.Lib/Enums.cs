@@ -51,6 +51,8 @@ public enum CapabilityID
     AMDSkinTemperatureTracking = 0x00050002,
     SupportedPowerModes = 0x00070000,
     LegionZoneSupportVersion = 0x00090000,
+    GodModeFnQSwitchable = 0x00100000,
+    OverDrive = 0x001A0000,
     AIChip = 0x000E0000,
     IGPUModeChangeStatus = 0x000F0000,
     CPUShortTermPowerLimit = 0x0101FF00,
@@ -89,8 +91,9 @@ public enum FanTableType
 {
     Unknown,
     CPU,
+    CPUSensor,
     GPU,
-    CPUSensor
+    GPU2
 }
 
 public enum FlipToStartState
@@ -197,6 +200,7 @@ public enum MicrophoneState
 [Flags]
 public enum ModifierKey
 {
+    None = 0,
     [Display(ResourceType = typeof(Resource), Name = "ModifierKey_Shift")]
     Shift = 1,
     [Display(ResourceType = typeof(Resource), Name = "ModifierKey_Ctrl")]
@@ -211,9 +215,14 @@ public enum NativeWindowsMessage
     LidClosed,
     MonitorOn,
     MonitorOff,
+    DeviceConnected,
+    DeviceDisconnected,
     MonitorConnected,
     MonitorDisconnected,
-    OnDisplayDeviceArrival
+    ExternalMonitorConnected,
+    ExternalMonitorDisconnected,
+    OnDisplayDeviceArrival,
+    BatterySaverEnabled
 }
 
 public enum NotificationDuration
@@ -338,6 +347,16 @@ public enum PowerAdapterStatus
     Disconnected
 }
 
+public enum PowerModeMappingMode
+{
+    [Display(ResourceType = typeof(Resource), Name = "PowerModeMappingMode_Disabled")]
+    Disabled,
+    [Display(ResourceType = typeof(Resource), Name = "PowerModeMappingMode_WindowsPowerMode")]
+    WindowsPowerMode,
+    [Display(ResourceType = typeof(Resource), Name = "PowerModeMappingMode_WindowsPowerPlan")]
+    WindowsPowerPlan,
+}
+
 public enum PowerModeState
 {
     [Display(ResourceType = typeof(Resource), Name = "PowerModeState_Quiet")]
@@ -348,6 +367,14 @@ public enum PowerModeState
     Performance,
     [Display(ResourceType = typeof(Resource), Name = "PowerModeState_GodMode")]
     GodMode = 254
+}
+
+public enum PowerStateEvent
+{
+    Unknown = -1,
+    StatusChange,
+    Suspend,
+    Resume,
 }
 
 public enum ProcessEventInfoType
@@ -365,7 +392,7 @@ public enum RebootType
     Delayed = 5
 }
 
-public enum RGBKeyboardBacklightChanged { }
+public enum RGBKeyboardBacklightChanged;
 
 public enum RGBKeyboardBacklightBrightness
 {
@@ -398,7 +425,9 @@ public enum RGBKeyboardBacklightPreset
     [Display(ResourceType = typeof(Resource), Name = "RGBKeyboardBacklightPreset_Two")]
     Two = 1,
     [Display(ResourceType = typeof(Resource), Name = "RGBKeyboardBacklightPreset_Three")]
-    Three = 2
+    Three = 2,
+    [Display(ResourceType = typeof(Resource), Name = "RGBKeyboardBacklightPreset_Four")]
+    Four = 3
 }
 
 public enum RGBKeyboardBacklightSpeed
@@ -411,6 +440,14 @@ public enum RGBKeyboardBacklightSpeed
     Fast,
     [Display(ResourceType = typeof(Resource), Name = "RGBKeyboardBacklightSpeed_Fastest")]
     Fastest
+}
+
+public enum SpeakerState
+{
+    [Display(ResourceType = typeof(Resource), Name = "SpeakerState_Mute")]
+    Mute,
+    [Display(ResourceType = typeof(Resource), Name = "SpeakerState_Unmute")]
+    Unmute
 }
 
 public enum SoftwareStatus
@@ -440,7 +477,13 @@ public enum SpecialKey
     SpectrumPreset3 = 34,
     SpectrumPreset4 = 35,
     SpectrumPreset5 = 36,
-    SpectrumPreset6 = 37
+    SpectrumPreset6 = 37,
+    FnN = 42,
+    FnF4 = 62,
+    FnF8 = 63,
+    WhiteBacklightOff = 64,
+    WhiteBacklight1 = 65,
+    WhiteBacklight2 = 66
 }
 
 public enum SpectrumKeyboardBacklightBrightness
@@ -522,7 +565,8 @@ public enum SpectrumLayout
 {
     KeyboardOnly,
     KeyboardAndFront,
-    Full
+    Full,
+    FullAlternative
 }
 
 public enum Theme
@@ -566,6 +610,29 @@ public enum TouchpadLockState
     On
 }
 
+public enum UpdateCheckFrequency
+{
+    [Display(ResourceType = typeof(Resource), Name = "UpdateCheckFrequency_PerHour")]
+    PerHour,
+    [Display(ResourceType = typeof(Resource), Name = "UpdateCheckFrequency_PerThreeHours")]
+    PerThreeHours,
+    [Display(ResourceType = typeof(Resource), Name = "UpdateCheckFrequency_PerTwelveHours")]
+    PerTwelveHours,
+    [Display(ResourceType = typeof(Resource), Name = "UpdateCheckFrequency_PerDay")]
+    PerDay,
+    [Display(ResourceType = typeof(Resource), Name = "UpdateCheckFrequency_PerWeek")]
+    PerWeek,
+    [Display(ResourceType = typeof(Resource), Name = "UpdateCheckFrequency_PerMonth")]
+    PerMonth
+}
+
+public enum UpdateCheckStatus
+{
+    Success,
+    RateLimitReached,
+    Error
+}
+
 public enum WhiteKeyboardBacklightState
 {
     [Display(ResourceType = typeof(Resource), Name = "WhiteKeyboardBacklightState_Off")]
@@ -576,6 +643,16 @@ public enum WhiteKeyboardBacklightState
     High
 }
 
+public enum WindowsPowerMode
+{
+    [Display(Name = "Best power efficiency")]
+    BestPowerEfficiency,
+    [Display(Name = "Balanced")]
+    Balanced,
+    [Display(Name = "Best performance")]
+    BestPerformance
+}
+
 public enum WinKeyState
 {
     [Display(ResourceType = typeof(Resource), Name = "WinKeyState_Off")]
@@ -584,4 +661,4 @@ public enum WinKeyState
     On
 }
 
-public enum WinKeyChanged { }
+public enum WinKeyChanged;

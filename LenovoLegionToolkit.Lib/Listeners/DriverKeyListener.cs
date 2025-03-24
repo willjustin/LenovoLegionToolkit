@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using LenovoLegionToolkit.Lib.Extensions;
 using LenovoLegionToolkit.Lib.Features;
 using LenovoLegionToolkit.Lib.Features.WhiteKeyboardBacklight;
+using LenovoLegionToolkit.Lib.Messaging;
+using LenovoLegionToolkit.Lib.Messaging.Messages;
 using LenovoLegionToolkit.Lib.SoftwareDisabler;
 using LenovoLegionToolkit.Lib.System;
 using LenovoLegionToolkit.Lib.Utils;
@@ -12,25 +13,22 @@ using Windows.Win32;
 
 namespace LenovoLegionToolkit.Lib.Listeners;
 
-public class DriverKeyListener : IListener<DriverKey>
+public class DriverKeyListener(
+    FnKeysDisabler fnKeysDisabler,
+    MicrophoneFeature microphoneFeature,
+    TouchpadLockFeature touchpadLockFeature,
+    WhiteKeyboardBacklightFeature whiteKeyboardBacklightFeature)
+    : IListener<DriverKeyListener.ChangedEventArgs>
 {
-    public event EventHandler<DriverKey>? Changed;
+    public class ChangedEventArgs(DriverKey driverKey) : EventArgs
+    {
+        public DriverKey DriverKey { get; } = driverKey;
+    }
 
-    private readonly FnKeysDisabler _fnKeysDisabler;
-    private readonly MicrophoneFeature _microphoneFeature;
-    private readonly TouchpadLockFeature _touchpadLockFeature;
-    private readonly WhiteKeyboardBacklightFeature _whiteKeyboardBacklightFeature;
+    public event EventHandler<ChangedEventArgs>? Changed;
 
     private CancellationTokenSource? _cancellationTokenSource;
     private Task? _listenTask;
-
-    public DriverKeyListener(FnKeysDisabler fnKeysDisabler, MicrophoneFeature microphoneFeature, TouchpadLockFeature touchpadLockFeature, WhiteKeyboardBacklightFeature whiteKeyboardBacklightFeature)
-    {
-        _fnKeysDisabler = fnKeysDisabler ?? throw new ArgumentNullException(nameof(fnKeysDisabler));
-        _microphoneFeature = microphoneFeature ?? throw new ArgumentNullException(nameof(microphoneFeature));
-        _touchpadLockFeature = touchpadLockFeature ?? throw new ArgumentNullException(nameof(touchpadLockFeature));
-        _whiteKeyboardBacklightFeature = whiteKeyboardBacklightFeature ?? throw new ArgumentNullException(nameof(whiteKeyboardBacklightFeature));
-    }
 
     public Task StartAsync()
     {
@@ -45,10 +43,14 @@ public class DriverKeyListener : IListener<DriverKey>
 
     public async Task StopAsync()
     {
-        _cancellationTokenSource?.Cancel();
+        if (_cancellationTokenSource is not null)
+            await _cancellationTokenSource.CancelAsync().ConfigureAwait(false);
+
         _cancellationTokenSource = null;
-        if (_listenTask != null)
+
+        if (_listenTask is not null)
             await _listenTask;
+
         _listenTask = null;
     }
 
@@ -65,11 +67,11 @@ public class DriverKeyListener : IListener<DriverKey>
 
             while (true)
             {
-                WaitHandle.WaitAny(new[] { resetEvent, token.WaitHandle });
+                WaitHandle.WaitAny([resetEvent, token.WaitHandle]);
 
                 token.ThrowIfCancellationRequested();
 
-                if (await _fnKeysDisabler.GetStatusAsync().ConfigureAwait(false) == SoftwareStatus.Enabled)
+                if (await fnKeysDisabler.GetStatusAsync().ConfigureAwait(false) == SoftwareStatus.Enabled)
                 {
                     if (Log.Instance.IsTraceEnabled)
                         Log.Instance.Trace($"Ignoring, FnKeys are enabled.");
@@ -87,7 +89,7 @@ public class DriverKeyListener : IListener<DriverKey>
                     Log.Instance.Trace($"Event received. [key={key}, value={value}]");
 
                 await OnChangedAsync(key).ConfigureAwait(false);
-                Changed?.Invoke(this, key);
+                Changed?.Invoke(this, new(key));
 
                 resetEvent.Reset();
             }
@@ -107,53 +109,44 @@ public class DriverKeyListener : IListener<DriverKey>
         {
             if (value.HasFlag(DriverKey.FnF4))
             {
-                if (await _microphoneFeature.IsSupportedAsync().ConfigureAwait(false))
+                if (await microphoneFeature.IsSupportedAsync().ConfigureAwait(false))
                 {
-                    switch (await _microphoneFeature.GetStateAsync().ConfigureAwait(false))
+                    switch (await microphoneFeature.GetStateAsync().ConfigureAwait(false))
                     {
                         case MicrophoneState.On:
-                            await _microphoneFeature.SetStateAsync(MicrophoneState.Off).ConfigureAwait(false);
-                            MessagingCenter.Publish(new Notification(NotificationType.MicrophoneOff));
+                            await microphoneFeature.SetStateAsync(MicrophoneState.Off).ConfigureAwait(false);
+                            MessagingCenter.Publish(new NotificationMessage(NotificationType.MicrophoneOff));
                             break;
                         case MicrophoneState.Off:
-                            await _microphoneFeature.SetStateAsync(MicrophoneState.On).ConfigureAwait(false);
-                            MessagingCenter.Publish(new Notification(NotificationType.MicrophoneOn));
+                            await microphoneFeature.SetStateAsync(MicrophoneState.On).ConfigureAwait(false);
+                            MessagingCenter.Publish(new NotificationMessage(NotificationType.MicrophoneOn));
                             break;
                     }
                 }
             }
 
             if (value.HasFlag(DriverKey.FnF8))
-            {
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = "cmd",
-                    Arguments = "/c \"start ms-settings:network-airplanemode\"",
-                    UseShellExecute = true,
-                    CreateNoWindow = true,
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                });
-            }
+                AirplaneMode.Open();
 
             if (value.HasFlag(DriverKey.FnF10))
             {
-                if (await _touchpadLockFeature.IsSupportedAsync().ConfigureAwait(false))
+                if (await touchpadLockFeature.IsSupportedAsync().ConfigureAwait(false))
                 {
-                    var status = await _touchpadLockFeature.GetStateAsync().ConfigureAwait(false);
+                    var status = await touchpadLockFeature.GetStateAsync().ConfigureAwait(false);
                     MessagingCenter.Publish(status == TouchpadLockState.Off
-                        ? new Notification(NotificationType.TouchpadOn)
-                        : new Notification(NotificationType.TouchpadOff));
+                        ? new NotificationMessage(NotificationType.TouchpadOn)
+                        : new NotificationMessage(NotificationType.TouchpadOff));
                 }
             }
 
             if (value.HasFlag(DriverKey.FnSpace))
             {
-                if (await _whiteKeyboardBacklightFeature.IsSupportedAsync().ConfigureAwait(false))
+                if (await whiteKeyboardBacklightFeature.IsSupportedAsync().ConfigureAwait(false))
                 {
-                    var state = await _whiteKeyboardBacklightFeature.GetStateAsync().ConfigureAwait(false);
+                    var state = await whiteKeyboardBacklightFeature.GetStateAsync().ConfigureAwait(false);
                     MessagingCenter.Publish(state == WhiteKeyboardBacklightState.Off
-                        ? new Notification(NotificationType.WhiteKeyboardBacklightOff, state.GetDisplayName())
-                        : new Notification(NotificationType.WhiteKeyboardBacklightChanged, state.GetDisplayName()));
+                        ? new NotificationMessage(NotificationType.WhiteKeyboardBacklightOff, state.GetDisplayName())
+                        : new NotificationMessage(NotificationType.WhiteKeyboardBacklightChanged, state.GetDisplayName()));
                 }
             }
         }

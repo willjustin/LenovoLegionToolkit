@@ -132,9 +132,6 @@
   <data name="AboutPage_ProjectWebsiteOnGitHub" xml:space="preserve">
     <value>Уебсайт на проекта в GitHub</value>
   </data>
-  <data name="AboutPage_ThirdPartyLibraries" xml:space="preserve">
-    <value>Използвани библиотеки от трети страни</value>
-  </data>
   <data name="AboutPage_Title" xml:space="preserve">
     <value>За проекта</value>
   </data>
@@ -150,13 +147,6 @@
   </data>
   <data name="AddNew" xml:space="preserve">
     <value>Добави ново</value>
-  </data>
-  <data name="AlwaysActivatePowerPlans_Message" xml:space="preserve">
-    <value>Активирай Планът за захранването, дори когато Vantage или неговите услуги работят.
-Тази опция е предназначена само за устройства, които не са дошли с множество планове на захранването.</value>
-  </data>
-  <data name="AlwaysActivatePowerPlans_Title" xml:space="preserve">
-    <value>Винаги активирай Планът за захранване на Windows</value>
   </data>
   <data name="AlwaysOnUSBControl_Message" xml:space="preserve">
     <value>Зареждане на USB устройства при изключен компютър, в спящ режим или в режим на хибернация.</value>
@@ -739,9 +729,6 @@
   <data name="IncompatibleDevice_Message" xml:space="preserve">
     <value>Това устройтво не е съвместимо с Lenovo Legion Toolkit.</value>
   </data>
-  <data name="IncompatibleDevice_Title" xml:space="preserve">
-    <value>Lenovo Legion Toolkit</value>
-  </data>
   <data name="KeyboardBacklightPage_NoCompatibleKeyboardsFound" xml:space="preserve">
     <value>Не са намерени съвместими клавиатури</value>
   </data>
@@ -749,7 +736,7 @@
     <value>Подсветка на клавиатурата</value>
   </data>
   <data name="Keyboard_VantageEnabledWarning_Message" xml:space="preserve">
-    <value>Подсветката на клавиатурата не може да бъде управлявана тук, когато Vantage или неговите услуги работят.</value>
+    <value>Подсветката на клавиатурата не може да бъде управлявана тук, когато Lenovo Vantage или неговите услуги работят.</value>
   </data>
   <data name="Keyboard_VantageEnabledWarning_Title" xml:space="preserve">
     <value>Lenovo Vantage или неговите услуги работят</value>
@@ -859,10 +846,6 @@
   <data name="NotificationsSettingsWindow_CapsAndNumLock" xml:space="preserve">
     <value>Caps Lock и Num Lock</value>
   </data>
-  <data name="NotificationsSettingsWindow_DontShowNotifications_Message" xml:space="preserve">
-    <value>Изключете известията за действия с клавиша Fn, като заглушаване на микрофона
-Активирайте тази настройка ако изпитвате проблеми с приложения на цял екран.</value>
-  </data>
   <data name="NotificationsSettingsWindow_DontShowNotifications_Title" xml:space="preserve">
     <value>Не показвай известия</value>
   </data>
@@ -957,9 +940,6 @@
   <data name="PackagesPage_DownloadInProgress_Title" xml:space="preserve">
     <value>Изтеглянето е в ход</value>
   </data>
-  <data name="PackagesPage_DownloadTo" xml:space="preserve">
-    <value>Сваляне в</value>
-  </data>
   <data name="Filter" xml:space="preserve">
     <value>Филтрирай...</value>
   </data>
@@ -1018,30 +998,6 @@
   <data name="PowerModeControl_Warning" xml:space="preserve">
     <value>Избраният режим на захранване може да не работи правилно без свързано зарядно.</value>
   </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Message" xml:space="preserve">
-    <value>Активиране на тази настройки, когато Lenovo Vantage или неговите услуги работят и извършват промени в режима на захранване на Вашия лаптоп, може да доведе до неочаквано поведение.</value>
-  </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Title" xml:space="preserve">
-    <value>Сигурни ли сте?</value>
-  </data>
-  <data name="PowerPlansWindow_BalanceMode" xml:space="preserve">
-    <value>Балансиран режим</value>
-  </data>
-  <data name="PowerPlansWindow_CustomMode" xml:space="preserve">
-    <value>Потребителски режим</value>
-  </data>
-  <data name="PowerPlansWindow_DefaultPowerPlan" xml:space="preserve">
-    <value>По подразбиране</value>
-  </data>
-  <data name="PowerPlansWindow_PerformanceMode" xml:space="preserve">
-    <value>Режим "Производителност"</value>
-  </data>
-  <data name="PowerPlansWindow_QuietMode" xml:space="preserve">
-    <value>Тих режим</value>
-  </data>
-  <data name="PowerPlansWindow_Title" xml:space="preserve">
-    <value>Планове за захранване</value>
-  </data>
   <data name="RGBKeyboardBacklightAutomationStepControl_Message" xml:space="preserve">
     <value>Нагласяне на предварително зададените настройки за подсветка.</value>
   </data>
@@ -1059,6 +1015,9 @@
   </data>
   <data name="RGBKeyboardBacklightControl_Preset3" xml:space="preserve">
     <value>Предварително зададена настройка 3</value>
+  </data>
+  <data name="RGBKeyboardBacklightControl_Preset4" xml:space="preserve">
+    <value>Предварително зададена 4</value>
   </data>
   <data name="RGBKeyboardBacklightControl_PresetOff" xml:space="preserve">
     <value>Изключена</value>
@@ -1181,10 +1140,10 @@
     <value>Деактивирай приложението Lenovo Hotkeys</value>
   </data>
   <data name="SettingsPage_DisableVantage_Error_Message" xml:space="preserve">
-    <value>Vantage и/или ImController може да не са били деактивирани правилно</value>
+    <value>Lenovo Vantage и/или ImController може да не са били деактивирани правилно</value>
   </data>
   <data name="SettingsPage_DisableVantage_Error_Title" xml:space="preserve">
-    <value>Vantage и/или ImController не можаха да бъдат деактивирани</value>
+    <value>Lenovo Vantage и/или ImController не можаха да бъдат деактивирани</value>
   </data>
   <data name="SettingsPage_DisableVantage_Message" xml:space="preserve">
     <value>Деактивирайте Lenovo Vantage и ImController без да ги деинсталирате.
@@ -1206,10 +1165,10 @@
     <value>Приложението Lenovo Hotkeys не можа да бъде активирано</value>
   </data>
   <data name="SettingsPage_EnableVantage_Error_Message" xml:space="preserve">
-    <value>Vantage и/или ImController може да не са били активирани правилно</value>
+    <value>Lenovo Vantage и/или ImController може да не са били активирани правилно</value>
   </data>
   <data name="SettingsPage_EnableVantage_Error_Title" xml:space="preserve">
-    <value>Vantage и/или ImController не можаха да бъдат активирани</value>
+    <value>Lenovo Vantage и/или ImController не можаха да бъдат активирани</value>
   </data>
   <data name="SettingsPage_ExcludeRefreshRates_Message" xml:space="preserve">
     <value>Може да изключите избрани честоти на опресняване, за да направите клавишната комбинация Fn+R по-полезна.</value>
@@ -1235,7 +1194,7 @@
   <data name="SettingsPage_Notifications_Title" xml:space="preserve">
     <value>Известия</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Title" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlans_Title" xml:space="preserve">
     <value>Планове за захранване</value>
   </data>
   <data name="SettingsPage_SmartKeyDoublePressAction_Message" xml:space="preserve">
@@ -1441,12 +1400,6 @@
   </data>
   <data name="WhiteKeyboardBacklightControl_Title" xml:space="preserve">
     <value>Подсветка на клавиатурата</value>
-  </data>
-  <data name="WinKeyAutomationStepControl_Message" xml:space="preserve">
-    <value>Активирайте или деактивирайте Windows клавиша.</value>
-  </data>
-  <data name="WinKeyAutomationStepControl_Title" xml:space="preserve">
-    <value>Windows клавиш</value>
   </data>
   <data name="WinKeyControl_Message" xml:space="preserve">
     <value>Работи само на вградената клавиатура.</value>
@@ -1713,13 +1666,13 @@
   <data name="PowerPlansWindow_AoAcWarning_Message" xml:space="preserve">
     <value>Windows докладва, че това устройство поддържа модерен режим на готовност. Използвайки план на захранване различен от Балансиран може да доведе до неочаквано поведение.</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Message" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlans_Message" xml:space="preserve">
     <value>Изберете план на захранване, когато режимът на работа бъде променен.</value>
   </data>
   <data name="SettingsPage_Power_Title" xml:space="preserve">
     <value>Захранване</value>
   </data>
-  <data name="SettingsPage_PowerPlansControlPanel_Title" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlansControlPanel_Title" xml:space="preserve">
     <value>Настройки на Плана на захранване в контролния панел</value>
   </data>
   <data name="PoweredOff" xml:space="preserve">
@@ -1846,6 +1799,10 @@
   <data name="IGPUModeChangeException_Title" xml:space="preserve">
     <value>Промяната в режима на работа на допълнителната видеокартата беше неуспешна</value>
   </data>
+  <data name="IGPUModeChangeException_Message" xml:space="preserve">
+    <value>Опитайте да промените режима отново след няколко секунди, ако не виждате очакваните резултати.
+Ако допълнителната видео карта не реагира изобщо, моля рестартирайте устройството.</value>
+  </data>
   <data name="IGPUModeChangeException_Title_IGPUOnly" xml:space="preserve">
     <value>Допълнителната видеокарта е използвана в момента</value>
   </data>
@@ -1870,7 +1827,185 @@
   <data name="DGPU_Disconnected_Title" xml:space="preserve">
     <value>Допълнителна видео карта деактивирана</value>
   </data>
+  <data name="ComboBoxHybridModeAutomationStepControl_Title" xml:space="preserve">
+    <value>Режим на работа на видео картата</value>
+  </data>
+  <data name="ComboBoxHybridModeAutomationStepControl_Message" xml:space="preserve">
+    <value>Изберете режим на работа за видео картата в зависимост от натоварването и захранването на компютъра.
+Промяна в режима може да изисква рестартиране.</value>
+  </data>
+  <data name="ToggleHybridModeAutomationStepControl_Title" xml:space="preserve">
+    <value>Хибриден режим</value>
+  </data>
+  <data name="ToggleHybridModeAutomationStepControl_Message" xml:space="preserve">
+    <value>Позволи превключване между вградена и допълнителна видеокарта.
+Изисква рестартиране.</value>
+  </data>
+  <data name="NotificationsSettingsWindow_NotificationDuration_Title" xml:space="preserve">
+    <value>Продължителност</value>
+  </data>
   <data name="NotificationsSettingsWindow_Updates_Title" xml:space="preserve">
     <value>Актуализации</value>
+  </data>
+  <data name="GodModeSettingsWindow_GPU_ToCpuDynamicBoostControl" xml:space="preserve">
+    <value>Динамичен бууст на видео картата от процесора</value>
+  </data>
+  <data name="SettingsPage_BootLogo_Title" xml:space="preserve">
+    <value>Лого при стартиране</value>
+  </data>
+  <data name="SettingsPage_BootLogo_Message" xml:space="preserve">
+    <value>Изберете изображение, което ще бъде показано при стартиране на системата, вместо логото по подразбиране на Lenovo.</value>
+  </data>
+  <data name="BootLogoWindow_Title" xml:space="preserve">
+    <value>Лого при стартиране</value>
+  </data>
+  <data name="BootLogoWindow_DefaultLogoSet" xml:space="preserve">
+    <value>Зададено е логото по подразбиране</value>
+  </data>
+  <data name="BootLogoWindow_CustomLogoSet" xml:space="preserve">
+    <value>Зададено е потребителско лого</value>
+  </data>
+  <data name="BootLogoWindow_Status" xml:space="preserve">
+    <value>Състояние</value>
+  </data>
+  <data name="RevertToDefault" xml:space="preserve">
+    <value>Връщане към подразбиране</value>
+  </data>
+  <data name="BootLogoWindow_Customize" xml:space="preserve">
+    <value>Персонализиране</value>
+  </data>
+  <data name="NotificationsSettingsWindow_Automation" xml:space="preserve">
+    <value>Действия</value>
+  </data>
+  <data name="NotificationAutomationStepControl_NotificationText" xml:space="preserve">
+    <value>Съдържание на известието</value>
+  </data>
+  <data name="NotificationAutomationStepControl_Title" xml:space="preserve">
+    <value>Покажи известие</value>
+  </data>
+  <data name="AutomationPipelineControl_SubtitlePart_Preset" xml:space="preserve">
+    <value>Предварително зададена настройка</value>
+  </data>
+  <data name="SettingsPage_SmartFnLock_Title" xml:space="preserve">
+    <value>Умно заключване на Fn бутона</value>
+  </data>
+  <data name="SettingsPage_SmartFnLock_Message" xml:space="preserve">
+    <value>Заключването на бутона Fn ще бъде изключено временно, когато някой от бутоните Alt, Ctrl или Shift е натиснат.</value>
+  </data>
+  <data name="Off" xml:space="preserve">
+    <value>Изключено</value>
+  </data>
+  <data name="BootLogoWindow_Description" xml:space="preserve">
+    <value>Потребителското лого трябва да бъде с големина от точно {0} пиксела.
+Поддържаните формати са: {1}.</value>
+  </data>
+  <data name="BatteryNightChargeModeControl_Title" xml:space="preserve">
+    <value>Зареждане на батерията през нощта</value>
+  </data>
+  <data name="BatteryNightChargeModeControl_Message" xml:space="preserve">
+    <value>Когато тази функция е активирана, устройството ще се зарежда до 80%, когато е включено през нощта, и до 100% преди да го използвате на сутринта.</value>
+  </data>
+  <data name="BatteryNightChargeAutomationStepControl_Title" xml:space="preserve">
+    <value>Зареждане на батерията през нощта</value>
+  </data>
+  <data name="BatteryNightChargeAutomationStepControl_Message" xml:space="preserve">
+    <value>Когато тази функция е активирана, устройството ще се зарежда до 80%, когато е включено през нощта, и до 100% преди да го използвате на сутринта.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Invalid_Image_Size" xml:space="preserve">
+    <value>Избрахте изображение с невалидна големина.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Invalid_Image_Format" xml:space="preserve">
+    <value>Избрахте изображение с невалиден формат.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Cannot_Mount_EFI_Partition" xml:space="preserve">
+    <value>Не може да се монтира EFI дял.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Cannot_Set_UEFI_Privilege" xml:space="preserve">
+    <value>Не може да се зададе привилегия UEFI.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Not_Enough_Free_Space_On_EFI_Partition" xml:space="preserve">
+    <value>Няма достатъчно свободно място в EFI дяла.</value>
+  </data>
+  <data name="BootLogoWindow_SetCustomFailed" xml:space="preserve">
+    <value>Потребителското лого не беше зададено успешно: {0}</value>
+  </data>
+  <data name="BootLogoWindow_SetDefaultFailed" xml:space="preserve">
+    <value>Потребителското лого не беше зададено успешно: {0}</value>
+  </data>
+  <data name="BootLogoWindow_SetDefaultSuccess" xml:space="preserve">
+    <value>Зададено е логото по подразбиране.</value>
+  </data>
+  <data name="BootLogoWindow_SetCustomSuccess" xml:space="preserve">
+    <value>Зададено е потребителско лого.</value>
+  </data>
+  <data name="WiFiConnectedPipelineTriggerTabItemContent_NetworkName" xml:space="preserve">
+    <value>Име на мрежата (SSID)</value>
+  </data>
+  <data name="WiFiConnectedPipelineTriggerTabItemContent_CopyCurrentNetworkName" xml:space="preserve">
+    <value>Копиране на текущото име на мрежата</value>
+  </data>
+  <data name="WiFiConnectedPipelineTriggerTabItemContent_LeaveEmptyForAnyNetwork" xml:space="preserve">
+    <value>Оставете празно за която и да е Wi-Fi мрежа.</value>
+  </data>
+  <data name="SettingsPage_HWiNFO_Title" xml:space="preserve">
+    <value>HWiNFO64</value>
+  </data>
+  <data name="SettingsPage_HWiNFO_Message" xml:space="preserve">
+    <value>Споделете скоростта на вентилатора, температурата на батерията и др. с HWiNFO64. Може да се наложи да рестартирате HWiNFO64 при промяна на тази настройка.</value>
+  </data>
+  <data name="SettingsPage_Integrations_Title" xml:space="preserve">
+    <value>Интеграции</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Информация</value>
+  </data>
+  <data name="PackagesPage_DownloadTo" xml:space="preserve">
+    <value>Папка за сваляне</value>
+  </data>
+  <data name="PackagesPage_OpenDownloadTo" xml:space="preserve">
+    <value>Отвори папката за сваляне</value>
+  </data>
+  <data name="PackageControl_Download" xml:space="preserve">
+    <value>Сваляне</value>
+  </data>
+  <data name="PackageControl_OpenReadme" xml:space="preserve">
+    <value>Отвори README</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_Preset" xml:space="preserve">
+    <value>Предварително зададена настройка</value>
+  </data>
+  <data name="DeviceInformationWindow_Refresh" xml:space="preserve">
+    <value>Опресни</value>
+  </data>
+  <data name="AbstractAutomationStepControl_Delete" xml:space="preserve">
+    <value>Изтрий</value>
+  </data>
+  <data name="PeriodicActionPipelineTriggerTabItemContent_PeriodMinutes" xml:space="preserve">
+    <value>Приод (минути)</value>
+    <comment>A prompt that is used both to ask the user to input an integer, representing the number of minutes between two periodic actions are triggered, and to inform the user what have they set once they are done configuring the action.</comment>
+  </data>
+  <data name="SettingsPage_OnBatterySinceReset_Message" xml:space="preserve">
+    <value>Нулира "На батерия от" брояча в раздела за батерията, когато системата бъде рестартирана.</value>
+  </data>
+  <data name="SettingsPage_OnBatterySinceReset_Title" xml:space="preserve">
+    <value>Нулиране на "На батерия от" брояча при стартиране</value>
+  </data>
+  <data name="TurnOffWiFiAutomationStepControl_Title" xml:space="preserve">
+    <value>Изключване на Wi-Fi</value>
+  </data>
+  <data name="TurnOnWiFiAutomationStepControl_Title" xml:space="preserve">
+    <value>Включване на Wi-Fi</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessRunSilently" xml:space="preserve">
+    <value>Тихо стартиране</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessWaitUntilFinished" xml:space="preserve">
+    <value>Изчакване до приключване на изпълнение</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessWaitUntilFinished_Description" xml:space="preserve">
+    <value>Изчакване на програмата или скрипта да приключат изпълнението си</value>
   </data>
 </root>

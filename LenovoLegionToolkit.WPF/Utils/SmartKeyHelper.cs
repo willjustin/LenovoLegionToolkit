@@ -6,6 +6,8 @@ using LenovoLegionToolkit.Lib;
 using LenovoLegionToolkit.Lib.Automation;
 using LenovoLegionToolkit.Lib.Extensions;
 using LenovoLegionToolkit.Lib.Listeners;
+using LenovoLegionToolkit.Lib.Messaging;
+using LenovoLegionToolkit.Lib.Messaging.Messages;
 using LenovoLegionToolkit.Lib.Settings;
 using LenovoLegionToolkit.Lib.SoftwareDisabler;
 using LenovoLegionToolkit.Lib.Utils;
@@ -35,9 +37,9 @@ internal class SmartKeyHelper
         _specialKeyListener.Changed += SpecialKeyListener_Changed;
     }
 
-    private async void SpecialKeyListener_Changed(object? sender, SpecialKey e)
+    private async void SpecialKeyListener_Changed(object? sender, SpecialKeyListener.ChangedEventArgs e)
     {
-        if (e != SpecialKey.FnF9)
+        if (e.SpecialKey != SpecialKey.FnF9)
             return;
 
         if (await _fnKeysDisabler.GetStatusAsync() == SoftwareStatus.Enabled)
@@ -48,7 +50,8 @@ internal class SmartKeyHelper
             return;
         }
 
-        _smartKeyDoublePressCancellationTokenSource?.Cancel();
+        if (_smartKeyDoublePressCancellationTokenSource is not null)
+            await _smartKeyDoublePressCancellationTokenSource.CancelAsync();
         _smartKeyDoublePressCancellationTokenSource = new CancellationTokenSource();
 
         var token = _smartKeyDoublePressCancellationTokenSource.Token;
@@ -76,8 +79,8 @@ internal class SmartKeyHelper
             ? _settings.Store.SmartKeyDoublePressActionId
             : _settings.Store.SmartKeySinglePressActionId;
         var actionList = isDoublePress
-            ? _settings.Store.SmartKeyDoublePressActionList.ToList()
-            : _settings.Store.SmartKeySinglePressActionList.ToList();
+            ? _settings.Store.SmartKeyDoublePressActionList
+            : _settings.Store.SmartKeySinglePressActionList;
 
         if (!currentGuid.HasValue)
         {
@@ -104,14 +107,14 @@ internal class SmartKeyHelper
         try
         {
             var pipeline = (await _automationProcessor.GetPipelinesAsync()).FirstOrDefault(p => p.Id == currentGuid);
-            if (pipeline != null)
+            if (pipeline is not null)
             {
                 if (Log.Instance.IsTraceEnabled)
                     Log.Instance.Trace($"Running action {currentGuid} after {(isDoublePress ? "double" : "single")} Fn+F9 press.");
 
                 await _automationProcessor.RunNowAsync(pipeline.Id);
 
-                MessagingCenter.Publish(new Notification(isDoublePress ? NotificationType.SmartKeyDoublePress : NotificationType.SmartKeySinglePress, pipeline.Name ?? string.Empty));
+                MessagingCenter.Publish(new NotificationMessage(isDoublePress ? NotificationType.SmartKeyDoublePress : NotificationType.SmartKeySinglePress, pipeline.Name ?? string.Empty));
             }
         }
         catch (Exception ex)

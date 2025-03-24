@@ -23,32 +23,31 @@ public partial class DeviceInformationWindow
     {
         var mi = await Compatibility.GetMachineInformationAsync();
 
-        _manufacturerLabel.Content = mi.Vendor;
-        _modelLabel.Content = mi.Model;
-        _mtmLabel.Content = mi.MachineType;
-        _serialNumberLabel.Content = mi.SerialNumber;
-        _biosLabel.Content = mi.BiosVersionRaw;
+        _manufacturerLabel.Text = mi.Vendor;
+        _modelLabel.Text = mi.Model;
+        _mtmLabel.Text = mi.MachineType;
+        _serialNumberLabel.Text = mi.SerialNumber;
+        _biosLabel.Text = mi.BiosVersionRaw;
 
         try
         {
             _refreshWarrantyButton.IsEnabled = false;
 
-            _warrantyStartLabel.Content = "-";
-            _warrantyEndLabel.Content = "-";
+            _warrantyStartLabel.Text = "-";
+            _warrantyEndLabel.Text = "-";
             _warrantyLinkCardAction.Tag = null;
             _warrantyLinkCardAction.IsEnabled = false;
 
             var warrantyInfo = await _warrantyChecker.GetWarrantyInfo(mi, forceRefresh);
-            _warrantyLinkCardAction.IsEnabled = false;
 
             if (!warrantyInfo.HasValue)
                 return;
 
-            _warrantyStartLabel.Content = warrantyInfo.Value.Start is not null ? warrantyInfo.Value.Start?.ToString(LocalizationHelper.ShortDateFormat) : "-";
-            _warrantyEndLabel.Content = warrantyInfo.Value.End is not null ? warrantyInfo.Value.End?.ToString(LocalizationHelper.ShortDateFormat) : "-";
+            _warrantyStartLabel.Text = warrantyInfo.Value.Start is not null ? warrantyInfo.Value.Start?.ToString(LocalizationHelper.ShortDateFormat) : "-";
+            _warrantyEndLabel.Text = warrantyInfo.Value.End is not null ? warrantyInfo.Value.End?.ToString(LocalizationHelper.ShortDateFormat) : "-";
             _warrantyLinkCardAction.Tag = warrantyInfo.Value.Link;
-
             _warrantyLinkCardAction.IsEnabled = true;
+            _warrantyInfo.Visibility = Visibility.Visible;
         }
         catch (Exception ex)
         {
@@ -65,7 +64,7 @@ public partial class DeviceInformationWindow
 
     private async void DeviceCardControl_Click(object sender, RoutedEventArgs e)
     {
-        if (((sender as CardControl)?.Content as Label)?.Content is not string str)
+        if (((sender as CardControl)?.Content as TextBlock)?.Text is not { } str)
             return;
 
         try

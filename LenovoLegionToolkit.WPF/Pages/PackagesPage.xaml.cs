@@ -67,7 +67,7 @@ public partial class PackagesPage : IProgress<float>
 
     public void Report(float value) => Dispatcher.Invoke(() =>
     {
-        _loader.IsIndeterminate = !(value > 0);
+        _loader.IsIndeterminate = value < 0;
         _loader.Progress = value;
     });
 
@@ -136,14 +136,18 @@ public partial class PackagesPage : IProgress<float>
 
             var machineType = _machineTypeTextBox.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(machineType) || machineType.Length != 4 || !_osComboBox.TryGetSelectedItem(out OS os))
+            if (string.IsNullOrWhiteSpace(machineType) || machineType.Length != 4 ||
+                !_osComboBox.TryGetSelectedItem(out OS os))
             {
-                await SnackbarHelper.ShowAsync(Resource.PackagesPage_DownloadFailed_Title, Resource.PackagesPage_DownloadFailed_Message);
+                await SnackbarHelper.ShowAsync(Resource.PackagesPage_DownloadFailed_Title,
+                    Resource.PackagesPage_DownloadFailed_Message);
                 return;
             }
 
-            _getPackagesTokenSource?.Cancel();
-            _getPackagesTokenSource = new CancellationTokenSource();
+            if (_getPackagesTokenSource is not null)
+                await _getPackagesTokenSource.CancelAsync();
+
+            _getPackagesTokenSource = new();
 
             var token = _getPackagesTokenSource.Token;
 
@@ -171,6 +175,15 @@ public partial class PackagesPage : IProgress<float>
 
             Reload();
         }
+        catch (UpdateCatalogNotFoundException ex)
+        {
+            if (Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace($"Update catalog not found.", ex);
+
+            await SnackbarHelper.ShowAsync(Resource.PackagesPage_UpdateCatalogNotFound_Title, Resource.PackagesPage_UpdateCatalogNotFound_Message, SnackbarType.Info);
+
+            errorOccurred = true;
+        }
         catch (OperationCanceledException)
         {
             errorOccurred = true;
@@ -180,7 +193,7 @@ public partial class PackagesPage : IProgress<float>
             if (Log.Instance.IsTraceEnabled)
                 Log.Instance.Trace($"Error occurred when downloading packages.", ex);
 
-            await SnackbarHelper.ShowAsync("Something went wrong", "Check if your internet connection is up and running.", SnackbarType.Error);
+            await SnackbarHelper.ShowAsync(Resource.PackagesPage_Error_Title, Resource.PackagesPage_Error_CheckInternet_Message, SnackbarType.Error);
 
             errorOccurred = true;
         }
@@ -189,7 +202,7 @@ public partial class PackagesPage : IProgress<float>
             if (Log.Instance.IsTraceEnabled)
                 Log.Instance.Trace($"Error occurred when downloading packages.", ex);
 
-            await SnackbarHelper.ShowAsync("Something went wrong", ex.Message, SnackbarType.Error);
+            await SnackbarHelper.ShowAsync(Resource.PackagesPage_Error_Title, ex.Message, SnackbarType.Error);
 
             errorOccurred = true;
         }
@@ -222,7 +235,9 @@ public partial class PackagesPage : IProgress<float>
             if (_packages is null)
                 return;
 
-            _filterDebounceCancellationTokenSource?.Cancel();
+            if (_filterDebounceCancellationTokenSource is not null)
+                await _filterDebounceCancellationTokenSource.CancelAsync();
+
             _filterDebounceCancellationTokenSource = new();
 
             await Task.Delay(500, _filterDebounceCancellationTokenSource.Token);
@@ -290,7 +305,7 @@ public partial class PackagesPage : IProgress<float>
         var hideMenuItem = new MenuItem
         {
             SymbolIcon = SymbolRegular.EyeOff24,
-            Header = "Hide",
+            Header = Resource.Hide,
         };
         hideMenuItem.Click += (_, _) =>
         {
@@ -303,7 +318,7 @@ public partial class PackagesPage : IProgress<float>
         var hideAllMenuItem = new MenuItem
         {
             SymbolIcon = SymbolRegular.EyeOff24,
-            Header = "Hide all",
+            Header = Resource.HideAll,
         };
         hideAllMenuItem.Click += (_, _) =>
         {
@@ -338,7 +353,7 @@ public partial class PackagesPage : IProgress<float>
 
         _packagesStackPanel.Children.Clear();
 
-        if (_packages is null || !_packages.Any())
+        if (_packages is null || _packages.Count == 0)
             return;
 
         var packages = SortAndFilter(_packages);
@@ -359,12 +374,13 @@ public partial class PackagesPage : IProgress<float>
                 Text = Resource.PackagesPage_NoMatchingDownloads,
                 Foreground = (SolidColorBrush)FindResource("TextFillColorSecondaryBrush"),
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new(0, 32, 0, 32)
+                Margin = new(0, 32, 0, 32),
+                Focusable = true
             };
             _packagesStackPanel.Children.Add(tb);
         }
 
-        if (_packageDownloaderSettings.Store.HiddenPackages.Any())
+        if (_packageDownloaderSettings.Store.HiddenPackages.Count != 0)
         {
             var clearHidden = new Hyperlink
             {

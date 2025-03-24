@@ -151,13 +151,6 @@
   <data name="AddNew" xml:space="preserve">
     <value>Pievienot jaunu</value>
   </data>
-  <data name="AlwaysActivatePowerPlans_Message" xml:space="preserve">
-    <value>Aktivizēt Enerģijas Plānus pat tad, kad Vantage ir iespējots.
-Šī opcija ir paredzēta tikai ierīcēm, kurām nav pievienoti vairāki Enerģijas Plāni.</value>
-  </data>
-  <data name="AlwaysActivatePowerPlans_Title" xml:space="preserve">
-    <value>Vienmēr aktivizēt Windows Enerģijas Plānus</value>
-  </data>
   <data name="AlwaysOnUSBControl_Message" xml:space="preserve">
     <value>Uzlādējiet USB ierīces, kad dators ir izslēgts vai atrodas miega vai hibernācijas režīmā.</value>
   </data>
@@ -740,9 +733,6 @@ BRĪDINĀJUMS. Ja iebūvētais ekrāns ir izslēgts, šī darbība nedarbosies p
   <data name="IncompatibleDevice_Message" xml:space="preserve">
     <value>Šī ierīce nesader ar Lenovo Legion Toolkit.</value>
   </data>
-  <data name="IncompatibleDevice_Title" xml:space="preserve">
-    <value>Lenovo Legion Toolkit</value>
-  </data>
   <data name="KeyboardBacklightPage_NoCompatibleKeyboardsFound" xml:space="preserve">
     <value>Netika atrastas saderīgas tastatūras</value>
   </data>
@@ -750,7 +740,7 @@ BRĪDINĀJUMS. Ja iebūvētais ekrāns ir izslēgts, šī darbība nedarbosies p
     <value>Tastatūras Izgaismojums</value>
   </data>
   <data name="Keyboard_VantageEnabledWarning_Message" xml:space="preserve">
-    <value>Tastatūras fona apgaismojumu šeit nevar kontrolēt, ja darbojas Vantage vai tā pakalpojumi.</value>
+    <value>Tastatūras fona apgaismojumu šeit nevar kontrolēt, ja darbojas Lenovo Vantage vai tā pakalpojumi.</value>
   </data>
   <data name="Keyboard_VantageEnabledWarning_Title" xml:space="preserve">
     <value>Lenovo Vantage vai tā servisi šobrīd ir ieslēgti</value>
@@ -860,10 +850,6 @@ BRĪDINĀJUMS. Ja iebūvētais ekrāns ir izslēgts, šī darbība nedarbosies p
   <data name="NotificationsSettingsWindow_CapsAndNumLock" xml:space="preserve">
     <value>Burtslēgs un Num Bloķēšana</value>
   </data>
-  <data name="NotificationsSettingsWindow_DontShowNotifications_Message" xml:space="preserve">
-    <value>Atspējo paziņojumu par Fn taustiņu darbībām, piemēram, mikrofona izslēgšanu
-Iespējojiet šo opciju, ja rodas konflikti ar pilnekrāna lietojumprogrammām.</value>
-  </data>
   <data name="NotificationsSettingsWindow_DontShowNotifications_Title" xml:space="preserve">
     <value>Nerādīt paziņojumus</value>
   </data>
@@ -958,9 +944,6 @@ Vienmēr pārliecinieties, vai instalējat pareizas pakotnes.</value>
   <data name="PackagesPage_DownloadInProgress_Title" xml:space="preserve">
     <value>Notiek Lejupielāde</value>
   </data>
-  <data name="PackagesPage_DownloadTo" xml:space="preserve">
-    <value>Lejupielādēt uz</value>
-  </data>
   <data name="Filter" xml:space="preserve">
     <value>Filtrs...</value>
   </data>
@@ -1019,30 +1002,6 @@ Jūs varat režīmus mainīt ar Fn+Q.</value>
   <data name="PowerModeControl_Warning" xml:space="preserve">
     <value>Izvēlētais barošanas režīms var nedarboties pareizi, ja nav pievienots maiņstrāvas adapteris.</value>
   </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Message" xml:space="preserve">
-    <value>Iespējojot šo opciju, ja darbojas Lenovo Vantage vai tā servisi un tie maina barošanas plānus klēpjdatorā, var rasties neparedzēta darbība.</value>
-  </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Title" xml:space="preserve">
-    <value>Vai esat pārliecināts?</value>
-  </data>
-  <data name="PowerPlansWindow_BalanceMode" xml:space="preserve">
-    <value>Balancētais režīms</value>
-  </data>
-  <data name="PowerPlansWindow_CustomMode" xml:space="preserve">
-    <value>Pielāgotais režīms</value>
-  </data>
-  <data name="PowerPlansWindow_DefaultPowerPlan" xml:space="preserve">
-    <value>Noklusējums</value>
-  </data>
-  <data name="PowerPlansWindow_PerformanceMode" xml:space="preserve">
-    <value>Veiktspējas režīms</value>
-  </data>
-  <data name="PowerPlansWindow_QuietMode" xml:space="preserve">
-    <value>Klusais režīms</value>
-  </data>
-  <data name="PowerPlansWindow_Title" xml:space="preserve">
-    <value>Barošanas Plāni</value>
-  </data>
   <data name="RGBKeyboardBacklightAutomationStepControl_Message" xml:space="preserve">
     <value>Pielāgojiet tastatūras fona apgaismojuma iestatījumu.</value>
   </data>
@@ -1060,6 +1019,9 @@ Jūs varat režīmus mainīt ar Fn+Q.</value>
   </data>
   <data name="RGBKeyboardBacklightControl_Preset3" xml:space="preserve">
     <value>Priekšiestatījums 3</value>
+  </data>
+  <data name="RGBKeyboardBacklightControl_Preset4" xml:space="preserve">
+    <value>Priekšiestatījums 4</value>
   </data>
   <data name="RGBKeyboardBacklightControl_PresetOff" xml:space="preserve">
     <value>Atspējots</value>
@@ -1182,10 +1144,10 @@ Pēc šīs opcijas maiņas ieteicams restartēt datoru.</value>
     <value>Atspējot Lenovo Hotkeys</value>
   </data>
   <data name="SettingsPage_DisableVantage_Error_Message" xml:space="preserve">
-    <value>Iespējams, Vantage un/vai ImController nav pareizi atspējots</value>
+    <value>Iespējams, Lenovo Vantage un/vai ImController nav pareizi atspējots</value>
   </data>
   <data name="SettingsPage_DisableVantage_Error_Title" xml:space="preserve">
-    <value>Nevarēja atspējot Vantage un/vai ImController</value>
+    <value>Nevarēja atspējot Lenovo Vantage un/vai ImController</value>
   </data>
   <data name="SettingsPage_DisableVantage_Message" xml:space="preserve">
     <value>Atspējojiet Lenovo Vantage un ImController, neatinstalējot tos.
@@ -1207,10 +1169,10 @@ Pēc šīs opcijas maiņas ieteicams restartēt datoru.</value>
     <value>Nevarēja iespējot Legion Hotkeys</value>
   </data>
   <data name="SettingsPage_EnableVantage_Error_Message" xml:space="preserve">
-    <value>Iespējams, Vantage un/vai ImController nav pareizi iespējots</value>
+    <value>Lenovo Iespējams, Vantage un/vai ImController nav pareizi iespējots</value>
   </data>
   <data name="SettingsPage_EnableVantage_Error_Title" xml:space="preserve">
-    <value>Nevarēja iespējot Vantage un/vai ImController</value>
+    <value>Nevarēja iespējot Lenovo Vantage un/vai ImController</value>
   </data>
   <data name="SettingsPage_ExcludeRefreshRates_Message" xml:space="preserve">
     <value>Varat izslēgt atsvaidzināšanas ātrumus, lai padarītu Fn+R saīsni noderīgāku.</value>
@@ -1236,7 +1198,7 @@ Pēc šīs opcijas maiņas ieteicams restartēt datoru.</value>
   <data name="SettingsPage_Notifications_Title" xml:space="preserve">
     <value>Paziņojumi</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Title" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlans_Title" xml:space="preserve">
     <value>Barošanas Plāni</value>
   </data>
   <data name="SettingsPage_SmartKeyDoublePressAction_Message" xml:space="preserve">
@@ -1442,12 +1404,6 @@ Ja izvēlaties turpināt, reģistrēšana tiks iespējota automātiski.</value>
   </data>
   <data name="WhiteKeyboardBacklightControl_Title" xml:space="preserve">
     <value>Tastatūras izgaismojums</value>
-  </data>
-  <data name="WinKeyAutomationStepControl_Message" xml:space="preserve">
-    <value>Iespējots vai atspējots Windows taustiņš.</value>
-  </data>
-  <data name="WinKeyAutomationStepControl_Title" xml:space="preserve">
-    <value>Windows Taustiņš</value>
   </data>
   <data name="WinKeyControl_Message" xml:space="preserve">
     <value>Strādā tikai ar iebūvēto taustatūru.</value>
@@ -1716,13 +1672,13 @@ Peles pārvietošana vai tastatūras nospiešana pamodinās ekrānus.</value>
   <data name="PowerPlansWindow_AoAcWarning_Message" xml:space="preserve">
     <value>Windows ziņo, ka šī ierīce atbalsta Moderno Gaidstāvi. Enerģijas plānu izmantošana, kas nav Līdzsvarots, var izraisīt negaidītu rīcību.</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Message" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlans_Message" xml:space="preserve">
     <value>Atlasiet Windows Barošanas Plānus, kas jālieto, mainot Barošanas Režīmu.</value>
   </data>
   <data name="SettingsPage_Power_Title" xml:space="preserve">
     <value>Jauda</value>
   </data>
-  <data name="SettingsPage_PowerPlansControlPanel_Title" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlansControlPanel_Title" xml:space="preserve">
     <value>Barošanas Plāna opcijas Windows Vadības Panelī</value>
   </data>
   <data name="PoweredOff" xml:space="preserve">
@@ -1865,13 +1821,7 @@ BRĪDINĀJUMS. Ja nav pieejams atsevišķs GPU, šī darbība nedarbosies pareiz
     <value>Pielāgotā Režīma iestatījumi netiks pielietoti pareizi kamēr Lenovo Vantage un tā servisi ir ieslēgti.</value>
   </data>
   <data name="GodModeSettingsWindow_LegionZoneWarning_Title" xml:space="preserve">
-    <value>Pielāgotā Režīma iestatījumi netiks pielietoti pareizi kamēr LegionZone un tā servisi ir ieslēgti.</value>
-  </data>
-  <data name="DGPU_Connected_Title" xml:space="preserve">
-    <value>DGPU pieslēdzies</value>
-  </data>
-  <data name="DGPU_Disconnected_Title" xml:space="preserve">
-    <value>DGPU atslēdzies</value>
+    <value>Pielāgotā Režīma iestatījumi netiks pielietoti pareizi kamēr Legion Zone un tā servisi ir ieslēgti.</value>
   </data>
   <data name="ComboBoxHybridModeAutomationStepControl_Title" xml:space="preserve">
     <value>GPU Darbošanās režīms</value>

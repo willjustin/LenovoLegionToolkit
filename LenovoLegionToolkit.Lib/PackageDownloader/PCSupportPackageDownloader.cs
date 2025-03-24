@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,11 +8,10 @@ using LenovoLegionToolkit.Lib.Extensions;
 
 namespace LenovoLegionToolkit.Lib.PackageDownloader;
 
-public class PCSupportPackageDownloader : AbstractPackageDownloader
+public class PCSupportPackageDownloader(HttpClientFactory httpClientFactory)
+    : AbstractPackageDownloader(httpClientFactory)
 {
     private const string CATALOG_BASE_URL = "https://pcsupport.lenovo.com/us/en/api/v4/downloads/drivers?productId=";
-
-    public PCSupportPackageDownloader(HttpClientFactory httpClientFactory) : base(httpClientFactory) { }
 
     public override async Task<List<Package>> GetPackagesAsync(string machineType, OS os, IProgress<float>? progress = null, CancellationToken token = default)
     {
@@ -36,7 +34,7 @@ public class PCSupportPackageDownloader : AbstractPackageDownloader
         var downloadsNode = catalogJsonNode?["body"]?["DownloadItems"]?.AsArray();
 
         if (downloadsNode is null)
-            return new();
+            return [];
 
         var packages = new List<Package>();
         foreach (var downloadNode in downloadsNode)
@@ -44,7 +42,7 @@ public class PCSupportPackageDownloader : AbstractPackageDownloader
             if (!IsCompatible(downloadNode, osString))
                 continue;
 
-            var package = await ParsePackageAsync(httpClient, downloadNode!, token).ConfigureAwait(false);
+            var package = ParsePackage(downloadNode!);
             if (package is null)
                 continue;
 
@@ -54,7 +52,7 @@ public class PCSupportPackageDownloader : AbstractPackageDownloader
         return packages;
     }
 
-    private static async Task<Package?> ParsePackageAsync(HttpClient httpClient, JsonNode downloadNode, CancellationToken token)
+    private static Package? ParsePackage(JsonNode downloadNode)
     {
         var id = downloadNode["ID"]!.ToJsonString();
         var category = downloadNode["Category"]!["Name"]!.ToString();
@@ -63,31 +61,30 @@ public class PCSupportPackageDownloader : AbstractPackageDownloader
         var version = downloadNode["SummaryInfo"]!["Version"]!.ToString();
 
         var filesNode = downloadNode["Files"]!.AsArray();
-        var mainFileNode = filesNode.FirstOrDefault(n => n!["TypeString"]!.ToString() == "EXE") ?? filesNode.FirstOrDefault();
+        var mainFileNode = filesNode.FirstOrDefault(n => n!["TypeString"]!.ToString().Equals("exe", StringComparison.InvariantCultureIgnoreCase))
+                           ?? filesNode.FirstOrDefault(n => n!["TypeString"]!.ToString().Equals("zip", StringComparison.InvariantCultureIgnoreCase))
+                           ?? filesNode.FirstOrDefault();
 
         if (mainFileNode is null)
             return null;
 
         var fileLocation = mainFileNode["URL"]!.ToString();
-        var fileName = fileLocation[(fileLocation.LastIndexOf('/') + 1)..];
+        var fileName = new Uri(fileLocation).Segments.LastOrDefault("file");
         var fileSize = mainFileNode["Size"]!.ToString();
         var fileCrc = mainFileNode["SHA256"]?.ToString();
         var releaseDateUnix = long.Parse(mainFileNode["Date"]!["Unix"]!.ToString());
         var releaseDate = DateTimeOffset.FromUnixTimeMilliseconds(releaseDateUnix).DateTime;
 
-        string? readme = null;
-        var readmeFileNode = downloadNode["Files"]!.AsArray().FirstOrDefault(n => n!["TypeString"]!.ToString() == "TXT README");
-        if (readmeFileNode is not null)
-        {
-            var readmeLocation = readmeFileNode["URL"]!.ToString();
-            readme = await GetReadmeAsync(httpClient, readmeLocation, token).ConfigureAwait(false);
-        }
+        var readmeFileNode = filesNode.FirstOrDefault(n => n!["TypeString"]!.ToString().Equals("txt readme", StringComparison.InvariantCultureIgnoreCase))
+                              ?? filesNode.FirstOrDefault(n => n!["TypeString"]!.ToString().Equals("html", StringComparison.InvariantCultureIgnoreCase));
+
+        var readme = readmeFileNode?["URL"]?.ToString();
 
         return new()
         {
             Id = id,
             Title = title,
-            Description = (title == description) ? string.Empty : description,
+            Description = title == description ? string.Empty : description,
             Version = version,
             Category = category,
             FileName = fileName,

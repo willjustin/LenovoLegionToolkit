@@ -446,18 +446,54 @@
     <value>Короткая</value>
   </data>
   <data name="ModifierKey_Shift" xml:space="preserve">
-	  <value>Shift</value>
+    <value>Shift</value>
   </data>
   <data name="ModifierKey_Ctrl" xml:space="preserve">
-	  <value>Ctrl</value>
+    <value>Ctrl</value>
   </data>
   <data name="ModifierKey_Alt" xml:space="preserve">
-	  <value>Alt</value>
+    <value>Alt</value>
   </data>
   <data name="BatteryNightChargeState_On" xml:space="preserve">
-	  <value>Вкл.</value>
+    <value>Вкл.</value>
   </data>
   <data name="BatteryNightChargeState_Off" xml:space="preserve">
-	  <value>Откл.</value>
+    <value>Откл.</value>
+  </data>
+  <data name="SpeakerState_Mute" xml:space="preserve">
+    <value>Выкл. звук</value>
+  </data>
+  <data name="SpeakerState_Unmute" xml:space="preserve">
+    <value>Вкл. звук</value>
+  </data>
+  <data name="PowerModeMappingMode_Disabled" xml:space="preserve">
+    <value>Отключен</value>
+  </data>
+  <data name="PowerModeMappingMode_WindowsPowerMode" xml:space="preserve">
+    <value>Схема питания Windows</value>
+  </data>
+  <data name="PowerModeMappingMode_WindowsPowerPlan" xml:space="preserve">
+    <value>Режим питания Windows</value>
+  </data>
+  <data name="RGBKeyboardBacklightPreset_Four" xml:space="preserve">
+    <value>Пресет 4</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerDay" xml:space="preserve">
+    <value>Ежедневно</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerHour" xml:space="preserve">
+    <value>Каждый час</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerMonth" xml:space="preserve">
+    <value>Ежемесячно</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerThreeHours" xml:space="preserve">
+    <value>Каждые 3 часа</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerTwelveHours" xml:space="preserve">
+    <value>Каждые 12 часов</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerWeek" xml:space="preserve">
+    <value>Еженедельно</value>
   </data>
 </root>

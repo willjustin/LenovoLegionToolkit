@@ -8,7 +8,7 @@ namespace LenovoLegionToolkit.WPF.Windows.Automation.TabItemContent;
 public partial class UserInactivityPipelineTriggerTabItemContent : IAutomationPipelineTriggerTabItemContent<IUserInactivityPipelineTrigger>
 {
     private static readonly TimeSpan[] TimeSpans =
-    {
+    [
         TimeSpan.FromSeconds(10),
         TimeSpan.FromSeconds(30),
         TimeSpan.FromMinutes(1),
@@ -18,10 +18,13 @@ public partial class UserInactivityPipelineTriggerTabItemContent : IAutomationPi
         TimeSpan.FromMinutes(10),
         TimeSpan.FromMinutes(15),
         TimeSpan.FromMinutes(30)
-    };
+    ];
+
+    private readonly IUserInactivityPipelineTrigger _trigger;
 
     public UserInactivityPipelineTriggerTabItemContent(IUserInactivityPipelineTrigger trigger)
     {
+        _trigger = trigger;
         InitializeComponent();
 
         _timeoutComboBox.SetItems(TimeSpans, trigger.InactivityTimeSpan, t => t.Humanize());
@@ -29,7 +32,9 @@ public partial class UserInactivityPipelineTriggerTabItemContent : IAutomationPi
 
     public IUserInactivityPipelineTrigger GetTrigger()
     {
-        var t = _timeoutComboBox.TryGetSelectedItem(out TimeSpan tt) ? tt : TimeSpan.FromSeconds(30);
-        return new UserInactivityAutomationPipelineTrigger(t);
+        var state = _timeoutComboBox.TryGetSelectedItem(out TimeSpan tt)
+            ? tt
+            : TimeSpan.FromSeconds(30);
+        return _trigger.DeepCopy(state);
     }
 }

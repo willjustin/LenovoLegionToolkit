@@ -3,11 +3,16 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using LenovoLegionToolkit.Lib;
+using LenovoLegionToolkit.Lib.Listeners;
+using LenovoLegionToolkit.Lib.Messaging;
+using LenovoLegionToolkit.Lib.Messaging.Messages;
 using LenovoLegionToolkit.Lib.Settings;
+using LenovoLegionToolkit.Lib.SoftwareDisabler;
 using LenovoLegionToolkit.Lib.Utils;
 using LenovoLegionToolkit.WPF.Extensions;
 using LenovoLegionToolkit.WPF.Pages;
@@ -15,23 +20,31 @@ using LenovoLegionToolkit.WPF.Resources;
 using LenovoLegionToolkit.WPF.Utils;
 using LenovoLegionToolkit.WPF.Windows.Utils;
 using Microsoft.Xaml.Behaviors.Core;
+using Windows.Win32;
+using Windows.Win32.System.Threading;
 using Wpf.Ui.Controls;
 #if !DEBUG
 using System.Reflection;
 using LenovoLegionToolkit.Lib.Extensions;
 #endif
 
+#pragma warning disable CA1416
+
 namespace LenovoLegionToolkit.WPF.Windows;
 
 public partial class MainWindow
 {
     private readonly ApplicationSettings _applicationSettings = IoCContainer.Resolve<ApplicationSettings>();
+    private readonly SpecialKeyListener _specialKeyListener = IoCContainer.Resolve<SpecialKeyListener>();
+    private readonly VantageDisabler _vantageDisabler = IoCContainer.Resolve<VantageDisabler>();
+    private readonly LegionZoneDisabler _legionZoneDisabler = IoCContainer.Resolve<LegionZoneDisabler>();
+    private readonly FnKeysDisabler _fnKeysDisabler = IoCContainer.Resolve<FnKeysDisabler>();
     private readonly UpdateChecker _updateChecker = IoCContainer.Resolve<UpdateChecker>();
 
     private TrayHelper? _trayHelper;
 
     public bool TrayTooltipEnabled { get; init; } = true;
-
+    public bool DisableConflictingSoftwareWarning { get; set; }
     public bool SuppressClosingEventHandler { get; set; }
 
     public Snackbar Snackbar => _snackbar;
@@ -48,19 +61,20 @@ public partial class MainWindow
         StateChanged += MainWindow_StateChanged;
 
 #if DEBUG
-        _title.Text += Debugger.IsAttached ? " [DEBUG ATTACHED]" : " [DEBUG]";
+        _title.Text += Debugger.IsAttached ? " [DEBUGGER ATTACHED]" : " [DEBUG]";
 #else
         var version = Assembly.GetEntryAssembly()?.GetName().Version;
         if (version is not null && version.IsBeta())
             _title.Text += " [BETA]";
 #endif
 
-
         if (Log.Instance.IsTraceEnabled)
         {
             _title.Text += " [LOGGING ENABLED]";
             _openLogIndicator.Visibility = Visibility.Visible;
         }
+
+        Title = _title.Text;
     }
 
     private void MainWindow_SourceInitialized(object? sender, EventArgs e) => RestoreSize();
@@ -74,9 +88,16 @@ public partial class MainWindow
 
         SmartKeyHelper.Instance.BringToForeground = () => Dispatcher.Invoke(BringToForeground);
 
+        _specialKeyListener.Changed += (_, args) =>
+        {
+            if (args.SpecialKey == SpecialKey.FnN)
+                Dispatcher.Invoke(BringToForeground);
+        };
+
         _contentGrid.Visibility = Visibility.Visible;
 
         LoadDeviceInfo();
+        UpdateIndicators();
         CheckForUpdates();
 
         InputBindings.Add(new KeyBinding(new ActionCommand(_navigationStore.NavigateToNext), Key.Tab, ModifierKeys.Control));
@@ -130,9 +151,11 @@ public partial class MainWindow
         switch (WindowState)
         {
             case WindowState.Minimized:
+                SetEfficiencyMode(true);
                 SendToTray();
                 break;
             case WindowState.Normal:
+                SetEfficiencyMode(false);
                 BringToForeground();
                 break;
         }
@@ -146,29 +169,35 @@ public partial class MainWindow
         CheckForUpdates();
     }
 
-    private void OpenLogIndicator_Click(object sender, MouseButtonEventArgs e)
-    {
-        try
-        {
-            if (!Directory.Exists(Folders.AppData))
-                return;
+    private void OpenLogIndicator_Click(object sender, MouseButtonEventArgs e) => OpenLog();
 
-            Process.Start("explorer", Log.Instance.LogPath);
-        }
-        catch (Exception ex)
-        {
-            if (Log.Instance.IsTraceEnabled)
-                Log.Instance.Trace($"Failed to open log.", ex);
-        }
+    private void OpenLogIndicator_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key is not Key.Enter and not Key.Space)
+            return;
+
+        OpenLog();
     }
 
-    private void DeviceInfoIndicator_Click(object sender, RoutedEventArgs e)
+    private void DeviceInfoIndicator_Click(object sender, MouseButtonEventArgs e) => ShowDeviceInfoWindow();
+
+    private void DeviceInfoIndicator_KeyDown(object sender, KeyEventArgs e)
     {
-        var window = new DeviceInformationWindow { Owner = this };
-        window.ShowDialog();
+        if (e.Key is not Key.Enter and not Key.Space)
+            return;
+
+        ShowDeviceInfoWindow();
     }
 
     private void UpdateIndicator_Click(object sender, RoutedEventArgs e) => ShowUpdateWindow();
+
+    private void UpdateIndicator_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key is not Key.Enter and not Key.Space)
+            return;
+
+        ShowUpdateWindow();
+    }
 
     private void LoadDeviceInfo()
     {
@@ -180,25 +209,71 @@ public partial class MainWindow
             }, TaskScheduler.FromCurrentSynchronizationContext());
     }
 
-    private void CheckForUpdates()
+    private void UpdateIndicators()
     {
-        Task.Run(_updateChecker.CheckAsync)
-            .ContinueWith(updatesAvailable =>
+        if (DisableConflictingSoftwareWarning)
+            return;
+
+        _vantageDisabler.OnRefreshed += (_, e) => Dispatcher.Invoke(() =>
+        {
+            _vantageIndicator.Visibility = e.Status == SoftwareStatus.Enabled ? Visibility.Visible : Visibility.Collapsed;
+        });
+
+        _legionZoneDisabler.OnRefreshed += (_, e) => Dispatcher.Invoke(() =>
+        {
+            _legionZoneIndicator.Visibility = e.Status == SoftwareStatus.Enabled ? Visibility.Visible : Visibility.Collapsed;
+        });
+
+        _fnKeysDisabler.OnRefreshed += (_, e) => Dispatcher.Invoke(() =>
+        {
+            _fnKeysIndicator.Visibility = e.Status == SoftwareStatus.Enabled ? Visibility.Visible : Visibility.Collapsed;
+        });
+
+        Task.Run(async () =>
+        {
+            _ = await _vantageDisabler.GetStatusAsync().ConfigureAwait(false);
+            _ = await _legionZoneDisabler.GetStatusAsync().ConfigureAwait(false);
+            _ = await _fnKeysDisabler.GetStatusAsync().ConfigureAwait(false);
+        });
+    }
+
+    public void CheckForUpdates(bool manualCheck = false)
+    {
+        Task.Run(() => _updateChecker.CheckAsync(manualCheck))
+            .ContinueWith(async updatesAvailable =>
             {
                 var result = updatesAvailable.Result;
                 if (result is null)
                 {
                     _updateIndicator.Visibility = Visibility.Collapsed;
-                    return;
+
+                    if (manualCheck && WindowState != WindowState.Minimized)
+                    {
+                        switch (_updateChecker.Status)
+                        {
+                            case UpdateCheckStatus.Success:
+                                await SnackbarHelper.ShowAsync(Resource.MainWindow_CheckForUpdates_Success_Title);
+                                break;
+                            case UpdateCheckStatus.RateLimitReached:
+                                await SnackbarHelper.ShowAsync(Resource.MainWindow_CheckForUpdates_Error_Title, Resource.MainWindow_CheckForUpdates_Error_ReachedRateLimit_Message, SnackbarType.Error);
+                                break;
+                            case UpdateCheckStatus.Error:
+                                await SnackbarHelper.ShowAsync(Resource.MainWindow_CheckForUpdates_Error_Title, Resource.MainWindow_CheckForUpdates_Error_Unknown_Message, SnackbarType.Error);
+                                break;
+                        }
+                    }
                 }
+                else
+                {
+                    var versionNumber = result.ToString(3);
 
-                var versionNumber = result.ToString(3);
+                    _updateIndicatorText.Text =
+                        string.Format(Resource.MainWindow_UpdateAvailableWithVersion, versionNumber);
+                    _updateIndicator.Visibility = Visibility.Visible;
 
-                _updateIndicatorText.Text = string.Format(Resource.MainWindow_UpdateAvailableWithVersion, versionNumber);
-                _updateIndicator.Visibility = Visibility.Visible;
-
-                if (WindowState == WindowState.Minimized)
-                    MessagingCenter.Publish(new Notification(NotificationType.UpdateAvailable, versionNumber));
+                    if (WindowState == WindowState.Minimized)
+                        MessagingCenter.Publish(new NotificationMessage(NotificationType.UpdateAvailable, versionNumber));
+                }
             }, TaskScheduler.FromCurrentSynchronizationContext());
     }
 
@@ -210,7 +285,8 @@ public partial class MainWindow
         Width = Math.Max(MinWidth, _applicationSettings.Store.WindowSize.Value.Width);
         Height = Math.Max(MinHeight, _applicationSettings.Store.WindowSize.Value.Height);
 
-        var desktopWorkingArea = ScreenHelper.GetPrimaryDesktopWorkingArea();
+        ScreenHelper.UpdateScreenInfos();
+        var desktopWorkingArea = ScreenHelper.PrimaryScreen.WorkArea;
 
         Left = (desktopWorkingArea.Width - Width) / 2 + desktopWorkingArea.Left;
         Top = (desktopWorkingArea.Height - Height) / 2 + desktopWorkingArea.Top;
@@ -226,15 +302,74 @@ public partial class MainWindow
 
     private void BringToForeground() => WindowExtensions.BringToForeground(this);
 
-    public void SendToTray()
+    private static void OpenLog()
     {
-        Hide();
-        ShowInTaskbar = false;
+        try
+        {
+            if (!Directory.Exists(Folders.AppData))
+                return;
+
+            Process.Start("explorer", Log.Instance.LogPath);
+        }
+        catch (Exception ex)
+        {
+            if (Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace($"Failed to open log.", ex);
+        }
+    }
+
+    private void ShowDeviceInfoWindow()
+    {
+        var window = new DeviceInformationWindow { Owner = this };
+        window.ShowDialog();
     }
 
     public void ShowUpdateWindow()
     {
         var window = new UpdateWindow { Owner = this };
         window.ShowDialog();
+    }
+
+    public void SendToTray()
+    {
+        if (!_applicationSettings.Store.MinimizeToTray)
+            return;
+
+        SetEfficiencyMode(true);
+        Hide();
+        ShowInTaskbar = true;
+    }
+
+    private static unsafe void SetEfficiencyMode(bool enabled)
+    {
+        var ptr = IntPtr.Zero;
+
+        try
+        {
+            var priorityClass = enabled
+                ? PROCESS_CREATION_FLAGS.IDLE_PRIORITY_CLASS
+                : PROCESS_CREATION_FLAGS.NORMAL_PRIORITY_CLASS;
+            PInvoke.SetPriorityClass(PInvoke.GetCurrentProcess(), priorityClass);
+
+            var state = new PROCESS_POWER_THROTTLING_STATE
+            {
+                Version = PInvoke.PROCESS_POWER_THROTTLING_CURRENT_VERSION,
+                ControlMask = PInvoke.PROCESS_POWER_THROTTLING_EXECUTION_SPEED,
+                StateMask = enabled ? PInvoke.PROCESS_POWER_THROTTLING_EXECUTION_SPEED : 0,
+            };
+
+            var size = Marshal.SizeOf<PROCESS_POWER_THROTTLING_STATE>();
+            ptr = Marshal.AllocHGlobal(size);
+            Marshal.StructureToPtr(state, ptr, false);
+
+            PInvoke.SetProcessInformation(PInvoke.GetCurrentProcess(),
+                PROCESS_INFORMATION_CLASS.ProcessPowerThrottling,
+                ptr.ToPointer(),
+                (uint)size);
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(ptr);
+        }
     }
 }

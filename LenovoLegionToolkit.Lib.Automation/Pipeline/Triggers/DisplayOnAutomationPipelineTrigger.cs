@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace LenovoLegionToolkit.Lib.Automation.Pipeline.Triggers;
 
-public class DisplayOnAutomationPipelineTrigger : INativeWindowsMessagePipelineTrigger
+public class DisplayOnAutomationPipelineTrigger : INativeWindowsMessagePipelineTrigger, IDisallowDuplicatesAutomationPipelineTrigger
 {
     [JsonIgnore]
     public string DisplayName => Resource.DisplayOnAutomationPipelineTrigger_DisplayName;
@@ -24,7 +24,7 @@ public class DisplayOnAutomationPipelineTrigger : INativeWindowsMessagePipelineT
         return Task.FromResult(result);
     }
 
-    public void UpdateEnvironment(ref AutomationEnvironment environment) => environment.DisplayOn = true;
+    public void UpdateEnvironment(AutomationEnvironment environment) => environment.DisplayOn = true;
 
     public IAutomationPipelineTrigger DeepCopy() => new DisplayOnAutomationPipelineTrigger();
 

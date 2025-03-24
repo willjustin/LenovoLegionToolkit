@@ -10,23 +10,25 @@ using LenovoLegionToolkit.Lib.Utils;
 
 namespace LenovoLegionToolkit.Lib.Controllers.GodMode;
 
-public class GodModeControllerV2 : AbstractGodModeController
+public class GodModeControllerV2(
+    GodModeSettings settings,
+    VantageDisabler vantageDisabler,
+    LegionZoneDisabler legionZoneDisabler)
+    : AbstractGodModeController(settings)
 {
-    public GodModeControllerV2(GodModeSettings settings, VantageDisabler vantageDisabler, LegionZoneDisabler legionZoneDisabler) : base(settings, vantageDisabler, legionZoneDisabler) { }
-
     public override Task<bool> NeedsVantageDisabledAsync() => Task.FromResult(true);
     public override Task<bool> NeedsLegionZoneDisabledAsync() => Task.FromResult(true);
 
     public override async Task ApplyStateAsync()
     {
-        if (await VantageDisabler.GetStatusAsync().ConfigureAwait(false) == SoftwareStatus.Enabled)
+        if (await vantageDisabler.GetStatusAsync().ConfigureAwait(false) == SoftwareStatus.Enabled)
         {
             if (Log.Instance.IsTraceEnabled)
                 Log.Instance.Trace($"Can't correctly apply state when Vantage is running.");
             return;
         }
 
-        if (await LegionZoneDisabler.GetStatusAsync().ConfigureAwait(false) == SoftwareStatus.Enabled)
+        if (await legionZoneDisabler.GetStatusAsync().ConfigureAwait(false) == SoftwareStatus.Enabled)
         {
             if (Log.Instance.IsTraceEnabled)
                 Log.Instance.Trace($"Can't correctly apply state when Legion Zone is running.");
@@ -54,26 +56,79 @@ public class GodModeControllerV2 : AbstractGodModeController
             { CapabilityID.GPUToCPUDynamicBoost, preset.GPUToCPUDynamicBoost },
         };
 
+        var defaultPresets = await GetDefaultsInOtherPowerModesAsync().ConfigureAwait(false);
+        var defaultPerformancePreset = defaultPresets.GetValueOrNull(PowerModeState.Performance);
+
+        var defaultPerformanceSettings = new Dictionary<CapabilityID, int?>
+        {
+            { CapabilityID.CPULongTermPowerLimit, defaultPerformancePreset?.CPULongTermPowerLimit },
+            { CapabilityID.CPUShortTermPowerLimit, defaultPerformancePreset?.CPUShortTermPowerLimit },
+            { CapabilityID.CPUPeakPowerLimit, defaultPerformancePreset?.CPUPeakPowerLimit },
+            { CapabilityID.CPUCrossLoadingPowerLimit, defaultPerformancePreset?.CPUCrossLoadingPowerLimit },
+            { CapabilityID.CPUPL1Tau, defaultPerformancePreset?.CPUPL1Tau },
+            { CapabilityID.APUsPPTPowerLimit, defaultPerformancePreset?.APUsPPTPowerLimit },
+            { CapabilityID.CPUTemperatureLimit, defaultPerformancePreset?.CPUTemperatureLimit },
+            { CapabilityID.GPUPowerBoost, defaultPerformancePreset?.GPUPowerBoost },
+            { CapabilityID.GPUConfigurableTGP, defaultPerformancePreset?.GPUConfigurableTGP  },
+            { CapabilityID.GPUTemperatureLimit, defaultPerformancePreset?.GPUTemperatureLimit },
+            { CapabilityID.GPUTotalProcessingPowerTargetOnAcOffsetFromBaseline, defaultPerformancePreset?.GPUTotalProcessingPowerTargetOnAcOffsetFromBaseline },
+            { CapabilityID.GPUToCPUDynamicBoost, defaultPerformancePreset?.GPUToCPUDynamicBoost },
+        };
+
+        var failAllowedSettings = new[]
+        {
+            CapabilityID.GPUPowerBoost,
+            CapabilityID.GPUConfigurableTGP,
+            CapabilityID.GPUTemperatureLimit,
+            CapabilityID.GPUTotalProcessingPowerTargetOnAcOffsetFromBaseline,
+            CapabilityID.GPUToCPUDynamicBoost,
+        };
+
         var fanTable = preset.FanTable ?? await GetDefaultFanTableAsync().ConfigureAwait(false);
         var fanFullSpeed = preset.FanFullSpeed ?? false;
 
         foreach (var (id, value) in settings)
         {
-            if (!value.HasValue)
-                continue;
-
-            try
+            if (value.HasValue)
             {
-                if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Applying {id}: {value}...");
+                try
+                {
+                    if (Log.Instance.IsTraceEnabled)
+                        Log.Instance.Trace($"Applying {id}: {value}...");
 
-                await SetValueAsync(id, value.Value).ConfigureAwait(false);
+                    await SetValueAsync(id, value.Value).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    if (Log.Instance.IsTraceEnabled)
+                        Log.Instance.Trace($"Failed to apply {id}. [value={value}]", ex);
+
+                    if (!failAllowedSettings.Contains(id))
+                        throw;
+                }
             }
-            catch (Exception ex)
+            else if (defaultPerformanceSettings.GetValueOrDefault(id) is { } defaultPerformanceValue)
+            {
+                try
+                {
+                    if (Log.Instance.IsTraceEnabled)
+                        Log.Instance.Trace($"Applying default {id}: {defaultPerformanceValue}...");
+
+                    await SetValueAsync(id, defaultPerformanceValue).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    if (Log.Instance.IsTraceEnabled)
+                        Log.Instance.Trace($"Failed to apply default {id}. [value={defaultPerformanceValue}]", ex);
+
+                    if (!failAllowedSettings.Contains(id))
+                        throw;
+                }
+            }
+            else
             {
                 if (Log.Instance.IsTraceEnabled)
-                    Log.Instance.Trace($"Failed to apply {id}. [value={value}]", ex);
-                throw;
+                    Log.Instance.Trace($"Failed to apply {id}, because neither value nor default value was available.");
             }
         }
 
@@ -140,7 +195,7 @@ public class GodModeControllerV2 : AbstractGodModeController
 
     public override Task<FanTable> GetMinimumFanTableAsync()
     {
-        var fanTable = new FanTable(new ushort[] { 1, 1, 1, 1, 1, 1, 1, 1, 3, 5 });
+        var fanTable = new FanTable([1, 1, 1, 1, 1, 1, 1, 1, 3, 5]);
         return Task.FromResult(fanTable);
     }
 
@@ -193,7 +248,7 @@ public class GodModeControllerV2 : AbstractGodModeController
             if (Log.Instance.IsTraceEnabled)
                 Log.Instance.Trace($"Failed to get defaults in other power modes.", ex);
 
-            return new Dictionary<PowerModeState, GodModeDefaults>();
+            return [];
         }
     }
 
@@ -221,10 +276,15 @@ public class GodModeControllerV2 : AbstractGodModeController
         foreach (var c in capabilityData)
         {
             var value = await GetValueAsync(c.Id).OrNullIfException().ConfigureAwait(false) ?? c.DefaultValue;
-            var steps = discreteData.GetValueOrDefault(c.Id) ?? Array.Empty<int>();
+            var steps = discreteData.GetValueOrDefault(c.Id) ?? [];
 
             if (c.Step == 0 && steps.Length < 1)
+            {
+                if (Log.Instance.IsTraceEnabled)
+                    Log.Instance.Trace($"Skipping {c.Id}... [idRaw={(int)c.Id:X}, defaultValue={c.DefaultValue}, min={c.Min}, max={c.Max}, step={c.Step}, steps={string.Join(", ", steps)}]");
+
                 continue;
+            }
 
             if (Log.Instance.IsTraceEnabled)
                 Log.Instance.Trace($"Creating StepperValue {c.Id}... [idRaw={(int)c.Id:X}, defaultValue={c.DefaultValue}, min={c.Min}, max={c.Max}, step={c.Step}, steps={string.Join(", ", steps)}]");
@@ -288,10 +348,12 @@ public class GodModeControllerV2 : AbstractGodModeController
         return WMI.LenovoOtherMethod.GetFeatureValueAsync(idRaw);
     }
 
-    private static Task SetValueAsync(CapabilityID id, StepperValue value)
+    private static Task SetValueAsync(CapabilityID id, StepperValue value) => SetValueAsync(id, value.Value);
+
+    private static Task SetValueAsync(CapabilityID id, int value)
     {
         var idRaw = (uint)id & 0xFFFF00FF;
-        return WMI.LenovoOtherMethod.SetFeatureValueAsync(idRaw, value.Value);
+        return WMI.LenovoOtherMethod.SetFeatureValueAsync(idRaw, value);
     }
 
     #endregion
@@ -307,23 +369,23 @@ public class GodModeControllerV2 : AbstractGodModeController
 
         var fanTableData = data
             .Where(d => d.mode == (int)powerModeState + 1)
-            .Select(d => new FanTableData
+            .Select(d =>
             {
-                Type = (d.fanId, d.sensorId) switch
+                var type = (d.fanId, d.sensorId) switch
                 {
                     (1, 4) => FanTableType.CPU,
                     (1, 1) => FanTableType.CPUSensor,
                     (2, 5) => FanTableType.GPU,
+                    (3, 5) => FanTableType.GPU2,
                     _ => FanTableType.Unknown,
-                },
-                FanId = d.fanId,
-                SensorId = d.sensorId,
-                FanSpeeds = d.fanTableData,
-                Temps = d.sensorTableData
+                };
+                return new FanTableData(type, d.fanId, d.sensorId, d.fanTableData, d.sensorTableData);
             })
             .ToArray();
 
-        if (fanTableData.Length != 3)
+        var length = fanTableData.Where(ftd => ftd.Type != FanTableType.Unknown).Count();
+
+        if (fanTableData.Length != length)
         {
             if (Log.Instance.IsTraceEnabled)
                 Log.Instance.Trace($"Bad fan table length: {string.Join(", ", fanTableData)}");
@@ -331,7 +393,7 @@ public class GodModeControllerV2 : AbstractGodModeController
             return null;
         }
 
-        if (fanTableData.Count(ftd => ftd.FanSpeeds.Length == 10) != 3)
+        if (fanTableData.Count(ftd => ftd.FanSpeeds.Length == 10) != length)
         {
             if (Log.Instance.IsTraceEnabled)
                 Log.Instance.Trace($"Bad fan table fan speeds length: {string.Join(", ", fanTableData)}");
@@ -339,7 +401,7 @@ public class GodModeControllerV2 : AbstractGodModeController
             return null;
         }
 
-        if (fanTableData.Count(ftd => ftd.Temps.Length == 10) != 3)
+        if (fanTableData.Count(ftd => ftd.Temps.Length == 10) != length)
         {
             if (Log.Instance.IsTraceEnabled)
                 Log.Instance.Trace($"Bad fan table temps length: {string.Join(", ", fanTableData)}");

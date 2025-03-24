@@ -132,9 +132,6 @@
   <data name="AboutPage_ProjectWebsiteOnGitHub" xml:space="preserve">
     <value>Web stranica projekta na GitHub-u</value>
   </data>
-  <data name="AboutPage_ThirdPartyLibraries" xml:space="preserve">
-    <value>Biblioteke treće strane</value>
-  </data>
   <data name="AboutPage_Title" xml:space="preserve">
     <value>O programu</value>
   </data>
@@ -467,9 +464,6 @@ Ovo vrijeme možda neće biti tačno ako je laptop bio napunjen dok je spavao il
   <data name="IncompatibleDevice_Message" xml:space="preserve">
     <value>Ovaj uređaj nije kompatibilan sa Lenovo Legion Toolkit.</value>
   </data>
-  <data name="IncompatibleDevice_Title" xml:space="preserve">
-    <value>Lenovo Legion Toolkit</value>
-  </data>
   <data name="KeyboardBacklightPage_NoCompatibleKeyboardsFound" xml:space="preserve">
     <value>Nije pronađena kompatibilna tastatura</value>
   </data>
@@ -514,10 +508,6 @@ Ovo vrijeme možda neće biti tačno ako je laptop bio napunjen dok je spavao il
   </data>
   <data name="No" xml:space="preserve">
     <value>Ne</value>
-  </data>
-  <data name="NotificationsSettingsWindow_DontShowNotifications_Message" xml:space="preserve">
-    <value>Onemogućuje notifikacije za Fn kratice kao što je utišavanje mikrofona
-Omogućite ovu opciju ukoliko imate konflikata sa aplikacijama u fullscreenu.</value>
   </data>
   <data name="NotificationsSettingsWindow_DontShowNotifications_Title" xml:space="preserve">
     <value>Ne prikazuj obavještenja</value>
@@ -571,9 +561,6 @@ Uvijek provjerite da li instalirate ispravne pakete.</value>
   <data name="PackagesPage_DownloadInProgress_Title" xml:space="preserve">
     <value>Preuzimanje u toku</value>
   </data>
-  <data name="PackagesPage_DownloadTo" xml:space="preserve">
-    <value>Preuzmite na</value>
-  </data>
   <data name="Filter" xml:space="preserve">
     <value>Filtriraj...</value>
   </data>
@@ -615,9 +602,6 @@ Uvijek provjerite da li instalirate ispravne pakete.</value>
   </data>
   <data name="PowerModeControl_Title" xml:space="preserve">
     <value>Režim rada</value>
-  </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Title" xml:space="preserve">
-    <value>Da li ste sigurni?</value>
   </data>
   <data name="RGBKeyboardBacklightAutomationStepControl_Message" xml:space="preserve">
     <value>Prilagodite pozadinsko osvjetljenje tastature.</value>
@@ -734,7 +718,7 @@ Startup is delayed by 30 seconds for compatibility reasons.</value>
   <data name="SettingsPage_MinimizeOnClose_Title" xml:space="preserve">
     <value>Minimiziraj pri zatvaranju</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Title" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlans_Title" xml:space="preserve">
     <value>Planovi napajanja</value>
   </data>
   <data name="SettingsPage_Theme_Description" xml:space="preserve">
@@ -829,12 +813,6 @@ Logiranje će biti automatski omogućeno, ukoliko izaberete da nastavite.</value
   </data>
   <data name="WhiteKeyboardBacklightControl_Message" xml:space="preserve">
     <value>Možete promijeniti svjetlost sa Fn + Space</value>
-  </data>
-  <data name="WinKeyAutomationStepControl_Message" xml:space="preserve">
-    <value>Omogućite ili onemogućite Windows dugme.</value>
-  </data>
-  <data name="WinKeyAutomationStepControl_Title" xml:space="preserve">
-    <value>Windows dugme</value>
   </data>
   <data name="WinKeyControl_Message" xml:space="preserve">
     <value>Radi samo na ugrađenoj tastaturi.</value>

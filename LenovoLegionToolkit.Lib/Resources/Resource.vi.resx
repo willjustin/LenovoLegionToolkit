@@ -250,7 +250,7 @@
     <value>Tùy Chỉnh</value>
   </data>
   <data name="PowerModeState_Performance" xml:space="preserve">
-    <value>Hiệu suất</value>
+    <value>Hiệu Suất</value>
   </data>
   <data name="PowerModeState_Quiet" xml:space="preserve">
     <value>Im Lặng</value>
@@ -259,13 +259,13 @@
     <value>Nhanh</value>
   </data>
   <data name="RGBKeyboardBacklightSpeed_Fastest" xml:space="preserve">
-    <value>Nhanh hơn</value>
+    <value>Nhanh nhất</value>
   </data>
   <data name="RGBKeyboardBacklightSpeed_Slow" xml:space="preserve">
     <value>Chậm</value>
   </data>
   <data name="RGBKeyboardBacklightSpeed_Slowest" xml:space="preserve">
-    <value>Chậm hơn</value>
+    <value>Chậm nhất</value>
   </data>
   <data name="RGBKeyboardBacklightBrightness_High" xml:space="preserve">
     <value>Cao</value>
@@ -444,5 +444,56 @@
   </data>
   <data name="NotificationDuration_Short" xml:space="preserve">
     <value>Ngắn</value>
+  </data>
+  <data name="ModifierKey_Shift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="ModifierKey_Ctrl" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="ModifierKey_Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="BatteryNightChargeState_On" xml:space="preserve">
+    <value>Bật</value>
+  </data>
+  <data name="BatteryNightChargeState_Off" xml:space="preserve">
+    <value>Tắt</value>
+  </data>
+  <data name="SpeakerState_Mute" xml:space="preserve">
+    <value>Tắt tiếng</value>
+  </data>
+  <data name="SpeakerState_Unmute" xml:space="preserve">
+    <value>Bật tiếng</value>
+  </data>
+  <data name="PowerModeMappingMode_Disabled" xml:space="preserve">
+    <value>Tắt</value>
+  </data>
+  <data name="PowerModeMappingMode_WindowsPowerMode" xml:space="preserve">
+    <value>Chế độ nguồn</value>
+  </data>
+  <data name="PowerModeMappingMode_WindowsPowerPlan" xml:space="preserve">
+    <value>Power Plan</value>
+  </data>
+  <data name="RGBKeyboardBacklightPreset_Four" xml:space="preserve">
+    <value>Thiết lập 4</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerDay" xml:space="preserve">
+    <value>Hàng ngày</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerHour" xml:space="preserve">
+    <value>Mỗi giờ</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerMonth" xml:space="preserve">
+    <value>Hàng tháng</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerThreeHours" xml:space="preserve">
+    <value>Mỗi 3 tiếng</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerTwelveHours" xml:space="preserve">
+    <value>Mỗi 12 tiếng</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerWeek" xml:space="preserve">
+    <value>Hàng tuần</value>
   </data>
 </root>

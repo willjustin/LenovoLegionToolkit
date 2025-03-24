@@ -130,7 +130,7 @@
     <value>Посилання</value>
   </data>
   <data name="AboutPage_ProjectWebsiteOnGitHub" xml:space="preserve">
-    <value>Сайт проєкту на GitHub</value>
+    <value>Сторінка проєкту на GitHub</value>
   </data>
   <data name="AboutPage_ThirdPartyLibraries" xml:space="preserve">
     <value>Сторонні бібліотеки</value>
@@ -151,13 +151,6 @@
   <data name="AddNew" xml:space="preserve">
     <value>Додати нову</value>
   </data>
-  <data name="AlwaysActivatePowerPlans_Message" xml:space="preserve">
-    <value>Активувати план живлення, коли Vantage або його служби ввімкнені.
-Ця опція призначена лише для пристроїв, які не постачаються з декількома планами живлення.</value>
-  </data>
-  <data name="AlwaysActivatePowerPlans_Title" xml:space="preserve">
-    <value>Завжди активувати план живлення Windows</value>
-  </data>
   <data name="AlwaysOnUSBControl_Message" xml:space="preserve">
     <value>Заряджати USB-пристрої, коли комп'ютер вимкнений або знаходиться у режимах сну чи гібернації.</value>
   </data>
@@ -168,7 +161,7 @@
     <value>Заряджати USB-пристрої, коли комп'ютер вимкнений або у режимі сну та режимі гібернації.</value>
   </data>
   <data name="AlwaysOnUsbAutomationStepControl_Title" xml:space="preserve">
-    <value>Завжди умімкнені USB</value>
+    <value>Завжди увімкнені USB</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>Lenovo Legion Toolkit</value>
@@ -614,6 +607,9 @@
   <data name="FanCurveControl_GPU" xml:space="preserve">
     <value>ГП</value>
   </data>
+  <data name="FanCurveControl_GPU2" xml:space="preserve">
+    <value>ГП #2</value>
+  </data>
   <data name="RPM" xml:space="preserve">
     <value>Об/хв</value>
   </data>
@@ -737,9 +733,6 @@
   <data name="IncompatibleDevice_Message" xml:space="preserve">
     <value>Цей пристрій не сумісний з Lenovo Legion Toolkit.</value>
   </data>
-  <data name="IncompatibleDevice_Title" xml:space="preserve">
-    <value>Lenovo Legion Toolkit</value>
-  </data>
   <data name="KeyboardBacklightPage_NoCompatibleKeyboardsFound" xml:space="preserve">
     <value>Не знайдено сумісних клавіатур</value>
   </data>
@@ -747,7 +740,7 @@
     <value>Підсвітка клавіатури</value>
   </data>
   <data name="Keyboard_VantageEnabledWarning_Message" xml:space="preserve">
-    <value>Неможливо керувати підсвіткою клавіатури, коли працює Vantage або його служби.</value>
+    <value>Неможливо керувати підсвіткою клавіатури, коли працює Lenovo Vantage або його служби.</value>
   </data>
   <data name="Keyboard_VantageEnabledWarning_Title" xml:space="preserve">
     <value>Lenovo Vatage або його служби запущені</value>
@@ -883,7 +876,7 @@
     <value>Частота оновлення</value>
   </data>
   <data name="NotificationsSettingsWindow_SmartKey" xml:space="preserve">
-    <value>Розумний ключ</value>
+    <value>Розумна клавіша</value>
   </data>
   <data name="NotificationsSettingsWindow_Title" xml:space="preserve">
     <value>Сповіщення</value>
@@ -955,9 +948,6 @@
   <data name="PackagesPage_DownloadInProgress_Title" xml:space="preserve">
     <value>Триває завантаження</value>
   </data>
-  <data name="PackagesPage_DownloadTo" xml:space="preserve">
-    <value>Завантажити до</value>
-  </data>
   <data name="Filter" xml:space="preserve">
     <value>Фільтр...</value>
   </data>
@@ -1016,29 +1006,11 @@
   <data name="PowerModeControl_Warning" xml:space="preserve">
     <value>Обраний режим живлення може не працювати справно без підключеного блоку живлення.</value>
   </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Message" xml:space="preserve">
-    <value>Увімкнення цієї опції під час роботи Lenovo Vantage або його служб і зміна планів живлення вашого ноутбуку можуть призвести до неочікуваної поведінки.</value>
-  </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Title" xml:space="preserve">
-    <value>Ви впевнені?</value>
-  </data>
-  <data name="PowerPlansWindow_BalanceMode" xml:space="preserve">
-    <value>Збалансований режим</value>
-  </data>
-  <data name="PowerPlansWindow_CustomMode" xml:space="preserve">
-    <value>Користувальницький режим</value>
-  </data>
-  <data name="PowerPlansWindow_DefaultPowerPlan" xml:space="preserve">
+  <data name="WindowsPowerPlansWindow_DefaultPowerPlan" xml:space="preserve">
     <value>За замовчуванням</value>
   </data>
-  <data name="PowerPlansWindow_PerformanceMode" xml:space="preserve">
-    <value>Режим продуктивності</value>
-  </data>
-  <data name="PowerPlansWindow_QuietMode" xml:space="preserve">
-    <value>Тихий режим</value>
-  </data>
-  <data name="PowerPlansWindow_Title" xml:space="preserve">
-    <value>Плани живлення</value>
+  <data name="WindowsPowerPlansWindow_Title" xml:space="preserve">
+    <value>План живлення Windows</value>
   </data>
   <data name="RGBKeyboardBacklightAutomationStepControl_Message" xml:space="preserve">
     <value>Налаштуйте шаблон підсвітки клавіатури.</value>
@@ -1057,6 +1029,9 @@
   </data>
   <data name="RGBKeyboardBacklightControl_Preset3" xml:space="preserve">
     <value>Шаблон 3</value>
+  </data>
+  <data name="RGBKeyboardBacklightControl_Preset4" xml:space="preserve">
+    <value>Шаблон 4</value>
   </data>
   <data name="RGBKeyboardBacklightControl_PresetOff" xml:space="preserve">
     <value>Вимк.</value>
@@ -1146,7 +1121,7 @@
     <value>Колір акценту</value>
   </data>
   <data name="SettingsPage_Autorun_Message" xml:space="preserve">
-    <value>Запускати згорнутим в трей, коли ви входите у Windows.</value>
+    <value>Запускати згорнутим у лоток, коли ви входите у Windows.</value>
   </data>
   <data name="SettingsPage_Autorun_Title" xml:space="preserve">
     <value>Автозапуск</value>
@@ -1179,10 +1154,10 @@
     <value>Вимкнути гарячі клавіші Lenovo</value>
   </data>
   <data name="SettingsPage_DisableVantage_Error_Message" xml:space="preserve">
-    <value>Можливо, Vantage та/або ImController було вимкнено неправильно</value>
+    <value>Можливо, Lenovo Vantage та/або ImController було вимкнено неправильно</value>
   </data>
   <data name="SettingsPage_DisableVantage_Error_Title" xml:space="preserve">
-    <value>Неможливо вимкнути Vantage та/або ImController</value>
+    <value>Неможливо вимкнути Lenovo Vantage та/або ImController</value>
   </data>
   <data name="SettingsPage_DisableVantage_Message" xml:space="preserve">
     <value>Вимкнути Lenovo Vantage та ImController без їхньої деінсталяції.
@@ -1204,10 +1179,10 @@
     <value>Не вдалося увімкнути гарячі клавіші Lenovo</value>
   </data>
   <data name="SettingsPage_EnableVantage_Error_Message" xml:space="preserve">
-    <value>Можливо, Vantage та/або ImController було увімкнено неправильно</value>
+    <value>Можливо, Lenovo Vantage та/або ImController було увімкнено неправильно</value>
   </data>
   <data name="SettingsPage_EnableVantage_Error_Title" xml:space="preserve">
-    <value>Неможливо увімкнути Vantage та/або ImController</value>
+    <value>Неможливо увімкнути Lenovo Vantage та/або ImController</value>
   </data>
   <data name="SettingsPage_ExcludeRefreshRates_Message" xml:space="preserve">
     <value>Ви можете виключити частоту оновлення, щоб зробити комбінацію клавіш Fn+R більш корисною.</value>
@@ -1222,7 +1197,7 @@
     <value>Мова</value>
   </data>
   <data name="SettingsPage_MinimizeOnClose_Message" xml:space="preserve">
-    <value>Завжди згортати у трей. Закривайте правою кнопкою миші на іконці у треї.</value>
+    <value>Завжди згортати у лоток. Закривайте натисканням правою кнопкою миші на образець у лотку.</value>
   </data>
   <data name="SettingsPage_MinimizeOnClose_Title" xml:space="preserve">
     <value>Згортати при закритті</value>
@@ -1233,20 +1208,20 @@
   <data name="SettingsPage_Notifications_Title" xml:space="preserve">
     <value>Сповіщення</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Title" xml:space="preserve">
-    <value>Плани живлення</value>
+  <data name="SettingsPage_WindowsPowerPlans_Title" xml:space="preserve">
+    <value>Плани живлення Windows</value>
   </data>
   <data name="SettingsPage_SmartKeyDoublePressAction_Message" xml:space="preserve">
     <value>Призначити швидкі дії на подвійне натискання Fn+F9.</value>
   </data>
   <data name="SettingsPage_SmartKeyDoublePressAction_Title" xml:space="preserve">
-    <value>Другорядна дія смартключа</value>
+    <value>Другорядна дія розумної клавіші</value>
   </data>
   <data name="SettingsPage_SmartKeySinglePressAction_Message" xml:space="preserve">
     <value>Призначити швидкі дії на натискання Fn+F9.</value>
   </data>
   <data name="SettingsPage_SmartKeySinglePressAction_Title" xml:space="preserve">
-    <value>Дія смартключа</value>
+    <value>Дія розумної клавіші</value>
   </data>
   <data name="SettingsPage_Theme_Description" xml:space="preserve">
     <value>Встановить білу тему, темну тему або дотримуйтесь системних налаштувань.</value>
@@ -1342,7 +1317,7 @@
     <value>Профіль яскравості підсвітки клавіатури</value>
   </data>
   <data name="SpectrumKeyboardEffectControl_Description_AllZones" xml:space="preserve">
-    <value>Всі ключи</value>
+    <value>Усі клавіші</value>
   </data>
   <data name="SpectrumKeyboardEffectControl_Description_Zones" xml:space="preserve">
     <value>{0} зон</value>
@@ -1441,10 +1416,10 @@
     <value>Підсвітка клавіатури</value>
   </data>
   <data name="WinKeyAutomationStepControl_Message" xml:space="preserve">
-    <value>Увімкнути або вимкнути клавішу Windows.</value>
+    <value>Вимкнути клавішу Windows вбудованої клавіатури.</value>
   </data>
   <data name="WinKeyAutomationStepControl_Title" xml:space="preserve">
-    <value>Ключ Windows</value>
+    <value>Блокування клавіші Windows</value>
   </data>
   <data name="WinKeyControl_Message" xml:space="preserve">
     <value>Працює тільки із вбудованою клавіатурою.</value>
@@ -1696,10 +1671,10 @@
     <value>Доступне оновлення!</value>
   </data>
   <data name="SymbolRegularPicker_Title" xml:space="preserve">
-    <value>Вибрати іконку</value>
+    <value>Вибрати образець</value>
   </data>
   <data name="AutomationPage_ChangeIcon" xml:space="preserve">
-    <value>Змінити іконку</value>
+    <value>Змінити образець</value>
   </data>
   <data name="BatteryPage_LowLevel" xml:space="preserve">
     <value>Низький рівень заряду батареї</value>
@@ -1713,13 +1688,13 @@
   <data name="PowerPlansWindow_AoAcWarning_Message" xml:space="preserve">
     <value>Windows повідомляє, що цей ноутбук підтримує Modern StandBy. Використання планів живлення, відмінних від Збалансованого, може призвести до неочікуваної поведінки.</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Message" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlans_Message" xml:space="preserve">
     <value>Оберіть плани живлення Windows, які буде застосовано при зміні режиму живлення.</value>
   </data>
   <data name="SettingsPage_Power_Title" xml:space="preserve">
     <value>Потужність</value>
   </data>
-  <data name="SettingsPage_PowerPlansControlPanel_Title" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlansControlPanel_Title" xml:space="preserve">
     <value>Плани живлення у панелі управління Windows</value>
   </data>
   <data name="PoweredOff" xml:space="preserve">
@@ -1812,7 +1787,7 @@
     <value>Вентилятор</value>
   </data>
   <data name="SensorsControl_GPU_Title" xml:space="preserve">
-    <value>ГП</value>
+    <value>Графічний процесор</value>
   </data>
   <data name="SensorsControl_MemoryClock_Title" xml:space="preserve">
     <value>Частота пам'яті</value>
@@ -1897,7 +1872,7 @@
     <value>Динамічний прискорювач ГП до ЦП</value>
   </data>
   <data name="GodModeSettingsWindow_GPU_ToCpuDynamicBoostControl_Description" xml:space="preserve">
-    <value>Це максимальне додаткове живлення, яке може бути виділене графічному процесору від центрального процесора, на основі використання центрального процесора. Чим вище значення, тим краща продуктивність програм, які використовують ГП.</value>
+    <value>Це максимальне додаткове живлення, яке може бути виділене центральному процесору від графічного процесора, на основі використання центрального процесора. Чим вище значення, тим краща продуктивність програм, які використовують ЦП.</value>
   </data>
   <data name="SettingsPage_BootLogo_Title" xml:space="preserve">
     <value>Познака завантаження</value>
@@ -1945,19 +1920,308 @@
     <value>Вимкнено</value>
   </data>
   <data name="BootLogoWindow_Description" xml:space="preserve">
-	  <value>Користувальницька познака завантаження має бути рівно {0} пікселів.
+    <value>Користувальницька познака завантаження має бути рівно {0} пікселів.
 Підтримувані формати: {1}.</value>
   </data>
   <data name="BatteryNightChargeModeControl_Title" xml:space="preserve">
-	  <value>Заряджання протягом ночі</value>
+    <value>Заряджання протягом ночі</value>
   </data>
   <data name="BatteryNightChargeModeControl_Message" xml:space="preserve">
-	  <value>Якщо увімкнено, цей пристрій буде заряджатися до 80% при підключенні протягом ночі та закінчить заряджання до 100% до моменту використання пристрою вранці.</value>
+    <value>Якщо увімкнено, цей пристрій буде заряджатися до 80% при підключенні протягом ночі та закінчить заряджання до 100% до моменту використання пристрою вранці.</value>
   </data>
   <data name="BatteryNightChargeAutomationStepControl_Title" xml:space="preserve">
-	  <value>Заряджання протягом ночі</value>
+    <value>Заряджання протягом ночі</value>
   </data>
   <data name="BatteryNightChargeAutomationStepControl_Message" xml:space="preserve">
-	  <value>Якщо увімкнено, цей пристрій буде заряджатися до 80% при підключенні протягом ночі та закінчить заряджання до 100% до моменту використання пристрою вранці.</value>
+    <value>Якщо увімкнено, цей пристрій буде заряджатися до 80% при підключенні протягом ночі та закінчить заряджання до 100% до моменту використання пристрою вранці.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Invalid_Image_Size" xml:space="preserve">
+    <value>Неприпустимий розмір зображення.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Invalid_Image_Format" xml:space="preserve">
+    <value>Неприпустимий формат зображення.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Cannot_Mount_EFI_Partition" xml:space="preserve">
+    <value>Не вдалося змонтувати розділ EFI.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Cannot_Set_UEFI_Privilege" xml:space="preserve">
+    <value>Не вдалося встановити привілеї UEFI.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Not_Enough_Free_Space_On_EFI_Partition" xml:space="preserve">
+    <value>Недостатньо вільного місця на розділі EFI.</value>
+  </data>
+  <data name="BootLogoWindow_SetCustomFailed" xml:space="preserve">
+    <value>Користувацький логотип не може бути встановленим: {0}</value>
+  </data>
+  <data name="BootLogoWindow_SetDefaultFailed" xml:space="preserve">
+    <value>Логотип за замовчуванням не може бути встановленим: {0}</value>
+  </data>
+  <data name="BootLogoWindow_SetDefaultSuccess" xml:space="preserve">
+    <value>Логотип за замовчуванням встановлено.</value>
+  </data>
+  <data name="BootLogoWindow_SetCustomSuccess" xml:space="preserve">
+    <value>Користувацький екран завантаження встановлено.</value>
+  </data>
+  <data name="WiFiConnectedPipelineTriggerTabItemContent_NetworkName" xml:space="preserve">
+    <value>Назва мережі (SSID)</value>
+  </data>
+  <data name="WiFiConnectedPipelineTriggerTabItemContent_CopyCurrentNetworkName" xml:space="preserve">
+    <value>Скопіювати поточну назву мережі</value>
+  </data>
+  <data name="WiFiConnectedPipelineTriggerTabItemContent_LeaveEmptyForAnyNetwork" xml:space="preserve">
+    <value>Залиште пустим для будь-якої мережі Wi-Fi.</value>
+  </data>
+  <data name="SettingsPage_HWiNFO_Title" xml:space="preserve">
+    <value>HWiNFO64</value>
+  </data>
+  <data name="SettingsPage_HWiNFO_Message" xml:space="preserve">
+    <value>Поділитися швидкістю вентилятора, температурою тощо з HWiNFO64. Вам, можливо, доведеться перезапустити HWiNFO64 після зміни цього налаштування.</value>
+  </data>
+  <data name="SettingsPage_Integrations_Title" xml:space="preserve">
+    <value>Інтеграції</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Налаштування</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Інформація</value>
+  </data>
+  <data name="PackagesPage_DownloadTo" xml:space="preserve">
+    <value>Тека завантажень</value>
+  </data>
+  <data name="PackagesPage_OpenDownloadTo" xml:space="preserve">
+    <value>Відкрити теку завантажень</value>
+  </data>
+  <data name="PackageControl_Download" xml:space="preserve">
+    <value>Завантажити</value>
+  </data>
+  <data name="PackageControl_OpenReadme" xml:space="preserve">
+    <value>Відкрити README</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_Preset" xml:space="preserve">
+    <value>Шаблон</value>
+  </data>
+  <data name="DeviceInformationWindow_Refresh" xml:space="preserve">
+    <value>Оновити</value>
+  </data>
+  <data name="AbstractAutomationStepControl_Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="PeriodicActionPipelineTriggerTabItemContent_PeriodMinutes" xml:space="preserve">
+    <value>Період (хвилини)</value>
+    <comment>A prompt that is used both to ask the user to input an integer, representing the number of minutes between two periodic actions are triggered, and to inform the user what have they set once they are done configuring the action.</comment>
+  </data>
+  <data name="SettingsPage_OnBatterySinceReset_Message" xml:space="preserve">
+    <value>Скидає лічильник "На батареї відколи" у розділі батареї під час перезавантаження системи.</value>
+  </data>
+  <data name="SettingsPage_OnBatterySinceReset_Title" xml:space="preserve">
+    <value>Скидання параметра "Від батареї з" під час запуску</value>
+  </data>
+  <data name="TurnOffWiFiAutomationStepControl_Title" xml:space="preserve">
+    <value>Вимкнути Wi-Fi</value>
+  </data>
+  <data name="TurnOnWiFiAutomationStepControl_Title" xml:space="preserve">
+    <value>Увімкнути Wi-Fi</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessRunSilently" xml:space="preserve">
+    <value>Тихий запуск</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessWaitUntilFinished" xml:space="preserve">
+    <value>Чекати закінчення</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessRunSilently_Description" xml:space="preserve">
+    <value>Виконувати консольні програми, не створюючи консольного вікна.</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessWaitUntilFinished_Description" xml:space="preserve">
+    <value>Зачекайте, поки програма або скрипт завершить виконання</value>
+  </data>
+  <data name="SpeakerAutomationStepControl_Message" xml:space="preserve">
+    <value>Усі активні пристрої виводу звуку будуть вимкнені.</value>
+  </data>
+  <data name="SpeakerAutomationStepControl_Title" xml:space="preserve">
+    <value>Гучник</value>
+  </data>
+  <data name="SettingsPage_MinimizeToTray_Title" xml:space="preserve">
+    <value>Ховати у лоток</value>
+  </data>
+  <data name="SettingsPage_MinimizeToTray_Message" xml:space="preserve">
+    <value>Завжди згортати у лоток замість панелі завдань.</value>
+  </data>
+  <data name="WindowsPowerModesWindow_Title" xml:space="preserve">
+    <value>Плани живлення</value>
+  </data>
+  <data name="Settings_GodModeFnQSwitchable_Title" xml:space="preserve">
+    <value>Перемикнутися на користувацький режим за допомогою Fn+Q</value>
+  </data>
+  <data name="Settings_GodModeFnQSwitchable_Message" xml:space="preserve">
+    <value>Дозволити швидке перемикання на користувацький режим за допомогою Fn+Q.</value>
+  </data>
+  <data name="SettingsPage_PowerModeMapping_Title" xml:space="preserve">
+    <value>Синхронізація режиму живлення</value>
+  </data>
+  <data name="SettingsPage_PowerModeMapping_Message" xml:space="preserve">
+    <value>Автоматично змінювати план живлення Windows або режим живлення Windows коли змінюється режим живлення.</value>
+  </data>
+  <data name="SettingsPage_WindowsPowerModes_Title" xml:space="preserve">
+    <value>Плани живлення Windows</value>
+  </data>
+  <data name="SettingsPage_WindowsPowerModes_Message" xml:space="preserve">
+    <value>Оберіть план живлення Windows, який буде застосовано при зміні режиму живлення.</value>
+  </data>
+  <data name="CompatibilityCheckError_Message" xml:space="preserve">
+    <value>Трапилася помилка при зчитуванні інформації про пристрій.</value>
+  </data>
+  <data name="MainWindow_NavigationItem_Macro" xml:space="preserve">
+    <value>Макрос</value>
+  </data>
+  <data name="MacroPage_Title" xml:space="preserve">
+    <value>Макрос</value>
+  </data>
+  <data name="MacroSequenceControl_Repeat_Title" xml:space="preserve">
+    <value>Повторити</value>
+  </data>
+  <data name="MacroSequenceControl_IgnoreDelays_Title" xml:space="preserve">
+    <value>Ігнорувати затримки</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Очистити</value>
+  </data>
+  <data name="MacroSequenceControl_Record" xml:space="preserve">
+    <value>Запис</value>
+  </data>
+  <data name="MacroSequenceControl_StopRecording" xml:space="preserve">
+    <value>Зупинити запис</value>
+  </data>
+  <data name="MacroSequenceControl_DontRepeat" xml:space="preserve">
+    <value>Не повторювати</value>
+  </data>
+  <data name="MacroPage_Enable_Subtitle" xml:space="preserve">
+    <value>Lenovo Legion Toolkit повинен бути запущений, щоб макроси працювали.</value>
+  </data>
+  <data name="MacroPage_Enable_Title" xml:space="preserve">
+    <value>Увімкнути</value>
+  </data>
+  <data name="MacroPage_Subtitle" xml:space="preserve">
+    <value>Ви можете записати послідовність натискання клавіш і активувати їх за допомогою цифрового блоку на клавіатурі.</value>
+  </data>
+  <data name="MacroAutomationStepControl_Title" xml:space="preserve">
+    <value>Макрос</value>
+  </data>
+  <data name="MacroAutomationStepControl_Message" xml:space="preserve">
+    <value>Увімкнути або вимкнути макрос.</value>
+  </data>
+  <data name="MacroSequenceControl_InterruptOnOtherKey_Title" xml:space="preserve">
+    <value>Перервати якщо інша клавіша була натиснута</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Приховати</value>
+  </data>
+  <data name="HideAll" xml:space="preserve">
+    <value>Приховати всі</value>
+  </data>
+  <data name="DevicePipelineTriggerTabItemContent_Devices" xml:space="preserve">
+    <value>Пристрої</value>
+  </data>
+  <data name="DeselectAll" xml:space="preserve">
+    <value>Зняти виділення з усіх</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Виділити усі</value>
+  </data>
+  <data name="MacroSequenceControl_Keyboard" xml:space="preserve">
+    <value>Лише клавіатура</value>
+  </data>
+  <data name="MacroSequenceControl_KeyboardMouse" xml:space="preserve">
+    <value>Клавіші клавіатури та кнопки миші</value>
+  </data>
+  <data name="MacroSequenceControl_KeyboardMouseMovement" xml:space="preserve">
+    <value>Усі пристрої вводу</value>
+  </data>
+  <data name="MacroSequenceControl_RecordingOptions" xml:space="preserve">
+    <value>Налаштування запису</value>
+  </data>
+  <data name="MacroRecordingWindow_Preparing_Title" xml:space="preserve">
+    <value>Запис почнеться за 3 секунди...</value>
+  </data>
+  <data name="MacroRecordingWindow_Recording_Title" xml:space="preserve">
+    <value>Записується...</value>
+  </data>
+  <data name="MacroRecordingWindow_Recording_Message" xml:space="preserve">
+    <value>Натисніть ESC для зупинки.</value>
+  </data>
+  <data name="DeviceAutomationPipelineTriggerTabItemContent_OnlySelected" xml:space="preserve">
+    <value>Показати лише вибрані пристрої</value>
+  </data>
+  <data name="DeviceAutomationPipelineTriggerTabItemContent_OnlyRemovable" xml:space="preserve">
+    <value>Показати лише знімні пристрої</value>
+  </data>
+  <data name="DeviceAutomationPipelineTriggerTabItemContent_OnlyConnected" xml:space="preserve">
+    <value>Показати лише під'єднані пристрої</value>
+  </data>
+  <data name="SettingsPage_CLI_Title" xml:space="preserve">
+    <value>Оболонка вказівного рядка</value>
+  </data>
+  <data name="SettingsPage_CLI_Message" xml:space="preserve">
+    <value>Увімкнути оболонку вказівного рядка, яка дозволяє керувати з вказівного рядка.</value>
+  </data>
+  <data name="SettingsPage_CLIAddToPath_Title" xml:space="preserve">
+    <value>Додати оболонку вказівного рядка до шляху</value>
+  </data>
+  <data name="SettingsPage_CLIAddToPath_Message" xml:space="preserve">
+    <value>Додати оболонку вказівного рядка до змінної шляху користувача.</value>
+  </data>
+  <data name="SettingsPage_Temperature_Title" xml:space="preserve">
+    <value>Температура</value>
+  </data>
+  <data name="SettingsPage_Temperature_Message" xml:space="preserve">
+    <value>Виберіть одиниці виміру для чутників температури.</value>
+  </data>
+  <data name="MainWindows_FnKeysRunning" xml:space="preserve">
+    <value>Гарячі клавіші Lenovo працюють у фоні.</value>
+  </data>
+  <data name="MainWindow_LegionZoneRunning" xml:space="preserve">
+    <value>Legion Zone працює у фоні.</value>
+  </data>
+  <data name="MainWindows_VantageRunning" xml:space="preserve">
+    <value>Lenovo Vantage та/або ImController працює у фоні.</value>
+  </data>
+  <data name="SettingsPage_CheckUpdatesButton_Content" xml:space="preserve">
+    <value>Перевірити</value>
+  </data>
+  <data name="SettingsPage_CheckUpdates_Started_Title" xml:space="preserve">
+    <value>Перевірка наявності оновлень...</value>
+  </data>
+  <data name="SettingsPage_CheckUpdates_Title" xml:space="preserve">
+    <value>Перевірити наявність оновлень</value>
+  </data>
+  <data name="SettingsPage_Update_Title" xml:space="preserve">
+    <value>Оновлення</value>
+  </data>
+  <data name="MainWindow_CheckForUpdates_Error_ReachedRateLimit_Message" xml:space="preserve">
+    <value>Досягнуто ліміту швидкості API, спробуйте пізніше.</value>
+  </data>
+  <data name="MainWindow_CheckForUpdates_Error_Title" xml:space="preserve">
+    <value>Не вдалося перевірити наявність оновленнь</value>
+  </data>
+  <data name="MainWindow_CheckForUpdates_Error_Unknown_Message" xml:space="preserve">
+    <value>Щось пішло не так, будь ласка, спробуйте пізніше.</value>
+  </data>
+  <data name="MainWindow_CheckForUpdates_Success_Title" xml:space="preserve">
+    <value>Оновлення не знайдено</value>
+  </data>
+  <data name="SettingsPage_UpdateCheckFrequency_Title" xml:space="preserve">
+    <value>Автоматично перевіряти наявність оновлень</value>
+  </data>
+  <data name="PackagesPage_UpdateCatalogNotFound_Title" xml:space="preserve">
+    <value>Каталог оновлень не знайдено</value>
+  </data>
+  <data name="PackagesPage_UpdateCatalogNotFound_Message" xml:space="preserve">
+    <value>Спробуйте отримати оновлення з іншого джерела.</value>
+  </data>
+  <data name="PackagesPage_Error_Title" xml:space="preserve">
+    <value>Щось пішло не так</value>
+  </data>
+  <data name="PackagesPage_Error_CheckInternet_Message" xml:space="preserve">
+    <value>Перевірте, чи працює ваше інтернет-з'єднання.</value>
   </data>
 </root>

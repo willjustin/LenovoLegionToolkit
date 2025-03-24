@@ -6,6 +6,7 @@ using LenovoLegionToolkit.WPF.Controls;
 using LenovoLegionToolkit.WPF.Controls.Automation;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
+using CardControl = LenovoLegionToolkit.WPF.Controls.Custom.CardControl;
 
 namespace LenovoLegionToolkit.WPF.Windows.Automation;
 
@@ -42,7 +43,7 @@ public partial class AddAutomationStepWindow
         return Task.CompletedTask;
     }
 
-    private UIElement CreateCardControl(AbstractAutomationStepControl stepControl)
+    private CardControl CreateCardControl(AbstractAutomationStepControl stepControl)
     {
         var control = new CardControl
         {

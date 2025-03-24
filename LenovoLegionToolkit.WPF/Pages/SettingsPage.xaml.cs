@@ -9,13 +9,17 @@ using LenovoLegionToolkit.Lib;
 using LenovoLegionToolkit.Lib.Controllers;
 using LenovoLegionToolkit.Lib.Extensions;
 using LenovoLegionToolkit.Lib.Features;
+using LenovoLegionToolkit.Lib.Integrations;
 using LenovoLegionToolkit.Lib.Settings;
 using LenovoLegionToolkit.Lib.SoftwareDisabler;
 using LenovoLegionToolkit.Lib.System;
+using LenovoLegionToolkit.Lib.System.Management;
 using LenovoLegionToolkit.Lib.Utils;
+using LenovoLegionToolkit.WPF.CLI;
 using LenovoLegionToolkit.WPF.Extensions;
 using LenovoLegionToolkit.WPF.Resources;
 using LenovoLegionToolkit.WPF.Utils;
+using LenovoLegionToolkit.WPF.Windows;
 using LenovoLegionToolkit.WPF.Windows.Settings;
 
 namespace LenovoLegionToolkit.WPF.Pages;
@@ -23,6 +27,7 @@ namespace LenovoLegionToolkit.WPF.Pages;
 public partial class SettingsPage
 {
     private readonly ApplicationSettings _settings = IoCContainer.Resolve<ApplicationSettings>();
+    private readonly IntegrationsSettings _integrationsSettings = IoCContainer.Resolve<IntegrationsSettings>();
 
     private readonly VantageDisabler _vantageDisabler = IoCContainer.Resolve<VantageDisabler>();
     private readonly LegionZoneDisabler _legionZoneDisabler = IoCContainer.Resolve<LegionZoneDisabler>();
@@ -30,6 +35,10 @@ public partial class SettingsPage
     private readonly PowerModeFeature _powerModeFeature = IoCContainer.Resolve<PowerModeFeature>();
     private readonly RGBKeyboardBacklightController _rgbKeyboardBacklightController = IoCContainer.Resolve<RGBKeyboardBacklightController>();
     private readonly ThemeManager _themeManager = IoCContainer.Resolve<ThemeManager>();
+    private readonly HWiNFOIntegration _hwinfoIntegration = IoCContainer.Resolve<HWiNFOIntegration>();
+    private readonly IpcServer _ipcServer = IoCContainer.Resolve<IpcServer>();
+    private readonly UpdateChecker _updateChecker = IoCContainer.Resolve<UpdateChecker>();
+    private readonly UpdateCheckSettings _updateCheckSettings = IoCContainer.Resolve<UpdateCheckSettings>();
 
     private bool _isRefreshing;
 
@@ -72,12 +81,19 @@ public partial class SettingsPage
             _langCardControl.Visibility = Visibility.Collapsed;
         }
 
+        _temperatureComboBox.SetItems(Enum.GetValues<TemperatureUnit>(), _settings.Store.TemperatureUnit, t => t switch
+        {
+            TemperatureUnit.C => Resource.Celsius,
+            TemperatureUnit.F => Resource.Fahrenheit,
+            _ => new ArgumentOutOfRangeException(nameof(t))
+        });
         _themeComboBox.SetItems(Enum.GetValues<Theme>(), _settings.Store.Theme, t => t.GetDisplayName());
 
         UpdateAccentColorPicker();
         _accentColorSourceComboBox.SetItems(Enum.GetValues<AccentColorSource>(), _settings.Store.AccentColorSource, t => t.GetDisplayName());
 
         _autorunComboBox.SetItems(Enum.GetValues<AutorunState>(), Autorun.State, t => t.GetDisplayName());
+        _minimizeToTrayToggle.IsChecked = _settings.Store.MinimizeToTray;
         _minimizeOnCloseToggle.IsChecked = _settings.Store.MinimizeOnClose;
 
         var vantageStatus = await _vantageDisabler.GetStatusAsync();
@@ -92,9 +108,9 @@ public partial class SettingsPage
         _fnKeysCard.Visibility = fnKeysStatus != SoftwareStatus.NotFound ? Visibility.Visible : Visibility.Collapsed;
         _fnKeysToggle.IsChecked = fnKeysStatus == SoftwareStatus.Disabled;
 
-        _smartFnLockComboBox.SetItems(new[] { (ModifierKey)0, ModifierKey.Alt, ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift },
+        _smartFnLockComboBox.SetItems([ModifierKey.None, ModifierKey.Alt, ModifierKey.Alt | ModifierKey.Ctrl | ModifierKey.Shift],
             _settings.Store.SmartFnLockFlags,
-            m => m is 0 ? Resource.Off : m.GetFlagsDisplayName());
+            m => m is ModifierKey.None ? Resource.Off : m.GetFlagsDisplayName(ModifierKey.None));
 
         _smartKeySinglePressActionCard.Visibility = fnKeysStatus != SoftwareStatus.Enabled ? Visibility.Visible : Visibility.Collapsed;
         _smartKeyDoublePressActionCard.Visibility = fnKeysStatus != SoftwareStatus.Enabled ? Visibility.Visible : Visibility.Collapsed;
@@ -102,21 +118,75 @@ public partial class SettingsPage
         _notificationsCard.Visibility = fnKeysStatus != SoftwareStatus.Enabled ? Visibility.Visible : Visibility.Collapsed;
         _excludeRefreshRatesCard.Visibility = fnKeysStatus != SoftwareStatus.Enabled ? Visibility.Visible : Visibility.Collapsed;
         _synchronizeBrightnessToAllPowerPlansToggle.IsChecked = _settings.Store.SynchronizeBrightnessToAllPowerPlans;
+        _onBatterySinceResetToggle.IsChecked = _settings.Store.ResetBatteryOnSinceTimerOnReboot;
 
         _bootLogoCard.Visibility = await BootLogo.IsSupportedAsync() ? Visibility.Visible : Visibility.Collapsed;
 
-        _powerPlansCard.Visibility = await _powerModeFeature.IsSupportedAsync() ? Visibility.Visible : Visibility.Collapsed;
+        if (_updateChecker.Disable)
+        {
+            _updateTextBlock.Visibility = Visibility.Collapsed;
+            _checkUpdatesCard.Visibility = Visibility.Collapsed;
+            _updateCheckFrequencyCard.Visibility = Visibility.Collapsed;
+        }
+        else
+        {
+            _checkUpdatesButton.Visibility = Visibility.Visible;
+            _updateCheckFrequencyComboBox.Visibility = Visibility.Visible;
+            _updateCheckFrequencyComboBox.SetItems(Enum.GetValues<UpdateCheckFrequency>(), _updateCheckSettings.Store.UpdateCheckFrequency, t => t.GetDisplayName());
+        }
+
+        try
+        {
+            var mi = await Compatibility.GetMachineInformationAsync();
+            if (mi.Features[CapabilityID.GodModeFnQSwitchable])
+            {
+                _godModeFnQSwitchableCard.Visibility = Visibility.Visible;
+                _godModeFnQSwitchableToggle.IsChecked = await WMI.LenovoOtherMethod.GetFeatureValueAsync(CapabilityID.GodModeFnQSwitchable) == 1;
+            }
+            else
+            {
+                _godModeFnQSwitchableCard.Visibility = Visibility.Collapsed;
+            }
+        }
+        catch (Exception ex)
+        {
+            _godModeFnQSwitchableCard.Visibility = Visibility.Collapsed;
+
+            if (Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace($"Failed to get GodModeFnQSwitchable status.", ex);
+        }
+
+        _powerModeMappingComboBox.SetItems(Enum.GetValues<PowerModeMappingMode>(), _settings.Store.PowerModeMappingMode, t => t.GetDisplayName());
+
+        var isPowerModeFeatureSupported = await _powerModeFeature.IsSupportedAsync();
+        _powerModeMappingCard.Visibility = isPowerModeFeatureSupported ? Visibility.Visible : Visibility.Collapsed;
+        _powerModesCard.Visibility = _settings.Store.PowerModeMappingMode == PowerModeMappingMode.WindowsPowerMode && isPowerModeFeatureSupported ? Visibility.Visible : Visibility.Collapsed;
+        _windowsPowerPlansCard.Visibility = _settings.Store.PowerModeMappingMode == PowerModeMappingMode.WindowsPowerPlan && isPowerModeFeatureSupported ? Visibility.Visible : Visibility.Collapsed;
+        _windowsPowerPlansControlPanelCard.Visibility = _settings.Store.PowerModeMappingMode == PowerModeMappingMode.WindowsPowerPlan && isPowerModeFeatureSupported ? Visibility.Visible : Visibility.Collapsed;
+
+        _onBatterySinceResetToggle.Visibility = Visibility.Visible;
+
+        _hwinfoIntegrationToggle.IsChecked = _integrationsSettings.Store.HWiNFO;
+        _cliInterfaceToggle.IsChecked = _integrationsSettings.Store.CLI;
+        _cliPathToggle.IsChecked = SystemPath.HasCLI();
 
         await loadingTask;
 
+        _temperatureComboBox.Visibility = Visibility.Visible;
         _themeComboBox.Visibility = Visibility.Visible;
         _autorunComboBox.Visibility = Visibility.Visible;
+        _minimizeToTrayToggle.Visibility = Visibility.Visible;
         _minimizeOnCloseToggle.Visibility = Visibility.Visible;
         _vantageToggle.Visibility = Visibility.Visible;
         _legionZoneToggle.Visibility = Visibility.Visible;
         _fnKeysToggle.Visibility = Visibility.Visible;
         _smartFnLockComboBox.Visibility = Visibility.Visible;
         _synchronizeBrightnessToAllPowerPlansToggle.Visibility = Visibility.Visible;
+        _godModeFnQSwitchableToggle.Visibility = Visibility.Visible;
+        _powerModeMappingComboBox.Visibility = Visibility.Visible;
+        _hwinfoIntegrationToggle.Visibility = Visibility.Visible;
+        _cliInterfaceToggle.Visibility = Visibility.Visible;
+        _cliPathToggle.Visibility = Visibility.Visible;
 
         _isRefreshing = false;
     }
@@ -132,6 +202,18 @@ public partial class SettingsPage
         await LocalizationHelper.SetLanguageAsync(cultureInfo);
 
         App.Current.RestartMainWindow();
+    }
+
+    private void TemperatureComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (_isRefreshing)
+            return;
+
+        if (!_temperatureComboBox.TryGetSelectedItem(out TemperatureUnit temperatureUnit))
+            return;
+
+        _settings.Store.TemperatureUnit = temperatureUnit;
+        _settings.SynchronizeStore();
     }
 
     private void ThemeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -223,6 +305,19 @@ public partial class SettingsPage
 
         var window = new SelectSmartKeyPipelinesWindow(isDoublePress: true) { Owner = Window.GetWindow(this) };
         window.ShowDialog();
+    }
+
+    private void MinimizeToTrayToggle_Click(object sender, RoutedEventArgs e)
+    {
+        if (_isRefreshing)
+            return;
+
+        var state = _minimizeToTrayToggle.IsChecked;
+        if (state is null)
+            return;
+
+        _settings.Store.MinimizeToTray = state.Value;
+        _settings.SynchronizeStore();
     }
 
     private void MinimizeOnCloseToggle_Click(object sender, RoutedEventArgs e)
@@ -476,17 +571,127 @@ public partial class SettingsPage
         window.ShowDialog();
     }
 
-    private void PowerPlans_Click(object sender, RoutedEventArgs e)
+    private async void CheckUpdates_Click(object sender, RoutedEventArgs e)
     {
         if (_isRefreshing)
             return;
 
-        var window = new PowerPlansWindow { Owner = Window.GetWindow(this) };
+        if (App.Current.MainWindow is not MainWindow mainWindow)
+            return;
+
+        mainWindow.CheckForUpdates(true);
+        await SnackbarHelper.ShowAsync(Resource.SettingsPage_CheckUpdates_Started_Title, type: SnackbarType.Info);
+    }
+
+    private void UpdateCheckFrequencyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (_isRefreshing)
+            return;
+
+        if (!_updateCheckFrequencyComboBox.TryGetSelectedItem(out UpdateCheckFrequency frequency))
+            return;
+
+        _updateCheckSettings.Store.UpdateCheckFrequency = frequency;
+        _updateCheckSettings.SynchronizeStore();
+        _updateChecker.UpdateMinimumTimeSpanForRefresh();
+    }
+
+    private async void GodModeFnQSwitchableToggle_Click(object sender, RoutedEventArgs e)
+    {
+        if (_isRefreshing)
+            return;
+
+        var state = _godModeFnQSwitchableToggle.IsChecked;
+        if (state is null)
+            return;
+
+        _godModeFnQSwitchableToggle.IsEnabled = false;
+
+        await WMI.LenovoOtherMethod.SetFeatureValueAsync(CapabilityID.GodModeFnQSwitchable, state.Value ? 1 : 0);
+
+        _godModeFnQSwitchableToggle.IsEnabled = true;
+    }
+
+    private async void PowerModeMappingComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (_isRefreshing)
+            return;
+
+        if (!_powerModeMappingComboBox.TryGetSelectedItem(out PowerModeMappingMode powerModeMappingMode))
+            return;
+
+        _settings.Store.PowerModeMappingMode = powerModeMappingMode;
+        _settings.SynchronizeStore();
+
+        var isPowerModeFeatureSupported = await _powerModeFeature.IsSupportedAsync();
+        _powerModesCard.Visibility = _settings.Store.PowerModeMappingMode == PowerModeMappingMode.WindowsPowerMode && isPowerModeFeatureSupported ? Visibility.Visible : Visibility.Collapsed;
+        _windowsPowerPlansCard.Visibility = _settings.Store.PowerModeMappingMode == PowerModeMappingMode.WindowsPowerPlan && isPowerModeFeatureSupported ? Visibility.Visible : Visibility.Collapsed;
+        _windowsPowerPlansControlPanelCard.Visibility = _settings.Store.PowerModeMappingMode == PowerModeMappingMode.WindowsPowerPlan && isPowerModeFeatureSupported ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    private void WindowsPowerPlans_Click(object sender, RoutedEventArgs e)
+    {
+        if (_isRefreshing)
+            return;
+
+        var window = new WindowsPowerPlansWindow { Owner = Window.GetWindow(this) };
         window.ShowDialog();
     }
 
-    private void PowerPlansControlPanel_Click(object sender, RoutedEventArgs e)
+    private void PowerModes_Click(object sender, RoutedEventArgs e)
+    {
+        if (_isRefreshing)
+            return;
+
+        var window = new WindowsPowerModesWindow { Owner = Window.GetWindow(this) };
+        window.ShowDialog();
+    }
+
+    private void WindowsPowerPlansControlPanel_Click(object sender, RoutedEventArgs e)
     {
         Process.Start("control", "/name Microsoft.PowerOptions");
+    }
+
+    private void OnBatterySinceResetToggle_Click(object sender, RoutedEventArgs e)
+    {
+        if (_isRefreshing)
+            return;
+
+        var state = _onBatterySinceResetToggle.IsChecked;
+        if (state is null)
+            return;
+
+        _settings.Store.ResetBatteryOnSinceTimerOnReboot = state.Value;
+        _settings.SynchronizeStore();
+    }
+
+    private async void HWiNFOIntegrationToggle_Click(object sender, RoutedEventArgs e)
+    {
+        if (_isRefreshing)
+            return;
+
+        _integrationsSettings.Store.HWiNFO = _hwinfoIntegrationToggle.IsChecked ?? false;
+        _integrationsSettings.SynchronizeStore();
+
+        await _hwinfoIntegration.StartStopIfNeededAsync();
+    }
+
+    private async void CLIInterfaceToggle_Click(object sender, RoutedEventArgs e)
+    {
+        if (_isRefreshing)
+            return;
+
+        _integrationsSettings.Store.CLI = _cliInterfaceToggle.IsChecked ?? false;
+        _integrationsSettings.SynchronizeStore();
+
+        await _ipcServer.StartStopIfNeededAsync();
+    }
+
+    private void CLIPathToggle_Click(object sender, RoutedEventArgs e)
+    {
+        if (_isRefreshing)
+            return;
+
+        SystemPath.SetCLI(_cliPathToggle.IsChecked ?? false);
     }
 }

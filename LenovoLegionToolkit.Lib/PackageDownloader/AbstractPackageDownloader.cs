@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
@@ -13,20 +12,15 @@ using LenovoLegionToolkit.Lib.Utils;
 
 namespace LenovoLegionToolkit.Lib.PackageDownloader;
 
-public abstract class AbstractPackageDownloader : IPackageDownloader
+public abstract class AbstractPackageDownloader(HttpClientFactory httpClientFactory) : IPackageDownloader
 {
-    protected readonly HttpClientFactory HttpClientFactory;
-
-    protected AbstractPackageDownloader(HttpClientFactory httpClientFactory)
-    {
-        HttpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
-    }
+    protected HttpClientFactory HttpClientFactory => httpClientFactory;
 
     public abstract Task<List<Package>> GetPackagesAsync(string machineType, OS os, IProgress<float>? progress = null, CancellationToken token = default);
 
     public async Task<string> DownloadPackageFileAsync(Package package, string location, IProgress<float>? progress = null, CancellationToken token = default)
     {
-        using var httpClient = HttpClientFactory.Create();
+        using var httpClient = httpClientFactory.Create();
 
         var tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
 
@@ -68,28 +62,16 @@ public abstract class AbstractPackageDownloader : IPackageDownloader
                 return;
             }
         }
-        catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+        catch (HttpRequestException ex)
         {
             if (Log.Instance.IsTraceEnabled)
-                Log.Instance.Trace($"External file checksum not found. [fileName={package.FileName}, fileLocation={package.FileLocation}, fileCrc={package.FileCrc}]");
+                Log.Instance.Trace($"External file checksum not found. [statusCode={ex.StatusCode}, fileName={package.FileName}, fileLocation={package.FileLocation}, fileCrc={package.FileCrc}]");
         }
 
         if (Log.Instance.IsTraceEnabled)
             Log.Instance.Trace($"File checksum mismatch. [fileName={package.FileName}, fileLocation={package.FileLocation}]");
 
-        throw new InvalidDataException("File checksum mismatch.");
-    }
-
-    protected static async Task<string?> GetReadmeAsync(HttpClient httpClient, string location, CancellationToken token)
-    {
-        try
-        {
-            return await httpClient.GetStringAsync(location, token).ConfigureAwait(false);
-        }
-        catch
-        {
-            return null;
-        }
+        throw new InvalidDataException("File checksum mismatch");
     }
 
     private static string SanitizeFileName(string name)

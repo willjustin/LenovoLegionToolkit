@@ -14,8 +14,8 @@ public partial class NotificationsSettingsWindow
 {
     private readonly ApplicationSettings _settings = IoCContainer.Resolve<ApplicationSettings>();
 
-    private IEnumerable<CardControl> Cards => new[]
-    {
+    private IEnumerable<CardControl> Cards =>
+    [
         _notificationPositionCard,
         _notificationDurationCard,
         _updateAvailableCard,
@@ -30,13 +30,14 @@ public partial class NotificationsSettingsWindow
         _acAdapterCard,
         _smartKeyCard,
         _automationCard
-    };
+    ];
 
     public NotificationsSettingsWindow()
     {
         InitializeComponent();
 
         _dontShowNotificationsToggle.IsChecked = _settings.Store.DontShowNotifications;
+        _notificationOnAllScreensToggle.IsChecked = _settings.Store.NotificationOnAllScreens;
 
         _notificationPositionComboBox.SetItems(Enum.GetValues<NotificationPosition>(), _settings.Store.NotificationPosition, v => v.GetDisplayName());
         _notificationDurationComboBox.SetItems(Enum.GetValues<NotificationDuration>(), _settings.Store.NotificationDuration, v => v.GetDisplayName());
@@ -75,6 +76,16 @@ public partial class NotificationsSettingsWindow
         _settings.SynchronizeStore();
 
         RefreshCards();
+    }
+
+    private void NotificationOnAllScreensToggle_Click(object sender, RoutedEventArgs e)
+    {
+        var state = _notificationOnAllScreensToggle.IsChecked;
+        if (state is null)
+            return;
+
+        _settings.Store.NotificationOnAllScreens = state.Value;
+        _settings.SynchronizeStore();
     }
 
     private void NotificationPositionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

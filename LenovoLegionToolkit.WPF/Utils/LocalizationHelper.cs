@@ -21,7 +21,7 @@ public static class LocalizationHelper
 
     private static readonly CultureInfo DefaultLanguage = new("en");
 
-    public static readonly CultureInfo[] Languages = {
+    public static readonly CultureInfo[] Languages = [
         DefaultLanguage,
         new("ar"),
         new("bg"),
@@ -30,9 +30,12 @@ public static class LocalizationHelper
         new("el"),
         new("es"),
         new("fr"),
+        new("hu"),
         new("it"),
+        new("ja"),
         new("lv"),
         new("nl-nl"),
+        new("pl"),
         new("pt"),
         new("pt-br"),
         new("ro"),
@@ -43,9 +46,8 @@ public static class LocalizationHelper
         new("vi"),
         new("zh-hans"),
         new("zh-hant"),
-        // HACK: Karakalpak is not a recognized culture by msbuild, so we use this one as workaround instead.
-        new("uz-latn-uz")
-    };
+        new("uz-latn-uz") // HACK: Karakalpak is not a recognized culture by msbuild, so we use this one as workaround instead.
+    ];
 
     public static FlowDirection Direction => Resource.Culture?.TextInfo.IsRightToLeft ?? false
         ? FlowDirection.RightToLeft
@@ -124,7 +126,7 @@ public static class LocalizationHelper
             var name = await File.ReadAllTextAsync(LanguagePath);
             var cultureInfo = new CultureInfo(name);
             if (!Languages.Contains(cultureInfo))
-                throw new InvalidOperationException("Unknown language.");
+                throw new InvalidOperationException("Unknown language");
             return cultureInfo;
         }
         catch
@@ -156,18 +158,15 @@ public static class LocalizationHelper
         var ptr = IntPtr.Zero;
         try
         {
-            var length = PInvoke.GetLocaleInfoEx((string?)null, PInvoke.LOCALE_SSHORTDATE, null, 0);
+            var length = PInvoke.GetLocaleInfoEx(null, PInvoke.LOCALE_SSHORTDATE, null, 0);
             if (length == 0)
                 return null;
 
             ptr = Marshal.AllocHGlobal(sizeof(char) * length);
             var charPtr = new PWSTR((char*)ptr.ToPointer());
 
-            length = PInvoke.GetLocaleInfoEx((string?)null, PInvoke.LOCALE_SSHORTDATE, charPtr, length);
-            if (length == 0)
-                return null;
-
-            return charPtr.ToString();
+            length = PInvoke.GetLocaleInfoEx(null, PInvoke.LOCALE_SSHORTDATE, charPtr, length);
+            return length == 0 ? null : charPtr.ToString();
         }
         finally
         {

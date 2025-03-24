@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using LenovoLegionToolkit.Lib;
 using LenovoLegionToolkit.Lib.Automation.Steps;
@@ -10,9 +10,9 @@ using LenovoLegionToolkit.WPF.Extensions;
 
 namespace LenovoLegionToolkit.WPF.Controls.Automation;
 
-public abstract class AbstractComboBoxAutomationStepCardControl<T> : AbstractAutomationStepControl<IAutomationStep<T>> where T : struct
+public abstract class AbstractComboBoxAutomationStepCardControl<T>(IAutomationStep<T> step)
+    : AbstractAutomationStepControl<IAutomationStep<T>>(step) where T : struct
 {
-
     private readonly ComboBox _comboBox = new()
     {
         MinWidth = 150,
@@ -21,8 +21,6 @@ public abstract class AbstractComboBoxAutomationStepCardControl<T> : AbstractAut
     };
 
     private T _state;
-
-    protected AbstractComboBoxAutomationStepCardControl(IAutomationStep<T> step) : base(step) { }
 
     protected override UIElement GetCustomControl()
     {
@@ -45,7 +43,7 @@ public abstract class AbstractComboBoxAutomationStepCardControl<T> : AbstractAut
     {
         var obj = Activator.CreateInstance(AutomationStep.GetType(), _state);
         if (obj is not IAutomationStep<T> step)
-            throw new InvalidOperationException("Couldn't create automation step.");
+            throw new InvalidOperationException("Couldn't create automation step");
         return step;
     }
 
@@ -58,12 +56,14 @@ public abstract class AbstractComboBoxAutomationStepCardControl<T> : AbstractAut
 
     protected override async Task RefreshAsync()
     {
+        AutomationProperties.SetName(_comboBox, Title);
+
         var items = await AutomationStep.GetAllStatesAsync();
         var selectedItem = AutomationStep.State;
 
         _state = selectedItem;
         _comboBox.SetItems(items, selectedItem, ComboBoxItemDisplayName);
-        _comboBox.IsEnabled = items.Any();
+        _comboBox.IsEnabled = items.Length != 0;
     }
 
     protected override void OnFinishedLoading() => _comboBox.Visibility = Visibility.Visible;

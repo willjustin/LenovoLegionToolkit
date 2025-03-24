@@ -56,17 +56,6 @@ public static partial class WMI
             }
         }
 
-        public static class BIOS
-        {
-            public static async Task<string> GetNameAsync()
-            {
-                var result = await ReadAsync("root\\CIMV2",
-                    $"SELECT * FROM Win32_BIOS",
-                    pdc => (string)pdc["Name"].Value).ConfigureAwait(false);
-                return result.First();
-            }
-        }
-
         public static class Processor
         {
             public static async Task<int> GetAddressWidthAsync()
@@ -119,13 +108,7 @@ public static partial class WMI
                     if (driverDateString is not null)
                         driverDate = ManagementDateTimeConverter.ToDateTime(driverDateString).Date;
 
-                    return new DriverInfo
-                    {
-                        DeviceId = deviceId,
-                        HardwareId = hardwareId,
-                        Version = driverVersion,
-                        Date = driverDate
-                    };
+                    return new DriverInfo(deviceId, hardwareId, driverVersion, driverDate);
                 });
         }
     }

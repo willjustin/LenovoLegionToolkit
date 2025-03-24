@@ -132,9 +132,6 @@
   <data name="AboutPage_ProjectWebsiteOnGitHub" xml:space="preserve">
     <value>موقع المشروع على GitHub</value>
   </data>
-  <data name="AboutPage_ThirdPartyLibraries" xml:space="preserve">
-    <value>مكتبات الطرف الثالث</value>
-  </data>
   <data name="AboutPage_Title" xml:space="preserve">
     <value>حول البرنامج</value>
   </data>
@@ -150,9 +147,6 @@
   </data>
   <data name="AddNew" xml:space="preserve">
     <value>أضف جديد</value>
-  </data>
-  <data name="AlwaysActivatePowerPlans_Title" xml:space="preserve">
-    <value>تشغيل وضع الطاقة الخاص بالويندوز</value>
   </data>
   <data name="AlwaysOnUSBControl_Message" xml:space="preserve">
     <value>شحن الاجهزة عبر ال USB, حتى لو كان الحاسب مغلق او فى وضع النوم او السبات.</value>
@@ -707,9 +701,6 @@
   <data name="IncompatibleDevice_Message" xml:space="preserve">
     <value>هذا الجهاز غير متوافق مع مجموعة أدوات Lenovo Legion.</value>
   </data>
-  <data name="IncompatibleDevice_Title" xml:space="preserve">
-    <value>مجموعة أدوات Lenovo Legion</value>
-  </data>
   <data name="KeyboardBacklightPage_NoCompatibleKeyboardsFound" xml:space="preserve">
     <value>لم يتم العثور على لوحة مفاتيح متوافقة</value>
   </data>
@@ -821,10 +812,6 @@
   <data name="NotificationsSettingsWindow_CapsAndNumLock" xml:space="preserve">
     <value>مفتاح تحويل الأحرف الصغيرة إلى كبيرة و مفتاح الأرقام</value>
   </data>
-  <data name="NotificationsSettingsWindow_DontShowNotifications_Message" xml:space="preserve">
-    <value>تعطيل الإشعار بإجراءات مفاتيح Fn مثل كتم صوت الميكروفون
-تمكين هذا الخِيار إذا كان لديك تعارض مع تطبيقات ملء الشاشة.</value>
-  </data>
   <data name="NotificationsSettingsWindow_DontShowNotifications_Title" xml:space="preserve">
     <value>لا تظهر أي إشعارات</value>
   </data>
@@ -919,9 +906,6 @@
   <data name="PackagesPage_DownloadInProgress_Title" xml:space="preserve">
     <value>جارٍ التنزيل</value>
   </data>
-  <data name="PackagesPage_DownloadTo" xml:space="preserve">
-    <value>التحميل إلى</value>
-  </data>
   <data name="Filter" xml:space="preserve">
     <value>جارٍ التصفية...</value>
   </data>
@@ -980,27 +964,6 @@
   <data name="PowerModeControl_Warning" xml:space="preserve">
     <value>قد لا يعمل وضع الطاقة المحدد بشكل صحيح بِدون توصيل محول التيار المتردد.</value>
   </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Title" xml:space="preserve">
-    <value>هل أنت متأكد؟</value>
-  </data>
-  <data name="PowerPlansWindow_BalanceMode" xml:space="preserve">
-    <value>وضع التوازن</value>
-  </data>
-  <data name="PowerPlansWindow_CustomMode" xml:space="preserve">
-    <value>وضع مخصص</value>
-  </data>
-  <data name="PowerPlansWindow_DefaultPowerPlan" xml:space="preserve">
-    <value>الافتراضي</value>
-  </data>
-  <data name="PowerPlansWindow_PerformanceMode" xml:space="preserve">
-    <value>وضع الأداء</value>
-  </data>
-  <data name="PowerPlansWindow_QuietMode" xml:space="preserve">
-    <value>وضع السكون أو الهدوء</value>
-  </data>
-  <data name="PowerPlansWindow_Title" xml:space="preserve">
-    <value>أوضاع أو خطط الطاقة</value>
-  </data>
   <data name="RGBKeyboardBacklightAutomationStepControl_Message" xml:space="preserve">
     <value>اضبط الإعداد المسبق للإضاءة الخلفية للوحة المفاتيح.</value>
   </data>
@@ -1018,6 +981,9 @@
   </data>
   <data name="RGBKeyboardBacklightControl_Preset3" xml:space="preserve">
     <value>الإعدادات المسبقة رَقَم 3</value>
+  </data>
+  <data name="RGBKeyboardBacklightControl_Preset4" xml:space="preserve">
+    <value>الإعدادات المسبقة رَقَم 4</value>
   </data>
   <data name="RGBKeyboardBacklightControl_PresetOff" xml:space="preserve">
     <value>غلق</value>
@@ -1130,12 +1096,6 @@
   <data name="SettingsPage_DisableLenovoHotkeys_Title" xml:space="preserve">
     <value>تعطيل مفاتيح Lenovo الساخنة</value>
   </data>
-  <data name="SettingsPage_DisableVantage_Error_Message" xml:space="preserve">
-    <value>ربما لم يتم تعطيل Vantage بشكل صحيح</value>
-  </data>
-  <data name="SettingsPage_DisableVantage_Error_Title" xml:space="preserve">
-    <value>تعذر تعطيل "%s"</value>
-  </data>
   <data name="SettingsPage_DisableVantage_Title" xml:space="preserve">
     <value>قم بتعطيل Lenovo Vantage</value>
   </data>
@@ -1165,9 +1125,6 @@
   </data>
   <data name="SettingsPage_Notifications_Title" xml:space="preserve">
     <value>الإشعارات</value>
-  </data>
-  <data name="SettingsPage_PowerPlans_Title" xml:space="preserve">
-    <value>أوضاع أو خطط الطاقة</value>
   </data>
   <data name="SettingsPage_SmartKeyDoublePressAction_Message" xml:space="preserve">
     <value>قم بتعيين إجراء سريع للضغط المزدوج على Fn + F9.</value>
@@ -1354,12 +1311,6 @@
   </data>
   <data name="WhiteKeyboardBacklightControl_Title" xml:space="preserve">
     <value>الإضاءة الخلفية للوحة المفاتيح</value>
-  </data>
-  <data name="WinKeyAutomationStepControl_Message" xml:space="preserve">
-    <value>تمكين أو تعطيل مفتاح الويندوز.</value>
-  </data>
-  <data name="WinKeyAutomationStepControl_Title" xml:space="preserve">
-    <value>مفتاح الويندوز</value>
   </data>
   <data name="WinKeyControl_Message" xml:space="preserve">
     <value>يعمل فقط على لوحة المفاتيح المدمجة.</value>

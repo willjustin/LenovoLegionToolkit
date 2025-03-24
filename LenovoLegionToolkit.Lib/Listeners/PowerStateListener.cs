@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using LenovoLegionToolkit.Lib.Controllers;
 using LenovoLegionToolkit.Lib.Features;
 using LenovoLegionToolkit.Lib.Features.Hybrid.Notify;
+using LenovoLegionToolkit.Lib.Messaging;
+using LenovoLegionToolkit.Lib.Messaging.Messages;
 using LenovoLegionToolkit.Lib.System;
 using LenovoLegionToolkit.Lib.Utils;
 using Microsoft.Win32;
@@ -14,14 +16,12 @@ using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace LenovoLegionToolkit.Lib.Listeners;
 
-public class PowerStateListener : IListener<EventArgs>
+public class PowerStateListener : IListener<PowerStateListener.ChangedEventArgs>
 {
-    private enum PowerMode
+    public class ChangedEventArgs(PowerStateEvent powerStateEvent, bool powerAdapterStateChanged) : EventArgs
     {
-        Unknown = -1,
-        StatusChange,
-        Suspend,
-        Resume,
+        public PowerStateEvent PowerStateEvent { get; } = powerStateEvent;
+        public bool PowerAdapterStateChanged { get; } = powerAdapterStateChanged;
     }
 
     private readonly SafeHandle _recipientHandle;
@@ -35,16 +35,16 @@ public class PowerStateListener : IListener<EventArgs>
 
     private bool _started;
     private HPOWERNOTIFY _handle;
-    private PowerAdapterStatus? _lastState;
+    private PowerAdapterStatus? _lastPowerAdapterState;
 
-    public event EventHandler<EventArgs>? Changed;
+    public event EventHandler<ChangedEventArgs>? Changed;
 
     public unsafe PowerStateListener(PowerModeFeature powerModeFeature, BatteryFeature batteryFeature, DGPUNotify dgpuNotify, RGBKeyboardBacklightController rgbController)
     {
-        _powerModeFeature = powerModeFeature ?? throw new ArgumentNullException(nameof(powerModeFeature));
-        _batteryFeature = batteryFeature ?? throw new ArgumentNullException(nameof(batteryFeature));
-        _dgpuNotify = dgpuNotify ?? throw new ArgumentNullException(nameof(dgpuNotify));
-        _rgbController = rgbController ?? throw new ArgumentNullException(nameof(rgbController));
+        _powerModeFeature = powerModeFeature;
+        _batteryFeature = batteryFeature;
+        _dgpuNotify = dgpuNotify;
+        _rgbController = rgbController;
 
         _callback = Callback;
         _recipientHandle = new StructSafeHandle<DEVICE_NOTIFY_SUBSCRIBE_PARAMETERS>(new DEVICE_NOTIFY_SUBSCRIBE_PARAMETERS
@@ -59,7 +59,7 @@ public class PowerStateListener : IListener<EventArgs>
         if (_started)
             return;
 
-        _lastState = await Power.IsPowerAdapterConnectedAsync().ConfigureAwait(false);
+        _lastPowerAdapterState = await Power.IsPowerAdapterConnectedAsync().ConfigureAwait(false);
 
         SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
         RegisterSuspendResumeNotification();
@@ -84,13 +84,13 @@ public class PowerStateListener : IListener<EventArgs>
 
         var powerMode = e.Mode switch
         {
-            PowerModes.StatusChange => PowerMode.StatusChange,
-            PowerModes.Resume => PowerMode.Resume,
-            PowerModes.Suspend => PowerMode.Suspend,
-            _ => PowerMode.Unknown
+            PowerModes.StatusChange => PowerStateEvent.StatusChange,
+            PowerModes.Resume => PowerStateEvent.Resume,
+            PowerModes.Suspend => PowerStateEvent.Suspend,
+            _ => PowerStateEvent.Unknown
         };
 
-        if (powerMode is PowerMode.Unknown)
+        if (powerMode is PowerStateEvent.Unknown)
             return;
 
         await HandleAsync(powerMode).ConfigureAwait(false);
@@ -118,24 +118,24 @@ public class PowerStateListener : IListener<EventArgs>
 
         var powerMode = type switch
         {
-            PInvoke.PBT_APMRESUMEAUTOMATIC => PowerMode.Resume,
-            _ => PowerMode.Unknown
+            PInvoke.PBT_APMRESUMEAUTOMATIC => PowerStateEvent.Resume,
+            _ => PowerStateEvent.Unknown
         };
 
-        if (powerMode is not PowerMode.Resume)
+        if (powerMode is not PowerStateEvent.Resume)
             return;
 
         await HandleAsync(powerMode).ConfigureAwait(false);
     }
 
-    private async Task HandleAsync(PowerMode mode)
+    private async Task HandleAsync(PowerStateEvent powerStateEvent)
     {
-        var newState = await Power.IsPowerAdapterConnectedAsync().ConfigureAwait(false);
+        var powerAdapterState = await Power.IsPowerAdapterConnectedAsync().ConfigureAwait(false);
 
         if (Log.Instance.IsTraceEnabled)
-            Log.Instance.Trace($"Handle {mode}. [newState={newState}]");
+            Log.Instance.Trace($"Handle {powerStateEvent}. [newState={powerAdapterState}]");
 
-        if (mode is PowerMode.Resume)
+        if (powerStateEvent is PowerStateEvent.Resume)
         {
             _ = Task.Run(async () =>
             {
@@ -147,7 +147,7 @@ public class PowerStateListener : IListener<EventArgs>
 
                 if (await _powerModeFeature.IsSupportedAsync().ConfigureAwait(false))
                 {
-                    await _powerModeFeature.EnsureCorrectPowerPlanIsSetAsync().ConfigureAwait(false);
+                    await _powerModeFeature.EnsureCorrectWindowsPowerSettingsAreSetAsync().ConfigureAwait(false);
                     await _powerModeFeature.EnsureGodModeStateIsAppliedAsync().ConfigureAwait(false);
                 }
 
@@ -159,7 +159,7 @@ public class PowerStateListener : IListener<EventArgs>
             });
         }
 
-        if (mode is PowerMode.StatusChange && newState is PowerAdapterStatus.Connected)
+        if (powerStateEvent is PowerStateEvent.StatusChange && powerAdapterState is PowerAdapterStatus.Connected)
         {
             _ = Task.Run(async () =>
             {
@@ -174,27 +174,16 @@ public class PowerStateListener : IListener<EventArgs>
             });
         }
 
-        if (newState == _lastState)
-        {
-            if (Log.Instance.IsTraceEnabled)
-                Log.Instance.Trace($"Event skipped. [newState={newState}, lastState={_lastState}]");
+        var powerAdapterStateChanged = powerAdapterState != _lastPowerAdapterState;
+        _lastPowerAdapterState = powerAdapterState;
 
+        if (powerStateEvent is PowerStateEvent.Suspend or PowerStateEvent.Unknown)
             return;
-        }
 
-        _lastState = newState;
+        if (powerAdapterStateChanged)
+            Notify(powerAdapterState);
 
-        if (mode is PowerMode.Suspend)
-        {
-            if (Log.Instance.IsTraceEnabled)
-                Log.Instance.Trace($"Event skipped. [mode={mode}]");
-
-            return;
-        }
-
-        Changed?.Invoke(this, EventArgs.Empty);
-
-        Notify(newState);
+        Changed?.Invoke(this, new(powerStateEvent, powerAdapterStateChanged));
     }
 
     private unsafe void RegisterSuspendResumeNotification()
@@ -215,13 +204,13 @@ public class PowerStateListener : IListener<EventArgs>
         switch (newState)
         {
             case PowerAdapterStatus.Connected:
-                MessagingCenter.Publish(new Notification(NotificationType.ACAdapterConnected));
+                MessagingCenter.Publish(new NotificationMessage(NotificationType.ACAdapterConnected));
                 break;
             case PowerAdapterStatus.ConnectedLowWattage:
-                MessagingCenter.Publish(new Notification(NotificationType.ACAdapterConnectedLowWattage));
+                MessagingCenter.Publish(new NotificationMessage(NotificationType.ACAdapterConnectedLowWattage));
                 break;
             case PowerAdapterStatus.Disconnected:
-                MessagingCenter.Publish(new Notification(NotificationType.ACAdapterDisconnected));
+                MessagingCenter.Publish(new NotificationMessage(NotificationType.ACAdapterDisconnected));
                 break;
         }
     }

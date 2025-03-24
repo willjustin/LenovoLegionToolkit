@@ -12,7 +12,7 @@ public static class ComboBoxExtensions
         return comboBox.Items.OfType<ComboBoxItem<T>>().Select(item => item.Value);
     }
 
-    public static void SetItems<T>(this ComboBox comboBox, IEnumerable<T> items, T selectedItem, Func<T, object>? displayValueConverter)
+    public static void SetItems<T>(this ComboBox comboBox, IEnumerable<T> items, T selectedItem, Func<T, object>? displayValueConverter = null)
     {
         var boxedItems = items.Select(v => new ComboBoxItem<T>(v, displayValueConverter)).ToArray();
         var selectedBoxedItem = boxedItems.FirstOrDefault(bv => EqualityComparer<T>.Default.Equals(bv.Value, selectedItem));
@@ -62,25 +62,18 @@ public static class ComboBoxExtensions
         return item.Value;
     }
 
-    private class ComboBoxItem<T>
+    private class ComboBoxItem<T>(T value, Func<T, object>? displayString)
     {
         public static bool operator ==(ComboBoxItem<T> left, ComboBoxItem<T> right) => left.Equals(right);
 
         public static bool operator !=(ComboBoxItem<T> left, ComboBoxItem<T> right) => !(left == right);
 
-        public T Value { get; }
-        private readonly Func<T, object>? _displayString;
-
-        public ComboBoxItem(T value, Func<T, object>? displayString)
-        {
-            Value = value;
-            _displayString = displayString;
-        }
+        public T Value { get; } = value;
 
         public override bool Equals(object? obj) => obj is ComboBoxItem<T> item && EqualityComparer<T>.Default.Equals(Value, item.Value);
 
         public override int GetHashCode() => HashCode.Combine(Value);
 
-        public override string ToString() => _displayString?.Invoke(Value).ToString() ?? Value?.ToString() ?? string.Empty;
+        public override string ToString() => displayString?.Invoke(Value).ToString() ?? Value?.ToString() ?? string.Empty;
     }
 }

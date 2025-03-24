@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using LenovoLegionToolkit.Lib;
 using LenovoLegionToolkit.Lib.Features;
+using LenovoLegionToolkit.Lib.Messaging;
+using LenovoLegionToolkit.Lib.Messaging.Messages;
 using LenovoLegionToolkit.Lib.Utils;
 using LenovoLegionToolkit.WPF.Extensions;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
+using CardControl = LenovoLegionToolkit.WPF.Controls.Custom.CardControl;
 
 namespace LenovoLegionToolkit.WPF.Controls;
 
@@ -29,7 +33,11 @@ public abstract class AbstractToggleFeatureCardControl<T> : AbstractRefreshingCo
     protected string Title
     {
         get => _cardHeaderControl.Title;
-        set => _cardHeaderControl.Title = value;
+        set
+        {
+            _cardHeaderControl.Title = value;
+            AutomationProperties.SetName(_toggle, value);
+        }
     }
 
     protected string Subtitle
@@ -54,7 +62,7 @@ public abstract class AbstractToggleFeatureCardControl<T> : AbstractRefreshingCo
 
     protected abstract T OffState { get; }
 
-    public virtual TimeSpan AdditionalStateChangeDelay => TimeSpan.Zero;
+    protected virtual TimeSpan AdditionalStateChangeDelay => TimeSpan.Zero;
 
     protected AbstractToggleFeatureCardControl()
     {
@@ -87,7 +95,13 @@ public abstract class AbstractToggleFeatureCardControl<T> : AbstractRefreshingCo
 
     protected override void OnFinishedLoading()
     {
-        MessagingCenter.Subscribe<T>(this, () => Dispatcher.InvokeTask(RefreshAsync));
+        MessagingCenter.Subscribe<FeatureStateMessage<T>>(this, () => Dispatcher.InvokeTask(async () =>
+        {
+            if (!IsVisible)
+                return;
+
+            await RefreshAsync();
+        }));
     }
 
     protected virtual async Task OnStateChange(ToggleSwitch toggle, IFeature<T> feature)

@@ -3,17 +3,17 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using LenovoLegionToolkit.Lib.Automation.Steps;
+using LenovoLegionToolkit.WPF.Resources;
 using Wpf.Ui.Common;
-using Wpf.Ui.Controls;
 using Button = Wpf.Ui.Controls.Button;
+using CardControl = LenovoLegionToolkit.WPF.Controls.Custom.CardControl;
 
 namespace LenovoLegionToolkit.WPF.Controls.Automation;
 
-public abstract class AbstractAutomationStepControl<T> : AbstractAutomationStepControl where T : IAutomationStep
+public abstract class AbstractAutomationStepControl<T>(T automationStep) : AbstractAutomationStepControl(automationStep)
+    where T : IAutomationStep
 {
     protected new T AutomationStep => (T)base.AutomationStep;
-
-    protected AbstractAutomationStepControl(T automationStep) : base(automationStep) { }
 }
 
 public abstract class AbstractAutomationStepControl : UserControl
@@ -35,6 +35,7 @@ public abstract class AbstractAutomationStepControl : UserControl
     private readonly Button _deleteButton = new()
     {
         Icon = SymbolRegular.Dismiss24,
+        ToolTip = Resource.AbstractAutomationStepControl_Delete,
         MinWidth = 34,
         Height = 34,
         Margin = new(8, 0, 0, 0),
@@ -56,6 +57,18 @@ public abstract class AbstractAutomationStepControl : UserControl
     {
         get => _cardHeaderControl.Subtitle;
         set => _cardHeaderControl.Subtitle = value;
+    }
+
+    public VerticalAlignment TitleVerticalAlignment
+    {
+        get => _cardHeaderControl.TitleVerticalAlignment;
+        set => _cardHeaderControl.TitleVerticalAlignment = value;
+    }
+
+    public VerticalAlignment SubtitleVerticalAlignment
+    {
+        get => _cardHeaderControl.SubtitleVerticalAlignment;
+        set => _cardHeaderControl.SubtitleVerticalAlignment = value;
     }
 
     public event EventHandler? Changed;

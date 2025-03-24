@@ -446,18 +446,54 @@
     <value>Short</value>
   </data>
   <data name="ModifierKey_Shift" xml:space="preserve">
-	  <value>Shift</value>
+    <value>Shift</value>
   </data>
   <data name="ModifierKey_Ctrl" xml:space="preserve">
-	  <value>Ctrl</value>
+    <value>Ctrl</value>
   </data>
   <data name="ModifierKey_Alt" xml:space="preserve">
-	  <value>Alt</value>
+    <value>Alt</value>
   </data>
   <data name="BatteryNightChargeState_On" xml:space="preserve">
-	  <value>On</value>
+    <value>On</value>
   </data>
   <data name="BatteryNightChargeState_Off" xml:space="preserve">
-	  <value>Off</value>
+    <value>Off</value>
+  </data>
+  <data name="SpeakerState_Mute" xml:space="preserve">
+    <value>Mute</value>
+  </data>
+  <data name="SpeakerState_Unmute" xml:space="preserve">
+    <value>Unmute</value>
+  </data>
+  <data name="PowerModeMappingMode_Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="PowerModeMappingMode_WindowsPowerMode" xml:space="preserve">
+    <value>Windows Power Mode</value>
+  </data>
+  <data name="PowerModeMappingMode_WindowsPowerPlan" xml:space="preserve">
+    <value>Windows Power Plan</value>
+  </data>
+  <data name="RGBKeyboardBacklightPreset_Four" xml:space="preserve">
+    <value>Preset 4</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerDay" xml:space="preserve">
+    <value>Daily</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerHour" xml:space="preserve">
+    <value>Every hour</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerMonth" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerThreeHours" xml:space="preserve">
+    <value>Every 3 hours</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerTwelveHours" xml:space="preserve">
+    <value>Every 12 hours</value>
+  </data>
+  <data name="UpdateCheckFrequency_PerWeek" xml:space="preserve">
+    <value>Weekly</value>
   </data>
 </root>

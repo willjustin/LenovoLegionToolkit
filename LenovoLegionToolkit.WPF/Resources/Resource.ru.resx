@@ -151,13 +151,6 @@
   <data name="AddNew" xml:space="preserve">
     <value>Добавить новое действие</value>
   </data>
-  <data name="AlwaysActivatePowerPlans_Message" xml:space="preserve">
-    <value>Активировать режим питания даже при работе Vantage.
-Этот параметр предназначен только для устройств, которые не поставляются с несколькими режимами питания.</value>
-  </data>
-  <data name="AlwaysActivatePowerPlans_Title" xml:space="preserve">
-    <value>Всегда включать схемы питания Windows</value>
-  </data>
   <data name="AlwaysOnUSBControl_Message" xml:space="preserve">
     <value>Зарядка устройств через USB, когда компьютер выключен или находится в режиме сна или гибернации.</value>
   </data>
@@ -331,7 +324,7 @@
     <value>Число циклов</value>
   </data>
   <data name="BatteryPage_DesignCapacity_Message" xml:space="preserve">
-    <value>Первоначальная емкость батареи.</value>
+    <value>Первоначальная емкость аккумулятора.</value>
   </data>
   <data name="BatteryPage_DesignCapacity_Title" xml:space="preserve">
     <value>Расчетная емкость</value>
@@ -352,7 +345,7 @@
     <value>Дата первого применения</value>
   </data>
   <data name="BatteryPage_FirstUse_Message" xml:space="preserve">
-    <value>Когда впервые была использована батарея.</value>
+    <value>Когда впервые был использован аккумулятор.</value>
   </data>
   <data name="BatteryPage_FullChargeCapacity_Message" xml:space="preserve">
     <value>Емкость батареи при полной зарядке.</value>
@@ -364,7 +357,7 @@
     <value>Подключено зарядное устройство низкой мощности</value>
   </data>
   <data name="BatteryPage_ManufactureDate_Message" xml:space="preserve">
-    <value>Когда была изготовлена батарея.</value>
+    <value>Когда был изготовлен аккумулятор.</value>
   </data>
   <data name="BatteryPage_ManufactureDate_Title" xml:space="preserve">
     <value>Дата изготовления</value>
@@ -374,7 +367,7 @@
 Это время может быть неточным, если ноутбук заряжался во время сна или был выключен.</value>
   </data>
   <data name="BatteryPage_OnBatterySince_Title" xml:space="preserve">
-    <value>На батарее</value>
+    <value>На аккумуляторе</value>
   </data>
   <data name="BatteryPage_Title" xml:space="preserve">
     <value>Батарея</value>
@@ -617,6 +610,9 @@
   <data name="FanCurveControl_GPU" xml:space="preserve">
     <value>Граф. процессор</value>
   </data>
+  <data name="FanCurveControl_GPU2" xml:space="preserve">
+    <value>Граф. процессор #2</value>
+  </data>
   <data name="RPM" xml:space="preserve">
     <value>об/мин</value>
   </data>
@@ -740,9 +736,6 @@
   <data name="IncompatibleDevice_Message" xml:space="preserve">
     <value>Это устройство не совместимо с Lenovo Legion Toolkit.</value>
   </data>
-  <data name="IncompatibleDevice_Title" xml:space="preserve">
-    <value>Lenovo Legion Toolkit</value>
-  </data>
   <data name="KeyboardBacklightPage_NoCompatibleKeyboardsFound" xml:space="preserve">
     <value>Не найдено подходящих клавиатур</value>
   </data>
@@ -750,7 +743,7 @@
     <value>Подсветка клавиатуры</value>
   </data>
   <data name="Keyboard_VantageEnabledWarning_Message" xml:space="preserve">
-    <value>Подсветкой клавиатуры нельзя управлять здесь, когда работает Vantage или его службы.</value>
+    <value>Подсветкой клавиатуры нельзя управлять здесь, когда работает Lenovo Vantage или его службы.</value>
   </data>
   <data name="Keyboard_VantageEnabledWarning_Title" xml:space="preserve">
     <value>Lenovo Vantage или его службы запущены</value>
@@ -958,9 +951,6 @@
   <data name="PackagesPage_DownloadInProgress_Title" xml:space="preserve">
     <value>Идет скачивание</value>
   </data>
-  <data name="PackagesPage_DownloadTo" xml:space="preserve">
-    <value>Место загрузки</value>
-  </data>
   <data name="Filter" xml:space="preserve">
     <value>Фильтр...</value>
   </data>
@@ -1019,29 +1009,11 @@
   <data name="PowerModeControl_Warning" xml:space="preserve">
     <value>Выбранный режим питания может работать некорректно, если блок питания не подключен.</value>
   </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Message" xml:space="preserve">
-    <value>Включение этой опции во время работы Lenovo Vantage и изменения схем питания на ноутбуке может привести к неожиданным последствиям.</value>
-  </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Title" xml:space="preserve">
-    <value>Вы уверены?</value>
-  </data>
-  <data name="PowerPlansWindow_BalanceMode" xml:space="preserve">
-    <value>Сбалансированный режим</value>
-  </data>
-  <data name="PowerPlansWindow_CustomMode" xml:space="preserve">
-    <value>Пользовательский режим</value>
-  </data>
-  <data name="PowerPlansWindow_DefaultPowerPlan" xml:space="preserve">
+  <data name="WindowsPowerPlansWindow_DefaultPowerPlan" xml:space="preserve">
     <value>По умолчанию</value>
   </data>
-  <data name="PowerPlansWindow_PerformanceMode" xml:space="preserve">
-    <value>Режим макс. производительности</value>
-  </data>
-  <data name="PowerPlansWindow_QuietMode" xml:space="preserve">
-    <value>Тихий режим</value>
-  </data>
-  <data name="PowerPlansWindow_Title" xml:space="preserve">
-    <value>Схемы питания</value>
+  <data name="WindowsPowerPlansWindow_Title" xml:space="preserve">
+    <value>Схемы питания Windows</value>
   </data>
   <data name="RGBKeyboardBacklightAutomationStepControl_Message" xml:space="preserve">
     <value>Настройть пресет подсветки клавиатуры.</value>
@@ -1060,6 +1032,9 @@
   </data>
   <data name="RGBKeyboardBacklightControl_Preset3" xml:space="preserve">
     <value>Пресет 3</value>
+  </data>
+  <data name="RGBKeyboardBacklightControl_Preset4" xml:space="preserve">
+    <value>Пресет 4</value>
   </data>
   <data name="RGBKeyboardBacklightControl_PresetOff" xml:space="preserve">
     <value>Откл.</value>
@@ -1182,10 +1157,10 @@
     <value>Отключить Lenovo Hotkeys</value>
   </data>
   <data name="SettingsPage_DisableVantage_Error_Message" xml:space="preserve">
-    <value>Возможно, Vantage и/или ImController были отключены неправильно</value>
+    <value>Возможно, Lenovo Vantage и/или ImController были отключены неправильно</value>
   </data>
   <data name="SettingsPage_DisableVantage_Error_Title" xml:space="preserve">
-    <value>Не удалось отключить Vantage и/или ImController</value>
+    <value>Не удалось отключить Lenovo Vantage и/или ImController</value>
   </data>
   <data name="SettingsPage_DisableVantage_Message" xml:space="preserve">
     <value>Отключить Lenovo Vantage и ImController, не удаляя их.
@@ -1207,10 +1182,10 @@
     <value>Не удалось включить клавиши горячих клавиш Lenovo Hotkeys</value>
   </data>
   <data name="SettingsPage_EnableVantage_Error_Message" xml:space="preserve">
-    <value>Возможно, Vantage и/или ImController были включены неправильно</value>
+    <value>Возможно, Lenovo Vantage и/или ImController были включены неправильно</value>
   </data>
   <data name="SettingsPage_EnableVantage_Error_Title" xml:space="preserve">
-    <value>Не удалось включить Vantage и/или ImController</value>
+    <value>Не удалось включить Lenovo Vantage и/или ImController</value>
   </data>
   <data name="SettingsPage_ExcludeRefreshRates_Message" xml:space="preserve">
     <value>Вы можете исключить частоту обновления, чтобы сделать сочетание клавиш Fn+R более полезным.</value>
@@ -1236,7 +1211,7 @@
   <data name="SettingsPage_Notifications_Title" xml:space="preserve">
     <value>Уведомления</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Title" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlans_Title" xml:space="preserve">
     <value>Схемы питания</value>
   </data>
   <data name="SettingsPage_SmartKeyDoublePressAction_Message" xml:space="preserve">
@@ -1444,10 +1419,10 @@
     <value>Подсветка клавиатуры</value>
   </data>
   <data name="WinKeyAutomationStepControl_Message" xml:space="preserve">
-    <value>Включить или отключить клавишу Windows.</value>
+    <value>Отключить клавишу Windows на встроенной клавиатуре.</value>
   </data>
   <data name="WinKeyAutomationStepControl_Title" xml:space="preserve">
-    <value>Клавиша Windows</value>
+    <value>Блокировка клавиши Windows</value>
   </data>
   <data name="WinKeyControl_Message" xml:space="preserve">
     <value>Действует только на встроенной клавиатуре.</value>
@@ -1584,11 +1559,11 @@
     <value>Сохранить и закрыть</value>
   </data>
   <data name="GodModePresetAutomationStepControl_Title" xml:space="preserve">
-    <value>Пресет Пользовательского режима</value>
+    <value>Пресет пользовательского режима</value>
   </data>
   <data name="GodModePresetAutomationStepControl_Message" xml:space="preserve">
-    <value>Активирует пресет Пользовательского режима.
-Эта настройка действует только при включенном Пользовательском режиме.</value>
+    <value>Активирует пресет пользовательского режима.
+Эта настройка действует только при включенном пользовательском режиме.</value>
   </data>
   <data name="GodModeSettingsWindow_EditPreset_Title" xml:space="preserve">
     <value>Название пресета</value>
@@ -1716,13 +1691,13 @@
   <data name="PowerPlansWindow_AoAcWarning_Message" xml:space="preserve">
     <value>Windows сообщает, что это устройство поддерживает Modern Standby. Применение планов питания, отличных от сбалансированного, может привести к неожиданному поведению.</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Message" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlans_Message" xml:space="preserve">
     <value>Выберите схемы питания Windows, которые будут применяться при изменении режима питания.</value>
   </data>
   <data name="SettingsPage_Power_Title" xml:space="preserve">
     <value>Питание</value>
   </data>
-  <data name="SettingsPage_PowerPlansControlPanel_Title" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlansControlPanel_Title" xml:space="preserve">
     <value>Параметры схемы питания в панели управления Windows</value>
   </data>
   <data name="PoweredOff" xml:space="preserve">
@@ -1860,16 +1835,16 @@
     <value>Дискретная видеокарта будет автоматически отключаться, если она не используется.</value>
   </data>
   <data name="IGPUModeChangeException_Title_Auto" xml:space="preserve">
-    <value>Дискретная видеокарта в настоящее время используется или ноутбук не работает от батареи</value>
+    <value>Дискретная видеокарта в настоящее время используется или ноутбук не работает от аккумулятора</value>
   </data>
   <data name="IGPUModeChangeException_Message_Auto" xml:space="preserve">
-    <value>Дискретная видеокарта будет автоматически отключаться, если ноутбук не используется и работает от батареи.</value>
+    <value>Дискретная видеокарта будет автоматически отключаться, если ноутбук не используется и работает от акумулятора.</value>
   </data>
   <data name="GodModeSettingsWindow_VantageWarning_Title" xml:space="preserve">
     <value>Параметры пользовательского режима будут неправильно применены, если запущен Lenovo Vantage или его службы.</value>
   </data>
   <data name="GodModeSettingsWindow_LegionZoneWarning_Title" xml:space="preserve">
-    <value>Параметры пользовательского режима будут неправильно применены, если запущен LegionZone или его службы.</value>
+    <value>Параметры пользовательского режима будут неправильно применены, если запущен Legion Zone или его службы.</value>
   </data>
   <data name="DGPU_Connected_Title" xml:space="preserve">
     <value>Графический процессор подключен</value>
@@ -1949,19 +1924,317 @@
     <value>Откл.</value>
   </data>
   <data name="BootLogoWindow_Description" xml:space="preserve">
-	  <value>Пользовательский логотип загрузки должен быть размером ровно {0} пикселей.
+    <value>Пользовательский логотип загрузки должен быть размером ровно {0} пикселей.
 Поддерживаемые форматы: {1}.</value>
   </data>
   <data name="BatteryNightChargeModeControl_Title" xml:space="preserve">
-	  <value>Ночная зарядка аккумулятора</value>
+    <value>Ночная зарядка аккумулятора</value>
   </data>
   <data name="BatteryNightChargeModeControl_Message" xml:space="preserve">
-	  <value>Когда эта функция включена, устройство будет заряжаться на 80% при подключении к сети на ночь и завершать зарядку до 100% к тому времени, как вы воспользуетесь устройством утром.</value>
+    <value>Когда эта функция включена, устройство будет заряжаться на 80% при подключении к сети на ночь и завершать зарядку до 100% к тому времени, как вы воспользуетесь устройством утром.</value>
   </data>
   <data name="BatteryNightChargeAutomationStepControl_Title" xml:space="preserve">
-	  <value>Ночная зарядка аккумулятора</value>
+    <value>Ночная зарядка аккумулятора</value>
   </data>
   <data name="BatteryNightChargeAutomationStepControl_Message" xml:space="preserve">
-	  <value>Когда эта функция включена, устройство будет заряжаться на 80% при подключении к сети на ночь и завершать зарядку до 100% к тому времени, как вы воспользуетесь устройством утром.</value>
+    <value>Когда эта функция включена, устройство будет заряжаться на 80% при подключении к сети на ночь и завершать зарядку до 100% к тому времени, как вы воспользуетесь устройством утром.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Invalid_Image_Size" xml:space="preserve">
+    <value>Недопустимый размер изображения.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Invalid_Image_Format" xml:space="preserve">
+    <value>Недопустимый формат изображения.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Cannot_Mount_EFI_Partition" xml:space="preserve">
+    <value>Не удается смонтировать раздел EFI.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Cannot_Set_UEFI_Privilege" xml:space="preserve">
+    <value>Не удается задать права доступа UEFI.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Not_Enough_Free_Space_On_EFI_Partition" xml:space="preserve">
+    <value>Недостаточно свободного места на разделе EFI.</value>
+  </data>
+  <data name="BootLogoWindow_SetCustomFailed" xml:space="preserve">
+    <value>Не удается установить логотип загрузки: {0}</value>
+  </data>
+  <data name="BootLogoWindow_SetDefaultFailed" xml:space="preserve">
+    <value>Не удается установить логотип загрузки по умолчанию: {0}</value>
+  </data>
+  <data name="BootLogoWindow_SetDefaultSuccess" xml:space="preserve">
+    <value>Установлен логотип загрузки по умолчанию.</value>
+  </data>
+  <data name="BootLogoWindow_SetCustomSuccess" xml:space="preserve">
+    <value>Пользовательский логотип загрузки установлен.</value>
+  </data>
+  <data name="WiFiConnectedPipelineTriggerTabItemContent_NetworkName" xml:space="preserve">
+    <value>Название сети (SSID)</value>
+  </data>
+  <data name="WiFiConnectedPipelineTriggerTabItemContent_CopyCurrentNetworkName" xml:space="preserve">
+    <value>Скопировать название текущей сети</value>
+  </data>
+  <data name="WiFiConnectedPipelineTriggerTabItemContent_LeaveEmptyForAnyNetwork" xml:space="preserve">
+    <value>Оставить пустым для любой сети.</value>
+  </data>
+  <data name="SettingsPage_HWiNFO_Title" xml:space="preserve">
+    <value>HWiNFO64</value>
+  </data>
+  <data name="SettingsPage_HWiNFO_Message" xml:space="preserve">
+    <value>Делиться данными о скорости вращения вентилятора, температуре аккумулятора и т.д. с HWiNFO64. После изменения этого параметра может потребоваться перезапуск HWiNFO64.</value>
+  </data>
+  <data name="SettingsPage_Integrations_Title" xml:space="preserve">
+    <value>Интеграции</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Информация</value>
+  </data>
+  <data name="PackagesPage_DownloadTo" xml:space="preserve">
+    <value>Папка загрузки</value>
+  </data>
+  <data name="PackagesPage_OpenDownloadTo" xml:space="preserve">
+    <value>Открыть папку загрузки</value>
+  </data>
+  <data name="PackageControl_Download" xml:space="preserve">
+    <value>Загрузить</value>
+  </data>
+  <data name="PackageControl_OpenReadme" xml:space="preserve">
+    <value>Открыть README</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_Preset" xml:space="preserve">
+    <value>Пресет</value>
+  </data>
+  <data name="DeviceInformationWindow_Refresh" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="AbstractAutomationStepControl_Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="PeriodicActionPipelineTriggerTabItemContent_PeriodMinutes" xml:space="preserve">
+    <value>Период (минуты)</value>
+    <comment>A prompt that is used both to ask the user to input an integer, representing the number of minutes between two periodic actions are triggered, and to inform the user what have they set once they are done configuring the action.</comment>
+  </data>
+  <data name="SettingsPage_OnBatterySinceReset_Message" xml:space="preserve">
+    <value>Сбрасывать счет времени значения "На аккумуляторе" при перезагрузке системы.</value>
+  </data>
+  <data name="SettingsPage_OnBatterySinceReset_Title" xml:space="preserve">
+    <value>Сбросить счетчик "На аккумуляторе" при запуске</value>
+  </data>
+  <data name="TurnOffWiFiAutomationStepControl_Title" xml:space="preserve">
+    <value>Выключить Wi-Fi</value>
+  </data>
+  <data name="TurnOnWiFiAutomationStepControl_Title" xml:space="preserve">
+    <value>Включить Wi-Fi</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessRunSilently" xml:space="preserve">
+    <value>Тихий запуск</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessWaitUntilFinished" xml:space="preserve">
+    <value>Ждать до завершения</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessRunSilently_Description" xml:space="preserve">
+    <value>Выполнять консольные задачи, не открывая окно командной строки.</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessWaitUntilFinished_Description" xml:space="preserve">
+    <value>Ждать, пока задача или скрипт не завершат работу</value>
+  </data>
+  <data name="SpeakerAutomationStepControl_Message" xml:space="preserve">
+    <value>При выключении звука все активные выходные аудиоустройства будут заглушены.</value>
+  </data>
+  <data name="SpeakerAutomationStepControl_Title" xml:space="preserve">
+    <value>Динамик</value>
+  </data>
+  <data name="SettingsPage_MinimizeToTray_Title" xml:space="preserve">
+    <value>Свернуть в трей</value>
+  </data>
+  <data name="SettingsPage_MinimizeToTray_Message" xml:space="preserve">
+    <value>Всегда сворачивать в трей вместо панели задач.</value>
+  </data>
+  <data name="WindowsPowerModesWindow_Title" xml:space="preserve">
+    <value>Режимы питания Windows</value>
+  </data>
+  <data name="Settings_GodModeFnQSwitchable_Title" xml:space="preserve">
+    <value>Переход в пользовательский режим с помощью Fn+Q</value>
+  </data>
+  <data name="Settings_GodModeFnQSwitchable_Message" xml:space="preserve">
+    <value>Позволяет быстро переключаться в пользовательский режим с помощью Fn+Q.</value>
+  </data>
+  <data name="SettingsPage_PowerModeMapping_Title" xml:space="preserve">
+    <value>Синхронизация режима питания</value>
+  </data>
+  <data name="SettingsPage_PowerModeMapping_Message" xml:space="preserve">
+    <value>Автоматическое изменение схемы питания Windows или режима питания Windows при смене режимов питания LLT.</value>
+  </data>
+  <data name="SettingsPage_WindowsPowerModes_Title" xml:space="preserve">
+    <value>Режимы питания Windows</value>
+  </data>
+  <data name="SettingsPage_WindowsPowerModes_Message" xml:space="preserve">
+    <value>Укажите режим питания Windows, который будет применяться при изменении режима питания LLT.</value>
+  </data>
+  <data name="CompatibilityCheckError_Message" xml:space="preserve">
+    <value>Произошла ошибка при чтении информации об устройстве.</value>
+  </data>
+  <data name="MainWindow_NavigationItem_Macro" xml:space="preserve">
+    <value>Макросы</value>
+  </data>
+  <data name="MacroPage_Title" xml:space="preserve">
+    <value>Макросы</value>
+  </data>
+  <data name="MacroSequenceControl_Repeat_Title" xml:space="preserve">
+    <value>Повторение</value>
+  </data>
+  <data name="MacroSequenceControl_IgnoreDelays_Title" xml:space="preserve">
+    <value>Игнорировать задержки</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="MacroSequenceControl_Record" xml:space="preserve">
+    <value>Запись</value>
+  </data>
+  <data name="MacroSequenceControl_StopRecording" xml:space="preserve">
+    <value>Остановить запись</value>
+  </data>
+  <data name="MacroSequenceControl_DontRepeat" xml:space="preserve">
+    <value>Не повторять</value>
+  </data>
+  <data name="MacroPage_Enable_Subtitle" xml:space="preserve">
+    <value>Lenovo Legion Toolkit должен быть запущен для работы макросов.</value>
+  </data>
+  <data name="MacroPage_Enable_Title" xml:space="preserve">
+    <value>Активировать</value>
+  </data>
+  <data name="MacroPage_Subtitle" xml:space="preserve">
+    <value>Вы можете записать последовательность нажатий клавиш и вызвать их с помощью цифровой клавиатуры.</value>
+  </data>
+  <data name="MacroAutomationStepControl_Title" xml:space="preserve">
+    <value>Макрос</value>
+  </data>
+  <data name="MacroAutomationStepControl_Message" xml:space="preserve">
+    <value>Включить или выключить работу макросов.</value>
+  </data>
+  <data name="MacroSequenceControl_InterruptOnOtherKey_Title" xml:space="preserve">
+    <value>Прервать, если была нажата другая клавиша</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Скрыть</value>
+  </data>
+  <data name="HideAll" xml:space="preserve">
+    <value>Скрыть все</value>
+  </data>
+  <data name="DevicePipelineTriggerTabItemContent_Devices" xml:space="preserve">
+    <value>Устройства</value>
+  </data>
+  <data name="DeselectAll" xml:space="preserve">
+    <value>Снять все</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Выбрать все</value>
+  </data>
+  <data name="MacroSequenceControl_Keyboard" xml:space="preserve">
+    <value>Только клавиатура</value>
+  </data>
+  <data name="MacroSequenceControl_KeyboardMouse" xml:space="preserve">
+    <value>Клавиши клавиатуры и кнопки мыши</value>
+  </data>
+  <data name="MacroSequenceControl_KeyboardMouseMovement" xml:space="preserve">
+    <value>Любое движение</value>
+  </data>
+  <data name="MacroSequenceControl_RecordingOptions" xml:space="preserve">
+    <value>Параметры записи</value>
+  </data>
+  <data name="MacroRecordingWindow_Preparing_Title" xml:space="preserve">
+    <value>Запись начнется через 3 секунды...</value>
+  </data>
+  <data name="MacroRecordingWindow_Recording_Title" xml:space="preserve">
+    <value>Идет запись...</value>
+  </data>
+  <data name="MacroRecordingWindow_Recording_Message" xml:space="preserve">
+    <value>Нажмите Esc для остановки.</value>
+  </data>
+  <data name="DeviceAutomationPipelineTriggerTabItemContent_OnlySelected" xml:space="preserve">
+    <value>Показывать только выбранные устройства</value>
+  </data>
+  <data name="DeviceAutomationPipelineTriggerTabItemContent_OnlyRemovable" xml:space="preserve">
+    <value>Показывать только съемные устройства</value>
+  </data>
+  <data name="DeviceAutomationPipelineTriggerTabItemContent_OnlyConnected" xml:space="preserve">
+    <value>Показывать только соединенные устройства</value>
+  </data>
+  <data name="SettingsPage_CLI_Title" xml:space="preserve">
+    <value>Интерфейс командной строки (CLI)</value>
+  </data>
+  <data name="SettingsPage_CLI_Message" xml:space="preserve">
+    <value>Включить интерфейс для управления из командной строки.</value>
+  </data>
+  <data name="SettingsPage_CLIAddToPath_Title" xml:space="preserve">
+    <value>Добавить CLI в PATH</value>
+  </data>
+  <data name="SettingsPage_CLIAddToPath_Message" xml:space="preserve">
+    <value>Добавить CLI в переменную окружения PATH пользователя.</value>
+  </data>
+  <data name="SettingsPage_Temperature_Title" xml:space="preserve">
+    <value>Температура</value>
+  </data>
+  <data name="SettingsPage_Temperature_Message" xml:space="preserve">
+    <value>Выбрать единицы измерения сенсоров температуры.</value>
+  </data>
+  <data name="MainWindows_FnKeysRunning" xml:space="preserve">
+    <value>Lenovo Hotkeys запущен в фоновом режиме.</value>
+  </data>
+  <data name="MainWindow_LegionZoneRunning" xml:space="preserve">
+    <value>Legion Zone запущен в фоновом режиме.</value>
+  </data>
+  <data name="MainWindows_VantageRunning" xml:space="preserve">
+    <value>Lenovo Vantage и/или ImController запущены в фоновом режиме.</value>
+  </data>
+  <data name="SettingsPage_CheckUpdatesButton_Content" xml:space="preserve">
+    <value>Проверить</value>
+  </data>
+  <data name="SettingsPage_CheckUpdates_Started_Title" xml:space="preserve">
+    <value>Проверка наличия обновлений...</value>
+  </data>
+  <data name="SettingsPage_CheckUpdates_Title" xml:space="preserve">
+    <value>Проверить наличие обновлений</value>
+  </data>
+  <data name="SettingsPage_Update_Title" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="MainWindow_CheckForUpdates_Error_ReachedRateLimit_Message" xml:space="preserve">
+    <value>Достигнут лимит запросов API, попробуйте позже.</value>
+  </data>
+  <data name="MainWindow_CheckForUpdates_Error_Title" xml:space="preserve">
+    <value>Не удалось проверить обновления</value>
+  </data>
+  <data name="MainWindow_CheckForUpdates_Error_Unknown_Message" xml:space="preserve">
+    <value>Что-то пошло не так, повторите попытку позже.</value>
+  </data>
+  <data name="MainWindow_CheckForUpdates_Success_Title" xml:space="preserve">
+    <value>Обновления не найдены</value>
+  </data>
+  <data name="SettingsPage_UpdateCheckFrequency_Title" xml:space="preserve">
+    <value>Автоматически проверять наличие обновлений</value>
+  </data>
+  <data name="PackagesPage_UpdateCatalogNotFound_Title" xml:space="preserve">
+    <value>Каталога обновлений не найдено</value>
+  </data>
+  <data name="PackagesPage_UpdateCatalogNotFound_Message" xml:space="preserve">
+    <value>Попробуйте загрузить обновления из другого источника.</value>
+  </data>
+  <data name="PackagesPage_Error_Title" xml:space="preserve">
+    <value>Что-то пошло не так</value>
+  </data>
+  <data name="PackagesPage_Error_CheckInternet_Message" xml:space="preserve">
+    <value>Проверьте, что ваше интернет-соединение исправно.</value>
+  </data>
+  <data name="PlaySoundAutomationStepControl_Title" xml:space="preserve">
+    <value>Воспроизвести звук</value>
+  </data>
+  <data name="PlaySoundAutomationStepControl_Message" xml:space="preserve">
+    <value>Поддерживаются такие форматы музыки, как wav или mp3.</value>
+  </data>
+  <data name="QuickActionAutomationStepControl_Title" xml:space="preserve">
+    <value>Быстрое действие</value>
   </data>
 </root>

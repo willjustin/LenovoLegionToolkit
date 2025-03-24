@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,17 +11,16 @@ using LenovoLegionToolkit.Lib.Utils;
 
 namespace LenovoLegionToolkit.Lib.PackageDownloader;
 
-public class VantagePackageDownloader : AbstractPackageDownloader
+public class VantagePackageDownloader(HttpClientFactory httpClientFactory)
+    : AbstractPackageDownloader(httpClientFactory)
 {
-    private readonly struct PackageDefinition
+    private readonly struct PackageDefinition(string location, string category)
     {
-        public string Location { get; init; }
-        public string Category { get; init; }
+        public string Location { get; } = location;
+        public string Category { get; } = category;
     }
 
     private const string CATALOG_BASE_URL = "https://download.lenovo.com/catalog/";
-
-    public VantagePackageDownloader(HttpClientFactory httpClientFactory) : base(httpClientFactory) { }
 
     public override async Task<List<Package>> GetPackagesAsync(string machineType, OS os, IProgress<float>? progress = null, CancellationToken token = default)
     {
@@ -62,14 +62,23 @@ public class VantagePackageDownloader : AbstractPackageDownloader
 
     private static async Task<List<PackageDefinition>> GetPackageDefinitionsAsync(HttpClient httpClient, string location, CancellationToken token)
     {
-        var catalogString = await httpClient.GetStringAsync(location, token).ConfigureAwait(false);
+        string catalogString;
+
+        try
+        {
+            catalogString = await httpClient.GetStringAsync(location, token).ConfigureAwait(false);
+        }
+        catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+        {
+            throw new UpdateCatalogNotFoundException(ex.Message, ex);
+        }
 
         var document = new XmlDocument();
         document.LoadXml(catalogString);
 
         var packageNodes = document.SelectNodes("/packages/package");
         if (packageNodes is null)
-            return new List<PackageDefinition>();
+            return [];
 
         var packageDefinitions = new List<PackageDefinition>();
         foreach (var packageNode in packageNodes.OfType<XmlElement>())
@@ -82,7 +91,7 @@ public class VantagePackageDownloader : AbstractPackageDownloader
             if (string.IsNullOrWhiteSpace(pLocation) || string.IsNullOrWhiteSpace(pCategory))
                 continue;
 
-            packageDefinitions.Add(new() { Location = pLocation, Category = pCategory });
+            packageDefinitions.Add(new(pLocation, pCategory));
         }
 
         return packageDefinitions;
@@ -108,7 +117,7 @@ public class VantagePackageDownloader : AbstractPackageDownloader
         var releaseDateString = document.SelectSingleNode("/Package/ReleaseDate")!.InnerText;
         var releaseDate = DateTime.Parse(releaseDateString);
         var readmeName = document.SelectSingleNode("/Package/Files/Readme/File/Name")?.InnerText;
-        var readme = await GetReadmeAsync(httpClient, $"{baseLocation}/{readmeName}", token).ConfigureAwait(false);
+        var readme = $"{baseLocation}/{readmeName}";
         var fileLocation = $"{baseLocation}/{fileName}";
         var rebootString = document.SelectSingleNode("/Package/Reboot/@type")!.InnerText;
         var reboot = int.TryParse(rebootString, out var rebootInt) ? (RebootType)rebootInt : RebootType.NotRequired;

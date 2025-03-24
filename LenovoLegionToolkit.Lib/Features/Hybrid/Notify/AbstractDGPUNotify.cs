@@ -11,8 +11,11 @@ using Windows.Win32.Foundation;
 
 namespace LenovoLegionToolkit.Lib.Features.Hybrid.Notify;
 
-public abstract class AbstractDGPUNotify : IDGPUNotify
+public abstract partial class AbstractDGPUNotify : IDGPUNotify
 {
+    [GeneratedRegex("pci#ven_([0-9A-Fa-f]{4})|dev_([0-9A-Fa-f]{4})")]
+    private static partial Regex HardwareIdRegex();
+
     private readonly object _lock = new();
 
     private CancellationTokenSource? _notifyLaterCancellationTokenSource;
@@ -20,6 +23,22 @@ public abstract class AbstractDGPUNotify : IDGPUNotify
     public event EventHandler<bool>? Notified;
 
     public abstract Task<bool> IsSupportedAsync();
+
+    public async Task<bool> IsDGPUAvailableAsync()
+    {
+        try
+        {
+            var dgpuHardwareId = await GetDGPUHardwareIdAsync().ConfigureAwait(false);
+            var isAvailable = IsDGPUAvailable(dgpuHardwareId);
+            return isAvailable;
+        }
+        catch (Exception ex)
+        {
+            if (Log.Instance.IsTraceEnabled)
+                Log.Instance.Trace($"Failed to notify.", ex);
+            return false;
+        }
+    }
 
     public async Task NotifyAsync(bool publish = true)
     {
@@ -88,7 +107,7 @@ public abstract class AbstractDGPUNotify : IDGPUNotify
         var deviceHandle = PInvoke.SetupDiGetClassDevs(guidDisplayDeviceArrival,
             null,
             HWND.Null,
-            PInvoke.DIGCF_DEVICEINTERFACE | PInvoke.DIGCF_PRESENT | PInvoke.DIGCF_PROFILE);
+            SETUP_DI_GET_CLASS_DEVS_FLAGS.DIGCF_DEVICEINTERFACE | SETUP_DI_GET_CLASS_DEVS_FLAGS.DIGCF_PRESENT | SETUP_DI_GET_CLASS_DEVS_FLAGS.DIGCF_PROFILE);
 
         uint index = 0;
         while (true)
@@ -126,7 +145,8 @@ public abstract class AbstractDGPUNotify : IDGPUNotify
                 if (!result3)
                     PInvokeExtensions.ThrowIfWin32Error("SetupDiGetDeviceInterfaceDetail");
 
-                devicePath = new string(deviceDetailData->DevicePath.Value);
+                fixed (char* e0Ptr = &deviceDetailData->DevicePath.e0)
+                    devicePath = new string(e0Ptr);
             }
             finally
             {
@@ -155,14 +175,14 @@ public abstract class AbstractDGPUNotify : IDGPUNotify
     {
         try
         {
-            var matches = new Regex("pci#ven_([0-9A-Fa-f]{4})|dev_([0-9A-Fa-f]{4})").Matches(devicePath);
+            var matches = HardwareIdRegex().Matches(devicePath);
             if (matches.Count != 2)
                 return default;
 
             var vendor = matches[0].Groups[1].Value;
             var device = matches[1].Groups[2].Value;
 
-            return new HardwareId { Vendor = vendor, Device = device };
+            return new(vendor, device);
         }
         catch
         {

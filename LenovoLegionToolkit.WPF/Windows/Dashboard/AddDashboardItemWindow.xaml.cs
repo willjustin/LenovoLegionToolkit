@@ -7,6 +7,7 @@ using LenovoLegionToolkit.WPF.Controls;
 using LenovoLegionToolkit.WPF.Extensions;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
+using CardControl = LenovoLegionToolkit.WPF.Controls.Custom.CardControl;
 
 namespace LenovoLegionToolkit.WPF.Windows.Dashboard;
 
@@ -46,7 +47,7 @@ public partial class AddDashboardItemWindow
         return Task.CompletedTask;
     }
 
-    private UIElement CreateCardControl(DashboardItem item)
+    private CardControl CreateCardControl(DashboardItem item)
     {
         var control = new CardControl
         {

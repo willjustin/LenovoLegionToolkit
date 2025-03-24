@@ -132,9 +132,6 @@
   <data name="AboutPage_ProjectWebsiteOnGitHub" xml:space="preserve">
     <value>Project website op GitHub</value>
   </data>
-  <data name="AboutPage_ThirdPartyLibraries" xml:space="preserve">
-    <value>Bibliotheken van derden</value>
-  </data>
   <data name="AboutPage_Title" xml:space="preserve">
     <value>Over</value>
   </data>
@@ -149,10 +146,7 @@
     <value>Toevoegen</value>
   </data>
   <data name="AddNew" xml:space="preserve">
-    <value>Nieuwe Toevoegen</value>
-  </data>
-  <data name="AlwaysActivatePowerPlans_Title" xml:space="preserve">
-    <value>Activeer altijd de Windows Energiebeheerschema</value>
+    <value>Toevoegen</value>
   </data>
   <data name="AlwaysOnUSBControl_Message" xml:space="preserve">
     <value>Laad USB-apparaten op wanneer de computer is uitgeschakeld of in de slaap- of sluimerstand staat.</value>
@@ -580,6 +574,9 @@ Bij voorbaat bedankt!</value>
   <data name="ExtendedHybridModeInfoWindow_DGPU_Title" xml:space="preserve">
     <value>dGPU Modus</value>
   </data>
+  <data name="ExtendedHybridModeInfoWindow_Hybrid_Message" xml:space="preserve">
+    <value>Zowel geïntegreerde als discrete GPU zijn ingeschakeld. Het systeem schakelt automatisch tussen deze.</value>
+  </data>
   <data name="ExtendedHybridModeInfoWindow_Hybrid_Title" xml:space="preserve">
     <value>Hybride modus</value>
   </data>
@@ -610,6 +607,12 @@ Bij voorbaat bedankt!</value>
   <data name="FanCurveControl_GPU" xml:space="preserve">
     <value>GPU</value>
   </data>
+  <data name="FanCurveControl_GPU2" xml:space="preserve">
+    <value>GPU #2</value>
+  </data>
+  <data name="RPM" xml:space="preserve">
+    <value>RPM</value>
+  </data>
   <data name="FlipToStartAutomationStepControl_Message" xml:space="preserve">
     <value>Zet de laptop aan als je het deksel opent.</value>
   </data>
@@ -633,6 +636,20 @@ Bij voorbaat bedankt!</value>
   </data>
   <data name="FnLockControl_Title" xml:space="preserve">
     <value>Fn Lock</value>
+  </data>
+  <data name="GodModeSettingsWindow_Advanced_MinOffset_Message" xml:space="preserve">
+    <value>LET OP!
+Sommige laptops accepteren lagere waarden dan aangegeven. Deze optie kan onvoorspelbaar gedrag veroorzaken. Als je niet zeker bent, laat deze waarde dan op 0 staan.</value>
+  </data>
+  <data name="GodModeSettingsWindow_Advanced_MinOffset_Title" xml:space="preserve">
+    <value>Minimale compensatie</value>
+  </data>
+  <data name="GodModeSettingsWindow_Advanced_MaxOffset_Message" xml:space="preserve">
+    <value>LET OP!
+Sommige laptops accepteren hogere waarden dan aangegeven. Deze optie kan onvoorspelbaar gedrag veroorzaken. Als je niet zeker bent, laat deze waarde dan op 0 staan.</value>
+  </data>
+  <data name="GodModeSettingsWindow_Advanced_MaxOffset_Title" xml:space="preserve">
+    <value>Maximale compensatie</value>
   </data>
   <data name="GodModeSettingsWindow_Advanced_Message" xml:space="preserve">
     <value>Wijzig deze instellingen alleen als u weet wat u doet.</value>
@@ -716,14 +733,17 @@ WAARSCHUWING: Deze actie wordt niet correct uitgevoerd als het interne display i
   <data name="IncompatibleDevice_Message" xml:space="preserve">
     <value>Dit apparaat is niet compatibel met Lenovo Legion Toolkit.</value>
   </data>
-  <data name="IncompatibleDevice_Title" xml:space="preserve">
-    <value>Lenovo Legion Toolkit</value>
-  </data>
   <data name="KeyboardBacklightPage_NoCompatibleKeyboardsFound" xml:space="preserve">
     <value>Geen compatibele toetsenborden gevonden</value>
   </data>
   <data name="KeyboardBacklightPage_Title" xml:space="preserve">
     <value>Toetsenbordverlichting</value>
+  </data>
+  <data name="Keyboard_VantageEnabledWarning_Message" xml:space="preserve">
+    <value>Toetsenbordverlichting kan hier niet worden beheerd wanneer Lenovo Vantage of zijn services actief zijn.</value>
+  </data>
+  <data name="Keyboard_VantageEnabledWarning_Title" xml:space="preserve">
+    <value>Lenovo Vantage of zijn services zijn actief</value>
   </data>
   <data name="MainWindow_NavigationItem_About" xml:space="preserve">
     <value>Over</value>
@@ -830,10 +850,6 @@ WAARSCHUWING: Deze actie wordt niet correct uitgevoerd als het interne display i
   <data name="NotificationsSettingsWindow_CapsAndNumLock" xml:space="preserve">
     <value>Caps Lock en Num Lock</value>
   </data>
-  <data name="NotificationsSettingsWindow_DontShowNotifications_Message" xml:space="preserve">
-    <value>Melding uitschakelen voor acties met Fn-toetsen, zoals microfoon dempen
-Schakel deze optie in als u conflicten hebt met toepassingen op volledig scherm.</value>
-  </data>
   <data name="NotificationsSettingsWindow_DontShowNotifications_Title" xml:space="preserve">
     <value>Geen meldingen weergeven</value>
   </data>
@@ -928,9 +944,6 @@ Zorg er altijd voor dat u de juiste pakketten installeert.</value>
   <data name="PackagesPage_DownloadInProgress_Title" xml:space="preserve">
     <value>Bezig met downloaden</value>
   </data>
-  <data name="PackagesPage_DownloadTo" xml:space="preserve">
-    <value>Download naar</value>
-  </data>
   <data name="Filter" xml:space="preserve">
     <value>Filteren...</value>
   </data>
@@ -989,26 +1002,11 @@ U kunt van modus wisselen met Fn+Q.</value>
   <data name="PowerModeControl_Warning" xml:space="preserve">
     <value>De geselecteerde energiemodus werkt mogelijk niet correct als de netadapter niet is aangesloten.</value>
   </data>
-  <data name="PowerPlansWindow_ActivatePowerProfilesWithVantageEnabled_Confirmation_Title" xml:space="preserve">
-    <value>Weet je het zeker?</value>
-  </data>
-  <data name="PowerPlansWindow_BalanceMode" xml:space="preserve">
-    <value>Balansmodus</value>
-  </data>
-  <data name="PowerPlansWindow_CustomMode" xml:space="preserve">
-    <value>Aangepaste modus</value>
-  </data>
-  <data name="PowerPlansWindow_DefaultPowerPlan" xml:space="preserve">
+  <data name="WindowsPowerPlansWindow_DefaultPowerPlan" xml:space="preserve">
     <value>Standaard</value>
   </data>
-  <data name="PowerPlansWindow_PerformanceMode" xml:space="preserve">
-    <value>Prestatiemodus</value>
-  </data>
-  <data name="PowerPlansWindow_QuietMode" xml:space="preserve">
-    <value>Stille modus</value>
-  </data>
-  <data name="PowerPlansWindow_Title" xml:space="preserve">
-    <value>Energieschema's</value>
+  <data name="WindowsPowerPlansWindow_Title" xml:space="preserve">
+    <value>Windows Energiebeheerschema's</value>
   </data>
   <data name="RGBKeyboardBacklightAutomationStepControl_Message" xml:space="preserve">
     <value>Pas de voorinstelling van de achtergrondverlichting van het toetsenbord aan.
@@ -1028,6 +1026,9 @@ U kunt van modus wisselen met Fn+Q.</value>
   </data>
   <data name="RGBKeyboardBacklightControl_Preset3" xml:space="preserve">
     <value>Voorinstelling 3</value>
+  </data>
+  <data name="RGBKeyboardBacklightControl_Preset4" xml:space="preserve">
+    <value>Voorinstelling 4</value>
   </data>
   <data name="RGBKeyboardBacklightControl_PresetOff" xml:space="preserve">
     <value>Uit</value>
@@ -1128,6 +1129,10 @@ Zorg ervoor dat uw script eerst correct wordt uitgevoerd.</value>
   <data name="SettingsPage_DisableLegionZone_Error_Title" xml:space="preserve">
     <value>Kan Legion Zone niet uitschakelen</value>
   </data>
+  <data name="SettingsPage_DisableLegionZone_Message" xml:space="preserve">
+    <value>Schakel Legion Zone en zijn service uit zonder deze te verwijderen. 
+Een herstart wordt aanbevolen na het wijzigen van deze optie.</value>
+  </data>
   <data name="SettingsPage_DisableLegionZone_Title" xml:space="preserve">
     <value>Schakel Legion Zone Uit</value>
   </data>
@@ -1137,8 +1142,26 @@ Zorg ervoor dat uw script eerst correct wordt uitgevoerd.</value>
   <data name="SettingsPage_DisableLenovoHotkeys_Error_Title" xml:space="preserve">
     <value>Kan Legion Zone niet uitschakelen</value>
   </data>
+  <data name="SettingsPage_DisableLenovoHotkeys_Message" xml:space="preserve">
+    <value>Schakel Legion Hotkeys en zijn service uit zonder deze te verwijderen.
+Als het is uitgeschakeld, zal deze app de Fn-snelkoppelingen beheren.
+Een herstart wordt aanbevolen na het wijzigen van deze optie.</value>
+  </data>
   <data name="SettingsPage_DisableLenovoHotkeys_Title" xml:space="preserve">
     <value>Schakel Lenovo Hotkeys uit</value>
+  </data>
+  <data name="SettingsPage_DisableVantage_Error_Message" xml:space="preserve">
+    <value>Lenovo Vantage en/of ImController zijn niet correct uitgeschakeld</value>
+  </data>
+  <data name="SettingsPage_DisableVantage_Error_Title" xml:space="preserve">
+    <value>Kon Lenovo Vantage en/of ImController niet uitschakelen</value>
+  </data>
+  <data name="SettingsPage_DisableVantage_Message" xml:space="preserve">
+    <value>Schakel Legion Vantage en ImController uit zonder deze te verwijderen. 
+Een herstart wordt aanbevolen na het wijzigen van deze optie.</value>
+  </data>
+  <data name="SettingsPage_DisableVantage_Title" xml:space="preserve">
+    <value>Lenovo Vantage en ImController uitschakelen</value>
   </data>
   <data name="SettingsPage_EnableLegionZone_Error_Message" xml:space="preserve">
     <value>Legion Zone is mogelijk niet correct ingeschakeld</value>
@@ -1151,6 +1174,12 @@ Zorg ervoor dat uw script eerst correct wordt uitgevoerd.</value>
   </data>
   <data name="SettingsPage_EnableLenovoHotkeys_Error_Title" xml:space="preserve">
     <value>Kan Lenovo Hotkeys niet uitschakelen</value>
+  </data>
+  <data name="SettingsPage_EnableVantage_Error_Message" xml:space="preserve">
+    <value>Lenovo Vantage en/of ImController zijn niet correct ingeschakeld</value>
+  </data>
+  <data name="SettingsPage_EnableVantage_Error_Title" xml:space="preserve">
+    <value>Kon Lenovo Vantage en/of ImController niet inschakelen</value>
   </data>
   <data name="SettingsPage_ExcludeRefreshRates_Message" xml:space="preserve">
     <value>U kunt verversingssnelheid uitsluiten om de Fn+R-snelkoppeling nuttiger te maken.</value>
@@ -1176,7 +1205,7 @@ Zorg ervoor dat uw script eerst correct wordt uitgevoerd.</value>
   <data name="SettingsPage_Notifications_Title" xml:space="preserve">
     <value>Notificaties</value>
   </data>
-  <data name="SettingsPage_PowerPlans_Title" xml:space="preserve">
+  <data name="SettingsPage_WindowsPowerPlans_Title" xml:space="preserve">
     <value>Energieschema's</value>
   </data>
   <data name="SettingsPage_SmartKeyDoublePressAction_Message" xml:space="preserve">
@@ -1384,10 +1413,10 @@ Logboekregistratie wordt automatisch ingeschakeld als u ervoor kiest om door te 
     <value>Toetsenbordverlichting</value>
   </data>
   <data name="WinKeyAutomationStepControl_Message" xml:space="preserve">
-    <value>Windows-toets in- of uitschakelen.</value>
+    <value>Schakel de Windows toets op het ingebouwd toetsenbord uit.</value>
   </data>
   <data name="WinKeyAutomationStepControl_Title" xml:space="preserve">
-    <value>Windows-toets</value>
+    <value>Windows-toetsvergrendeling</value>
   </data>
   <data name="WinKeyControl_Message" xml:space="preserve">
     <value>Werkt alleen op ingebouwd toetsenbord.</value>
@@ -1520,6 +1549,76 @@ Als u de muis beweegt of op het toetsenbord drukt, worden de schermen gewekt.</v
   <data name="PackageControl_RebootRecommended" xml:space="preserve">
     <value>Herstart aanbevolen</value>
   </data>
+  <data name="SaveAndClose" xml:space="preserve">
+    <value>Opslaan &amp; sluiten</value>
+  </data>
+  <data name="GodModePresetAutomationStepControl_Title" xml:space="preserve">
+    <value>Aangepaste modus voorinstelling</value>
+  </data>
+  <data name="GodModePresetAutomationStepControl_Message" xml:space="preserve">
+    <value>Activeer de Aangepaste Voorinstelling modus.
+Deze instelling is alleen van kracht wanneer de Aangepaste modus ingeschakeld is.</value>
+  </data>
+  <data name="GodModeSettingsWindow_EditPreset_Title" xml:space="preserve">
+    <value>Naam voorinstelling</value>
+  </data>
+  <data name="GodModeSettingsWindow_EditPreset_Message" xml:space="preserve">
+    <value>Naam</value>
+  </data>
+  <data name="GodModeSettingsWindow_ActivePreset_Title" xml:space="preserve">
+    <value>Actieve voorinstelling</value>
+  </data>
+  <data name="AboutPage_ApplicationFolders" xml:space="preserve">
+    <value>Applicatiemappen</value>
+  </data>
+  <data name="AboutPage_Data" xml:space="preserve">
+    <value>Gegevens</value>
+  </data>
+  <data name="AboutPage_Temp" xml:space="preserve">
+    <value>Temperatuur</value>
+  </data>
+  <data name="SettingsPage_SynchronizeBrightnessToAllPowerPlans_Title" xml:space="preserve">
+    <value>Enkele Schermhelderheid</value>
+  </data>
+  <data name="SettingsPage_SynchronizeBrightnessToAllPowerPlans_Message" xml:space="preserve">
+    <value>Wanneer deze instelling is ingeschakeld, zal dezelfde helderheid worden toegepast op alle Windows Energiebeheerschema's wanneer je deze aanpast.</value>
+  </data>
+  <data name="Notification_UpdateAvailable" xml:space="preserve">
+    <value>Update {0} is beschikbaar!</value>
+  </data>
+  <data name="GodModeSettingsWindow_CPU_PeakPL" xml:space="preserve">
+    <value>Piekvermogen Limiet</value>
+  </data>
+  <data name="GodModeSettingsWindow_CPU_APUsPPT_PL" xml:space="preserve">
+    <value>APU sPPT Vermogenlimiet</value>
+  </data>
+  <data name="GodModeSettingsWindow_CPU_LongTermPL_Description" xml:space="preserve">
+    <value>Het continue stroomverbruik dat door de CPU kan worden bereikt.</value>
+  </data>
+  <data name="GodModeSettingsWindow_CPU_ShortTermPL_Description" xml:space="preserve">
+    <value>Het continue stroomverbruik dat door de CPU kan worden bereikt in een korte periode.</value>
+  </data>
+  <data name="GodModeSettingsWindow_CPU_PeakPL_Description" xml:space="preserve">
+    <value>Het maximale directe stroomverbruik dat door de CPU kan worden bereikt.</value>
+  </data>
+  <data name="GodModeSettingsWindow_CPU_CrossLoading_Description" xml:space="preserve">
+    <value>Het maximale stroomverbruik dat door de CPU kan worden bereikt wanneer zowel de CPU als GPU volledig belast worden.</value>
+  </data>
+  <data name="GodModeSettingsWindow_CPU_APUsPPT_PL_Description" xml:space="preserve">
+    <value>De continue stroomverbruik dat door de CPU met een korte vertraging bereikt kan worden.</value>
+  </data>
+  <data name="GodModeSettingsWindow_CPU_TempLimit_Description" xml:space="preserve">
+    <value>De maximale temperatuur die door de CPU bereikt kan worden voordat de frequentie en het vermogen verminderd worden.</value>
+  </data>
+  <data name="GodModeSettingsWindow_GPU_DynamicBoost_Description" xml:space="preserve">
+    <value>Het aanvullend maximum wattage dat naar de videokaart toegewezen kan worden, gebaseerd op het verbruik van de CPU.</value>
+  </data>
+  <data name="GodModeSettingsWindow_GPU_CTGP_Description" xml:space="preserve">
+    <value>Het aanvullend wattage dat naar de videokaart toegewezen kan worden.</value>
+  </data>
+  <data name="GodModeSettingsWindow_GPU_TempLimit_Description" xml:space="preserve">
+    <value>De maximale temperatuur die door de CPU bereikt kan worden voordat de frequentie en het vermogen verminderd worden.</value>
+  </data>
   <data name="Default" xml:space="preserve">
     <value>Standaard</value>
   </data>
@@ -1535,17 +1634,32 @@ Als u de muis beweegt of op het toetsenbord drukt, worden de schermen gewekt.</v
   <data name="GodModeSettingsWindow_GPU_TotalProcessingPowerTargetOnAcOffsetFromBaselineControl_Description" xml:space="preserve">
     <value>Het punt waarbij de CPU de dynamische stroom consumptie wijziging triggered voor de GPU.</value>
   </data>
+  <data name="Create" xml:space="preserve">
+    <value>Maak Aan</value>
+  </data>
   <data name="AddAutomationStepWindow_Title" xml:space="preserve">
     <value>Stap toevoegen</value>
+  </data>
+  <data name="CreateAutomationPipelineWindow_Title" xml:space="preserve">
+    <value>Nieuwe actie aanmaken</value>
   </data>
   <data name="StatusTrayPopup_PowerMode" xml:space="preserve">
     <value>Energiemodus</value>
   </data>
+  <data name="StatusTrayPopup_Preset" xml:space="preserve">
+    <value>Voorinstelling</value>
+  </data>
   <data name="StatusTrayPopup_DiscreteGPU" xml:space="preserve">
     <value>Discrete GPU</value>
   </data>
+  <data name="StatusTrayPopup_PowerState" xml:space="preserve">
+    <value>Energiemodus</value>
+  </data>
   <data name="StatusTrayPopup_Battery" xml:space="preserve">
     <value>Batterij</value>
+  </data>
+  <data name="StatusTrayPopup_Mode" xml:space="preserve">
+    <value>Modus</value>
   </data>
   <data name="StatusTrayPopup_DischargeRate" xml:space="preserve">
     <value>Ontlading snelheid</value>
@@ -1553,13 +1667,507 @@ Als u de muis beweegt of op het toetsenbord drukt, worden de schermen gewekt.</v
   <data name="StatusTrayPopup_UpdateAvailable" xml:space="preserve">
     <value>Update beschikbaar!</value>
   </data>
+  <data name="SymbolRegularPicker_Title" xml:space="preserve">
+    <value>Selecteer icoon</value>
+  </data>
+  <data name="AutomationPage_ChangeIcon" xml:space="preserve">
+    <value>Verander icoon</value>
+  </data>
+  <data name="BatteryPage_LowLevel" xml:space="preserve">
+    <value>Batterij bijna leeg</value>
+  </data>
   <data name="AutomationPipelineTriggerConfigurationWindow_Title" xml:space="preserve">
     <value>Configureren</value>
+  </data>
+  <data name="PowerPlansWindow_AoAcWarning_Title" xml:space="preserve">
+    <value>Laagvermogenmodus (S0) gedetecteerd</value>
+  </data>
+  <data name="PowerPlansWindow_AoAcWarning_Message" xml:space="preserve">
+    <value>Windows meldt dat deze laptop Modern Standby ondersteunt. Het gebruik van andere energiebeheerschema's kan onverwacht gedrag veroorzaken.</value>
+  </data>
+  <data name="SettingsPage_WindowsPowerPlans_Message" xml:space="preserve">
+    <value>Laat Windows energiebeheerschema's toepassen wanneer de energiemodus verandert.</value>
   </data>
   <data name="SettingsPage_Power_Title" xml:space="preserve">
     <value>Stroom</value>
   </data>
+  <data name="SettingsPage_WindowsPowerPlansControlPanel_Title" xml:space="preserve">
+    <value>Energiebeheerschema instellingen in het Windows Configuratiescherm</value>
+  </data>
   <data name="PoweredOff" xml:space="preserve">
     <value>Uitgeschakeld</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightImportProfileAutomationStepControl_Title" xml:space="preserve">
+    <value>Importeer een achtergrondverlichtingsprofiel van het toetsenbord.</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightImportProfileAutomationStepControl_Message" xml:space="preserve">
+    <value>Importeer en pas een achtergrondverlichtingsconfiguratie toe aan het huidige profiel.</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightImportProfileAutomationStepControl_Path" xml:space="preserve">
+    <value>Pad</value>
+  </data>
+  <data name="AutomationPipelineControl_SubtitlePart_After" xml:space="preserve">
+    <value>Na {0}</value>
+  </data>
+  <data name="MultipleTriggersAutomationPipelineTrigger_DisplayName" xml:space="preserve">
+    <value>Meerdere triggers...</value>
+    <comment>Allows the user to merge multiple triggers for the execution of selected actions.</comment>
+  </data>
+  <data name="OverclockDiscreteGPUSettingsWindow_Title" xml:space="preserve">
+    <value>Videokaart overklok instellingen</value>
+  </data>
+  <data name="OverclockDiscreteGPUSettingsWindow_CoreFrequencyOffset_Title" xml:space="preserve">
+    <value>Kernfrequentie afwijking</value>
+  </data>
+  <data name="OverclockDiscreteGPUSettingsWindow_MemoryFrequencyOffset_Title" xml:space="preserve">
+    <value>Geheugenfrequentie afwijking</value>
+  </data>
+  <data name="OverclockDiscreteGPUControl_Title" xml:space="preserve">
+    <value>Videokaart overklokken</value>
+  </data>
+  <data name="OverclockDiscreteGPUControl_Message" xml:space="preserve">
+    <value>Verbeter prestaties door de discrete videokaart te overklokken.</value>
+  </data>
+  <data name="OverclockDiscreteGPUAutomationStepControl_Title" xml:space="preserve">
+    <value>GPU Overklokken</value>
+  </data>
+  <data name="OverclockDiscreteGPUAutomationStepControl_Message" xml:space="preserve">
+    <value>Verbeter prestaties door de discrete videokaart te overklokken.
+
+WAARSCHUWING: Deze actie zal niet correct uitgevoerd worden als de externe videokaart niet beschikbaar is.</value>
+  </data>
+  <data name="PortsBacklightControl_Title" xml:space="preserve">
+    <value>Achtergrondverlichting van de poorten</value>
+  </data>
+  <data name="PortsBacklightControl_Message" xml:space="preserve">
+    <value>Zet de achtergrondverlichting van de poorten aan, of uit.</value>
+  </data>
+  <data name="PortsBacklightAutomationStepControl_Title" xml:space="preserve">
+    <value>Achtergrondverlichting van de poorten</value>
+  </data>
+  <data name="PortsBacklightAutomationStepControl_Message" xml:space="preserve">
+    <value>Zet de achtergrondverlichting van de poorten aan, of uit.</value>
+  </data>
+  <data name="PanelLogoBacklightControl_Title" xml:space="preserve">
+    <value>Achtergrondverlichting van het deksellogo</value>
+  </data>
+  <data name="PanelLogoBacklightControl_Message" xml:space="preserve">
+    <value>Zet de achtergrondverlichting van het deksellogo aan of uit.</value>
+  </data>
+  <data name="PanelLogoBacklightAutomationStepControl_Title" xml:space="preserve">
+    <value>Achtergrondverlichting van het deksellogo</value>
+  </data>
+  <data name="PanelLogoBacklightAutomationStepControl_Message" xml:space="preserve">
+    <value>Zet de achtergrondverlichting van het deksellogo aan of uit.</value>
+  </data>
+  <data name="GHz" xml:space="preserve">
+    <value>Ghz</value>
+  </data>
+  <data name="MHz" xml:space="preserve">
+    <value>Mhz</value>
+  </data>
+  <data name="SensorsControl_Maximum" xml:space="preserve">
+    <value>Maximum: {0}</value>
+  </data>
+  <data name="SensorsControl_CPU_Title" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="SensorsControl_Utilization_Title" xml:space="preserve">
+    <value>Gebruik</value>
+  </data>
+  <data name="SensorsControl_CoreClock_Title" xml:space="preserve">
+    <value>Kernfrequentie</value>
+  </data>
+  <data name="SensorsControl_Temperature_Title" xml:space="preserve">
+    <value>Temperatuur</value>
+  </data>
+  <data name="SensorsControl_Fan_Title" xml:space="preserve">
+    <value>Ventilatie</value>
+  </data>
+  <data name="SensorsControl_GPU_Title" xml:space="preserve">
+    <value>GPU</value>
+  </data>
+  <data name="SensorsControl_MemoryClock_Title" xml:space="preserve">
+    <value>Geheugenfrequentie</value>
+  </data>
+  <data name="SensorsControl_RefreshInterval" xml:space="preserve">
+    <value>Vernieuwingsfrequentie</value>
+  </data>
+  <data name="InstantBootControl_Title" xml:space="preserve">
+    <value>Snel Opstarten</value>
+  </data>
+  <data name="InstantBootControl_Message" xml:space="preserve">
+    <value>Start de laptop op wanneer een oplader wordt aangesloten.</value>
+  </data>
+  <data name="InstantBootAutomationStepControl_Title" xml:space="preserve">
+    <value>Snel Opstarten</value>
+  </data>
+  <data name="InstantBootAutomationStepControl_Message" xml:space="preserve">
+    <value>Start de laptop op wanneer een oplader wordt aangesloten.</value>
+  </data>
+  <data name="PowerModeUnavailableWithoutACException_Title" xml:space="preserve">
+    <value>Kan de energiemodus niet wijzigen</value>
+  </data>
+  <data name="PowerModeUnavailableWithoutACException_Message" xml:space="preserve">
+    <value>{0} energiemodus is niet beschikbaar zonder een oplader.</value>
+    <comment>For example: "{Performance} power mode is not available without AC power."</comment>
+  </data>
+  <data name="EditDashboardWindow_Sensors" xml:space="preserve">
+    <value>Sensoren</value>
+  </data>
+  <data name="IGPUModeChangeException_Title" xml:space="preserve">
+    <value>Kon modus van de videokaart niet wijzigen</value>
+  </data>
+  <data name="IGPUModeChangeException_Message" xml:space="preserve">
+    <value>Probeer de modus opnieuw te veranderen over een paar seconden, als je het verwachte resultaat niet ziet. Als de videokaart helemaal niet reageert, herstart dan je laptop.</value>
+  </data>
+  <data name="IGPUModeChangeException_Title_IGPUOnly" xml:space="preserve">
+    <value>dGPU momenteel in gebruik</value>
+  </data>
+  <data name="IGPUModeChangeException_Message_IGPUOnly" xml:space="preserve">
+    <value>dGPU zal automatisch ontkoppelen wanneer niet in gebruik.</value>
+  </data>
+  <data name="IGPUModeChangeException_Title_Auto" xml:space="preserve">
+    <value>dGPU is momenteel in gebruik, of de laptop is niet op batterijstroom</value>
+  </data>
+  <data name="IGPUModeChangeException_Message_Auto" xml:space="preserve">
+    <value>dGPU zal automatisch ontkoppelen wanneer deze niet in gebruik is en wanneer de laptop op batterijstroom werkt.</value>
+  </data>
+  <data name="GodModeSettingsWindow_VantageWarning_Title" xml:space="preserve">
+    <value>De instellingen van de aangepaste modus wordt niet correct toegepast als Lenovo Vantage of diens services actief zijn.</value>
+  </data>
+  <data name="GodModeSettingsWindow_LegionZoneWarning_Title" xml:space="preserve">
+    <value>De instellingen van de aangepaste modus wordt niet correct toegepast als Legion Zone of diens services actief zijn.</value>
+  </data>
+  <data name="DGPU_Connected_Title" xml:space="preserve">
+    <value>dGPU verbonden</value>
+  </data>
+  <data name="DGPU_Disconnected_Title" xml:space="preserve">
+    <value>Verbinding met dGPU verbroken</value>
+  </data>
+  <data name="ComboBoxHybridModeAutomationStepControl_Title" xml:space="preserve">
+    <value>GPU Modus</value>
+  </data>
+  <data name="ComboBoxHybridModeAutomationStepControl_Message" xml:space="preserve">
+    <value>Selecteer de GPU-bedieningsmodus op basis van het gebruik en de stroomvoorziening van uw computer.
+Voor het wisselen van modi is mogelijk opnieuw opstarten vereist.</value>
+  </data>
+  <data name="ToggleHybridModeAutomationStepControl_Title" xml:space="preserve">
+    <value>Hybride modus</value>
+  </data>
+  <data name="ToggleHybridModeAutomationStepControl_Message" xml:space="preserve">
+    <value>Sta het schakelen tussen de geïntegreerde en de discrete videokaart toe. 
+Dit vereist een herstart.</value>
+  </data>
+  <data name="NotificationsSettingsWindow_NotificationDuration_Title" xml:space="preserve">
+    <value>Duur</value>
+  </data>
+  <data name="NotificationsSettingsWindow_Updates_Title" xml:space="preserve">
+    <value>Updates</value>
+  </data>
+  <data name="GodModeSettingsWindow_GPU_ToCpuDynamicBoostControl" xml:space="preserve">
+    <value>Dynamische boost van GPU naar de CPU</value>
+  </data>
+  <data name="GodModeSettingsWindow_GPU_ToCpuDynamicBoostControl_Description" xml:space="preserve">
+    <value>Dit is het maximale extra vermogen dat kan worden toegewezen aan de CPU vanuit de GPU, gebaseerd op het CPU-gebruik. Hoe hoger de waarde, hoe beter de prestaties van applicaties die de CPU gebruiken.</value>
+  </data>
+  <data name="SettingsPage_BootLogo_Title" xml:space="preserve">
+    <value>Opstartlogo</value>
+  </data>
+  <data name="SettingsPage_BootLogo_Message" xml:space="preserve">
+    <value>Pas het opstartlogo aan, dat zichtbaar is als het systeem opstart.</value>
+  </data>
+  <data name="BootLogoWindow_Title" xml:space="preserve">
+    <value>Opstartlogo</value>
+  </data>
+  <data name="BootLogoWindow_DefaultLogoSet" xml:space="preserve">
+    <value>Standaard opstartlogo is ingesteld</value>
+  </data>
+  <data name="BootLogoWindow_CustomLogoSet" xml:space="preserve">
+    <value>Aangepaste opstartlogo is ingesteld</value>
+  </data>
+  <data name="BootLogoWindow_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="RevertToDefault" xml:space="preserve">
+    <value>Standaardinstellingen herstellen</value>
+  </data>
+  <data name="BootLogoWindow_Customize" xml:space="preserve">
+    <value>Aanpassen</value>
+  </data>
+  <data name="NotificationsSettingsWindow_Automation" xml:space="preserve">
+    <value>Acties</value>
+  </data>
+  <data name="NotificationAutomationStepControl_NotificationText" xml:space="preserve">
+    <value>Melding tekst</value>
+  </data>
+  <data name="NotificationAutomationStepControl_Title" xml:space="preserve">
+    <value>Meldingen weergeven</value>
+  </data>
+  <data name="AutomationPipelineControl_SubtitlePart_Preset" xml:space="preserve">
+    <value>Voorinstelling</value>
+  </data>
+  <data name="SettingsPage_SmartFnLock_Title" xml:space="preserve">
+    <value>Fn knop slim vergrendelen</value>
+  </data>
+  <data name="SettingsPage_SmartFnLock_Message" xml:space="preserve">
+    <value>De functieknop wordt slim vergrendeld wanneer Alt, Ctrl of Shift is ingedrukt.</value>
+  </data>
+  <data name="Off" xml:space="preserve">
+    <value>Uit</value>
+  </data>
+  <data name="BootLogoWindow_Description" xml:space="preserve">
+    <value>Aangepaste opstartlogo moet precies {0} pixels groot zijn.
+Ondersteunde formaten zijn: {1}.</value>
+  </data>
+  <data name="BatteryNightChargeModeControl_Title" xml:space="preserve">
+    <value>'S Nachts opladen van de batterij</value>
+  </data>
+  <data name="BatteryNightChargeModeControl_Message" xml:space="preserve">
+    <value>Wanneer deze optie is ingeschakeld, zal de batterij 's nachts tot 80% worden opgeladen en tegen de tijd dat je het apparaat 's ochtends wilt gebruiken, tot 100%.</value>
+  </data>
+  <data name="BatteryNightChargeAutomationStepControl_Title" xml:space="preserve">
+    <value>'S Nachts opladen van de batterij</value>
+  </data>
+  <data name="BatteryNightChargeAutomationStepControl_Message" xml:space="preserve">
+    <value>Wanneer deze optie is ingeschakeld, zal de batterij 's nachts tot 80% worden opgeladen en tegen de tijd dat je het apparaat 's ochtends wilt gebruiken, tot 100%.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Invalid_Image_Size" xml:space="preserve">
+    <value>Ongeldige afbeeldingsformaat.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Invalid_Image_Format" xml:space="preserve">
+    <value>Ongeldige afbeeldingstype.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Cannot_Mount_EFI_Partition" xml:space="preserve">
+    <value>Kan EFI partitie niet koppelen.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Cannot_Set_UEFI_Privilege" xml:space="preserve">
+    <value>Kan UEFI privilege niet instellen.</value>
+  </data>
+  <data name="BootLogoWindow_SetError_Not_Enough_Free_Space_On_EFI_Partition" xml:space="preserve">
+    <value>Er is niet voldoende vrije ruimte op de EFI partitie.</value>
+  </data>
+  <data name="BootLogoWindow_SetCustomFailed" xml:space="preserve">
+    <value>Aangepaste logo kon niet ingesteld worden: {0}</value>
+  </data>
+  <data name="BootLogoWindow_SetDefaultFailed" xml:space="preserve">
+    <value>Standaard logo kon niet ingesteld worden: {0}</value>
+  </data>
+  <data name="BootLogoWindow_SetDefaultSuccess" xml:space="preserve">
+    <value>Standaard opstartlogo is ingesteld.</value>
+  </data>
+  <data name="BootLogoWindow_SetCustomSuccess" xml:space="preserve">
+    <value>Aangepaste logo is ingesteld.</value>
+  </data>
+  <data name="WiFiConnectedPipelineTriggerTabItemContent_NetworkName" xml:space="preserve">
+    <value>Netwerknaam (SSID)</value>
+  </data>
+  <data name="WiFiConnectedPipelineTriggerTabItemContent_CopyCurrentNetworkName" xml:space="preserve">
+    <value>Kopieer hudig netwerknaam</value>
+  </data>
+  <data name="WiFiConnectedPipelineTriggerTabItemContent_LeaveEmptyForAnyNetwork" xml:space="preserve">
+    <value>Leeg laten voor elk Wi-Fi-netwerk.</value>
+  </data>
+  <data name="SettingsPage_HWiNFO_Title" xml:space="preserve">
+    <value>HWiNFO64</value>
+  </data>
+  <data name="SettingsPage_HWiNFO_Message" xml:space="preserve">
+    <value>Deel ventilatorsnelheid, batterijtemperatuur, etc. met HWiNFO64. De laptop moet mogelijk opnieuw opgestart worden na het wijzigen van deze optie.</value>
+  </data>
+  <data name="SettingsPage_Integrations_Title" xml:space="preserve">
+    <value>Integraties</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Instellingen</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Informatie</value>
+  </data>
+  <data name="PackagesPage_DownloadTo" xml:space="preserve">
+    <value>Downloads-map</value>
+  </data>
+  <data name="PackagesPage_OpenDownloadTo" xml:space="preserve">
+    <value>Downloads map openen</value>
+  </data>
+  <data name="PackageControl_Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="PackageControl_OpenReadme" xml:space="preserve">
+    <value>Open README</value>
+  </data>
+  <data name="SpectrumKeyboardBacklightControl_Preset" xml:space="preserve">
+    <value>Voorinstelling</value>
+  </data>
+  <data name="DeviceInformationWindow_Refresh" xml:space="preserve">
+    <value>Ververs</value>
+  </data>
+  <data name="AbstractAutomationStepControl_Delete" xml:space="preserve">
+    <value>Verwijder</value>
+  </data>
+  <data name="PeriodicActionPipelineTriggerTabItemContent_PeriodMinutes" xml:space="preserve">
+    <value>Periode (in minuten)</value>
+    <comment>A prompt that is used both to ask the user to input an integer, representing the number of minutes between two periodic actions are triggered, and to inform the user what have they set once they are done configuring the action.</comment>
+  </data>
+  <data name="SettingsPage_OnBatterySinceReset_Message" xml:space="preserve">
+    <value>Stel de teller voor 'Op batterij sinds' opnieuw in wanneer het systeem opnieuw opstart.</value>
+  </data>
+  <data name="SettingsPage_OnBatterySinceReset_Title" xml:space="preserve">
+    <value>Stel de teller voor 'Op batterij sinds' opnieuw in wanneer het systeem opstart</value>
+  </data>
+  <data name="TurnOffWiFiAutomationStepControl_Title" xml:space="preserve">
+    <value>Wifi inschakelen</value>
+  </data>
+  <data name="TurnOnWiFiAutomationStepControl_Title" xml:space="preserve">
+    <value>Wifi inschakelen</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessRunSilently" xml:space="preserve">
+    <value>Stil uitvoeren</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessWaitUntilFinished" xml:space="preserve">
+    <value>Wacht totdat het voltooid is</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessRunSilently_Description" xml:space="preserve">
+    <value>Voer console applicaties uit zonder een hiervoor een scherm te openen.</value>
+  </data>
+  <data name="RunAutomationStepControl_ProcessWaitUntilFinished_Description" xml:space="preserve">
+    <value>Wacht totdat programma of script is uitgevoerd</value>
+  </data>
+  <data name="SpeakerAutomationStepControl_Message" xml:space="preserve">
+    <value>Wanneer gedempt, zullen alle actieve audio-uitvoerapparaten worden gedempt.</value>
+  </data>
+  <data name="SpeakerAutomationStepControl_Title" xml:space="preserve">
+    <value>Luidspreker</value>
+  </data>
+  <data name="SettingsPage_MinimizeToTray_Title" xml:space="preserve">
+    <value>Minimaliseer naar systeemvak</value>
+  </data>
+  <data name="SettingsPage_MinimizeToTray_Message" xml:space="preserve">
+    <value>Altijd minimaliseren naar het systeemvak in plaats van de taakbalk.</value>
+  </data>
+  <data name="WindowsPowerModesWindow_Title" xml:space="preserve">
+    <value>Windows Energiemodus</value>
+  </data>
+  <data name="Settings_GodModeFnQSwitchable_Title" xml:space="preserve">
+    <value>Schakel naar aangepaste modus met Fn+Q</value>
+  </data>
+  <data name="Settings_GodModeFnQSwitchable_Message" xml:space="preserve">
+    <value>Sta het snel schakelen naar aangepaste modus toe met Fn+Q.</value>
+  </data>
+  <data name="SettingsPage_PowerModeMapping_Title" xml:space="preserve">
+    <value>Energiemodus synchronisatie</value>
+  </data>
+  <data name="SettingsPage_PowerModeMapping_Message" xml:space="preserve">
+    <value>Pas de Windows-energiemodus of het energiebeheerschema automatisch aan wanneer de energiemodus wordt gewijzigd.</value>
+  </data>
+  <data name="SettingsPage_WindowsPowerModes_Title" xml:space="preserve">
+    <value>Windows Energiemodus</value>
+  </data>
+  <data name="SettingsPage_WindowsPowerModes_Message" xml:space="preserve">
+    <value>Laat de windows energiemodus toepassen wanneer de energiemodus verandert.</value>
+  </data>
+  <data name="CompatibilityCheckError_Message" xml:space="preserve">
+    <value>Fout opgetreden bij het lezen van de apparaat-informatie.</value>
+  </data>
+  <data name="MainWindow_NavigationItem_Macro" xml:space="preserve">
+    <value>Macro</value>
+  </data>
+  <data name="MacroPage_Title" xml:space="preserve">
+    <value>Macro</value>
+  </data>
+  <data name="MacroSequenceControl_Repeat_Title" xml:space="preserve">
+    <value>Herhalen</value>
+  </data>
+  <data name="MacroSequenceControl_IgnoreDelays_Title" xml:space="preserve">
+    <value>Negeer vertragingen</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Wissen</value>
+  </data>
+  <data name="MacroSequenceControl_Record" xml:space="preserve">
+    <value>Opnemen</value>
+  </data>
+  <data name="MacroSequenceControl_StopRecording" xml:space="preserve">
+    <value>Opnemen stoppen</value>
+  </data>
+  <data name="MacroSequenceControl_DontRepeat" xml:space="preserve">
+    <value>Niet herhalen</value>
+  </data>
+  <data name="MacroPage_Enable_Subtitle" xml:space="preserve">
+    <value>Lenovo Legion Toolkit moet actief zijn om macro's uit te voeren.</value>
+  </data>
+  <data name="MacroPage_Enable_Title" xml:space="preserve">
+    <value>Schakel in</value>
+  </data>
+  <data name="MacroPage_Subtitle" xml:space="preserve">
+    <value>Je kunt reeksen toetsaanslagen opnemen en ze afspelen met het numerieke toetsenblok op je toetsenbord.</value>
+  </data>
+  <data name="MacroAutomationStepControl_Title" xml:space="preserve">
+    <value>Macro</value>
+  </data>
+  <data name="MacroAutomationStepControl_Message" xml:space="preserve">
+    <value>Schakel macro's in of uit.</value>
+  </data>
+  <data name="MacroSequenceControl_InterruptOnOtherKey_Title" xml:space="preserve">
+    <value>Onderbreek als een andere toets in wordt gedrukt</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Verberg</value>
+  </data>
+  <data name="HideAll" xml:space="preserve">
+    <value>Verberg alles</value>
+  </data>
+  <data name="DevicePipelineTriggerTabItemContent_Devices" xml:space="preserve">
+    <value>Apparaten</value>
+  </data>
+  <data name="DeselectAll" xml:space="preserve">
+    <value>Selectie ongedaan maken</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Alles selecteren</value>
+  </data>
+  <data name="MacroSequenceControl_Keyboard" xml:space="preserve">
+    <value>Alleen toetsenbord</value>
+  </data>
+  <data name="MacroSequenceControl_KeyboardMouse" xml:space="preserve">
+    <value>Toetsenbord en muis knoppen</value>
+  </data>
+  <data name="MacroSequenceControl_KeyboardMouseMovement" xml:space="preserve">
+    <value>Alle invoer</value>
+  </data>
+  <data name="MacroSequenceControl_RecordingOptions" xml:space="preserve">
+    <value>Opnameopties</value>
+  </data>
+  <data name="MacroRecordingWindow_Preparing_Title" xml:space="preserve">
+    <value>Opname zal in 3 seconden beginnen...</value>
+  </data>
+  <data name="MacroRecordingWindow_Recording_Title" xml:space="preserve">
+    <value>Opnemen...</value>
+  </data>
+  <data name="MacroRecordingWindow_Recording_Message" xml:space="preserve">
+    <value>Druk op ESC om te stoppen.</value>
+  </data>
+  <data name="DeviceAutomationPipelineTriggerTabItemContent_OnlySelected" xml:space="preserve">
+    <value>Laat alleen geselecteerde apparaten zien</value>
+  </data>
+  <data name="DeviceAutomationPipelineTriggerTabItemContent_OnlyRemovable" xml:space="preserve">
+    <value>Laat alleen verwijderbare apparaten zien</value>
+  </data>
+  <data name="DeviceAutomationPipelineTriggerTabItemContent_OnlyConnected" xml:space="preserve">
+    <value>Laat alleen geselecteerde apparaten zien</value>
+  </data>
+  <data name="SettingsPage_CLI_Title" xml:space="preserve">
+    <value>CLI</value>
+  </data>
+  <data name="SettingsPage_CLI_Message" xml:space="preserve">
+    <value>Schakel de opdrachtregelinterface in die controle vanaf de opdrachtregel mogelijk maakt.</value>
+  </data>
+  <data name="SettingsPage_CLIAddToPath_Title" xml:space="preserve">
+    <value>Voeg CLI toe aan PATH</value>
+  </data>
+  <data name="PlaySoundAutomationStepControl_Title" xml:space="preserve">
+    <value>Geluid afspelen</value>
+  </data>
+  <data name="QuickActionAutomationStepControl_Title" xml:space="preserve">
+    <value>Snelle actie</value>
   </data>
 </root>

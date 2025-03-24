@@ -11,16 +11,20 @@ using TaskService = Microsoft.Win32.TaskScheduler.TaskService;
 
 namespace LenovoLegionToolkit.Lib.SoftwareDisabler;
 
-public class SoftwareDisablerException : Exception
-{
-    public SoftwareDisablerException(string message, Exception innerException) : base(message, innerException) { }
-}
+public class SoftwareDisablerException(string message, Exception innerException) : Exception(message, innerException);
 
 public abstract class AbstractSoftwareDisabler
 {
+    public class AbstractSoftwareDisablerEventArgs : EventArgs
+    {
+        public SoftwareStatus Status { get; init; }
+    }
+
     protected abstract IEnumerable<string> ScheduledTasksPaths { get; }
     protected abstract IEnumerable<string> ServiceNames { get; }
     protected abstract IEnumerable<string> ProcessNames { get; }
+
+    public event EventHandler<AbstractSoftwareDisablerEventArgs>? OnRefreshed;
 
     public Task<SoftwareStatus> GetStatusAsync() => Task.Run(() =>
     {
@@ -38,7 +42,7 @@ public abstract class AbstractSoftwareDisabler
                 Log.Instance.Trace($"Running processes count: {processes.Length}. [type={GetType().Name}, processes={string.Join(",", processes)}]");
             }
 
-            isEnabled = services.Any() || processes.Any();
+            isEnabled = services.Length != 0 || processes.Length != 0;
             isInstalled = IsInstalled();
         }
         catch (Exception ex)
@@ -53,22 +57,29 @@ public abstract class AbstractSoftwareDisabler
         if (Log.Instance.IsTraceEnabled)
             Log.Instance.Trace($"Status: {isEnabled},{isInstalled} [type={GetType().Name}]");
 
+        SoftwareStatus status;
+
         if (isEnabled)
-            return SoftwareStatus.Enabled;
+            status = SoftwareStatus.Enabled;
+        else if (!isInstalled)
+            status = SoftwareStatus.NotFound;
+        else
+            status = SoftwareStatus.Disabled;
 
-        if (!isInstalled)
-            return SoftwareStatus.NotFound;
+        OnRefreshed?.Invoke(this, new() { Status = status });
 
-        return SoftwareStatus.Disabled;
+        return status;
     });
 
-    public virtual Task EnableAsync() => Task.Run(() =>
+    public virtual Task EnableAsync() => Task.Run(async () =>
     {
         if (Log.Instance.IsTraceEnabled)
             Log.Instance.Trace($"Enabling... [type={GetType().Name}]");
 
         SetScheduledTasksEnabled(true);
         SetServicesEnabled(true);
+
+        _ = await GetStatusAsync().ConfigureAwait(false);
 
         if (Log.Instance.IsTraceEnabled)
             Log.Instance.Trace($"Enabled [type={GetType().Name}]");
@@ -82,6 +93,8 @@ public abstract class AbstractSoftwareDisabler
         SetScheduledTasksEnabled(false);
         SetServicesEnabled(false);
         await KillProcessesAsync().ConfigureAwait(false);
+
+        _ = await GetStatusAsync().ConfigureAwait(false);
 
         if (Log.Instance.IsTraceEnabled)
             Log.Instance.Trace($"Disabled [type={GetType().Name}]");
@@ -166,7 +179,7 @@ public abstract class AbstractSoftwareDisabler
                 if (Log.Instance.IsTraceEnabled)
                     Log.Instance.Trace($"Failed to register changes on task {task.Name} in {task.Path}.", ex);
 
-                throw new SoftwareDisablerException($"Failed to register changes on task {task.Name} in {task.Path}. [type={GetType().Name}]", ex);
+                throw new SoftwareDisablerException($"Failed to register changes on task {task.Name} in {task.Path} [type={GetType().Name}]", ex);
             }
         }
     }
@@ -255,7 +268,7 @@ public abstract class AbstractSoftwareDisabler
                 {
                     if (process.ProcessName.StartsWith(processName, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        process.Kill();
+                        process.Kill(true);
                         await process.WaitForExitAsync().ConfigureAwait(false);
                     }
                 }

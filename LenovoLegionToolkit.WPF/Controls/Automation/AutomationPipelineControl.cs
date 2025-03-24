@@ -19,8 +19,8 @@ using LenovoLegionToolkit.WPF.Resources;
 using LenovoLegionToolkit.WPF.Utils;
 using LenovoLegionToolkit.WPF.Windows.Automation;
 using Wpf.Ui.Common;
-using Wpf.Ui.Controls;
 using Button = Wpf.Ui.Controls.Button;
+using CardExpander = LenovoLegionToolkit.WPF.Controls.Custom.CardExpander;
 using MenuItem = Wpf.Ui.Controls.MenuItem;
 
 namespace LenovoLegionToolkit.WPF.Controls.Automation;
@@ -202,6 +202,9 @@ public class AutomationPipelineControl : UserControl
             var pipeline = CreateAutomationPipeline();
             await _automationProcessor.RunNowAsync(pipeline);
 
+            _runNowButton.Content = Resource.AutomationPipelineControl_RunNow;
+            _runNowButton.IsEnabled = true;
+
             await SnackbarHelper.ShowAsync(Resource.AutomationPipelineControl_RunNow_Success_Title, Resource.AutomationPipelineControl_RunNow_Success_Message);
         }
         catch (Exception ex)
@@ -209,12 +212,10 @@ public class AutomationPipelineControl : UserControl
             if (Log.Instance.IsTraceEnabled)
                 Log.Instance.Trace($"Run now completed with errors", ex);
 
-            await SnackbarHelper.ShowAsync(Resource.AutomationPipelineControl_RunNow_Error_Title, Resource.AutomationPipelineControl_RunNow_Error_Message);
-        }
-        finally
-        {
             _runNowButton.Content = Resource.AutomationPipelineControl_RunNow;
             _runNowButton.IsEnabled = true;
+
+            await SnackbarHelper.ShowAsync(Resource.AutomationPipelineControl_RunNow_Error_Title, Resource.AutomationPipelineControl_RunNow_Error_Message);
         }
     }
 
@@ -251,16 +252,16 @@ public class AutomationPipelineControl : UserControl
         if (AutomationPipeline.Trigger is IPowerModeAutomationPipelineTrigger pm)
             result += $" | {Resource.AutomationPipelineControl_SubtitlePart_PowerMode}: {pm.PowerModeState.GetDisplayName()}";
 
-        if (AutomationPipeline.Trigger is IGodModePresetChangedAutomationPipelineTrigger gmpt)
+        if (AutomationPipeline.Trigger is IGodModePresetChangedAutomationPipelineTrigger gpt)
         {
-            var name = _godModeSettings.Store.Presets.Where(kv => kv.Key == gmpt.PresetId)
+            var name = _godModeSettings.Store.Presets.Where(kv => kv.Key == gpt.PresetId)
                 .Select(kv => kv.Value.Name)
                 .DefaultIfEmpty("-")
                 .First();
             result += $" | {Resource.AutomationPipelineControl_SubtitlePart_Preset}: {name}";
         }
 
-        if (AutomationPipeline.Trigger is IProcessesAutomationPipelineTrigger pt && pt.Processes.Any())
+        if (AutomationPipeline.Trigger is IProcessesAutomationPipelineTrigger pt && pt.Processes.Length != 0)
             result += $" | {Resource.AutomationPipelineControl_SubtitlePart_Apps}: {string.Join(", ", pt.Processes.Select(p => p.Name))}";
 
         if (AutomationPipeline.Trigger is ITimeAutomationPipelineTrigger tt)
@@ -287,10 +288,19 @@ public class AutomationPipelineControl : UserControl
         if (AutomationPipeline.Trigger is IUserInactivityPipelineTrigger ut && ut.InactivityTimeSpan > TimeSpan.Zero)
             result += $" | {string.Format(Resource.AutomationPipelineControl_SubtitlePart_After, ut.InactivityTimeSpan.Humanize(culture: Resource.Culture))}";
 
+        if (AutomationPipeline.Trigger is IWiFiConnectedPipelineTrigger wt && wt.Ssids.Length != 0)
+            result += $" | {string.Join(",", wt.Ssids)}";
+
+        if (AutomationPipeline.Trigger is IPeriodicAutomationPipelineTrigger pet)
+            result += $" | {Resource.PeriodicActionPipelineTriggerTabItemContent_PeriodMinutes}: {pet.Period.TotalMinutes}";
+
+        if (AutomationPipeline.Trigger is IDeviceAutomationPipelineTrigger dt && dt.InstanceIds.Length != 0)
+            result += $" | {Resource.DevicePipelineTriggerTabItemContent_Devices}: {dt.InstanceIds.Length}";
+
         return result;
     }
 
-    private UIElement? GenerateAccessory()
+    private Button? GenerateAccessory()
     {
         var triggers = AutomationPipeline.AllTriggers
             .ToArray();
@@ -337,26 +347,32 @@ public class AutomationPipelineControl : UserControl
             HDRAutomationStep s => new HDRAutomationStepControl(s),
             HybridModeAutomationStep s => await HybridModeAutomationStepControlFactory.GetControlAsync(s),
             InstantBootAutomationStep s => new InstantBootAutomationStepControl(s),
+            MacroAutomationStep s => new MacroAutomationStepControl(s),
             MicrophoneAutomationStep s => new MicrophoneAutomationStepControl(s),
             NotificationAutomationStep s => new NotificationAutomationStepControl(s),
             OneLevelWhiteKeyboardBacklightAutomationStep s => new OneLevelWhiteKeyboardBacklightAutomationStepControl(s),
             OverDriveAutomationStep s => new OverDriveAutomationStepControl(s),
             OverclockDiscreteGPUAutomationStep s => new OverclockDiscreteGPUAutomationStepControl(s),
             PanelLogoBacklightAutomationStep s => new PanelLogoBacklightAutomationStepControl(s),
+            PlaySoundAutomationStep s => new PlaySoundAutomationStepControl(s),
             PortsBacklightAutomationStep s => new PortsBacklightAutomationStepControl(s),
             PowerModeAutomationStep s => new PowerModeAutomationStepControl(s),
+            QuickActionAutomationStep s => new QuickActionAutomationStepControl(s),
             RefreshRateAutomationStep s => new RefreshRateAutomationStepControl(s),
             ResolutionAutomationStep s => new ResolutionAutomationStepControl(s),
             RGBKeyboardBacklightAutomationStep s => new RGBKeyboardBacklightAutomationStepControl(s),
             RunAutomationStep s => new RunAutomationStepControl(s),
+            SpeakerAutomationStep s => new SpeakerAutomationStepControl(s),
             SpectrumKeyboardBacklightBrightnessAutomationStep s => new SpectrumKeyboardBacklightBrightnessAutomationStepControl(s),
             SpectrumKeyboardBacklightImportProfileAutomationStep s => new SpectrumKeyboardBacklightImportProfileAutomationStepControl(s),
             SpectrumKeyboardBacklightProfileAutomationStep s => new SpectrumKeyboardBacklightProfileAutomationStepControl(s),
             TurnOffMonitorsAutomationStep s => new TurnOffMonitorsAutomationStepControl(s),
+            TurnOffWiFiAutomationStep s => new TurnOffWiFiAutomationStepControl(s),
+            TurnOnWiFiAutomationStep s => new TurnOnWiFiAutomationStepControl(s),
             TouchpadLockAutomationStep s => new TouchpadLockAutomationStepControl(s),
             WhiteKeyboardBacklightAutomationStep s => new WhiteKeyboardBacklightAutomationStepControl(s),
             WinKeyAutomationStep s => new WinKeyAutomationStepControl(s),
-            _ => throw new InvalidOperationException("Unknown step type."),
+            _ => throw new InvalidOperationException("Unknown step type"),
         };
         control.MouseRightButtonUp += (_, e) =>
         {
@@ -423,6 +439,8 @@ public class AutomationPipelineControl : UserControl
         _stepsStackPanel.Children.Add(control);
         _cardHeaderControl.Subtitle = GenerateSubtitle();
         _cardHeaderControl.SubtitleToolTip = _cardHeaderControl.Subtitle;
+
+        control.Focus();
 
         OnChanged?.Invoke(this, EventArgs.Empty);
     }
